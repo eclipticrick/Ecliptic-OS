@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Temp from './containers/Temp/Temp';
+import OperatingSystem from './components/OperatingSystem/OperatingSystem';
 
 export class App extends React.Component<{}, {}> {
     public render() {
         return (
-            <Temp filename='BOOTMGR'/>
+            <OperatingSystem />
         );
     }
 }
