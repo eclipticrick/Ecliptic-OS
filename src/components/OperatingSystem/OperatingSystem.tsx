@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Desktop from '../Desktop/Desktop';
-import TaskBar from '../TaskBar/TaskBar';
+import Desktop from '../../containers/Temp/Desktop';
+import TaskBar from '../../containers/TaskBar/TaskBar';
 
-const operatingSystem = (props: {}) => (
+const operatingSystem = () => (
     <>
         <Desktop/>
         <TaskBar/>

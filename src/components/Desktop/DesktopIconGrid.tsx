@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classes from './DesktopIconGrid.module.scss';
 
-const desktopIconGrid = (props: {}) => (
+const desktopIconGrid = () => (
     <div className={classes.root}>
         DesktopIconGrid
     </div>
