@@ -4,7 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --mode=development\"",
     "build": "webpack --mode production"
   },
