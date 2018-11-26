@@ -24,6 +24,9 @@ tags
 # NodeJS
 node_modules/*
 
+# JEST
+coverage/*
+
 # React build directory
 dist/*
 

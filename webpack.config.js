@@ -136,8 +136,11 @@ module.exports = {
 
     plugins: [
 
-        // to clean the ./dist folder before regenerating files.
-        new CleanWebpackPlugin('dist', {} ),
+        // to clean the ./dist & ./coverage folder before regenerating files.
+        new CleanWebpackPlugin([
+            'dist',
+            'coverage'
+        ], {}),
 
         // reloads webpack after file changes
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'index.html') }),
