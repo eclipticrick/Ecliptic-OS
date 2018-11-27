@@ -1,4 +1,7 @@
 # Ecliptic-OS
+A web-OS :)
+
+[![Build Status](https://travis-ci.com/eclipticrick/Ecliptic-OS.svg?branch=master)](https://travis-ci.com/eclipticrick/Ecliptic-OS)
 
 _This project uses __TypeScript__ and __SASS__ for logic and styling._
 
@@ -40,10 +43,29 @@ Alternatively you can go to [localhost:8080/webpack-dev-server/](http://localhos
 
 ## Running the tests
 
-Run the tests for this react dashboard
+Run the tests for this project
 ```
 npm run test
 ```
+
+Keep running the tests on every file-change (for development)
+```
+npm run test:watch
+```
+
+## Generate a test-coverage rapport
+
+To generate a test coverage rapport run the following command.
+```
+npm run test:coverage
+```
+This command will add a folder named `/coverage` in the root of this project. 
+
+If you're running this project on a Windows device, you can run the following command to open the coverage rapport in your default browser.
+```
+npm run show:coverage
+```
+Alternatively you can open the coverage rapport manually by opening `/coverage/lcov-report/index.html`.
 
 ## Deployment
 
