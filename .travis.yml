@@ -5,7 +5,9 @@ node_js:
   - 7
   - 6
   - node
-
+cache:
+  directories:
+    - node_modules
 jobs:
   include:
     - stage: Produce Coverage
