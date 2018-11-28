@@ -5,3 +5,9 @@ node_js:
   - 8
   - 7
   - node
+
+jobs:
+  include:
+    - stage: Produce Coverage
+      node_js: node
+      script: npm run test:coverage && cat ./_coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./_coverage
