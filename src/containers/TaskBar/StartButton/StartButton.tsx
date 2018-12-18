@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as classes from './StartButton.module.scss';
 import classNames from 'classnames';
-import {Button} from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
+import {Icon, Button} from '@material-ui/core';
 
 const startButton = () => (
     <div className={classes.root}>
