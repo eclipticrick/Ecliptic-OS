@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/eclipticrick/Ecliptic-OS#readme",
   "dependencies": {
+    "@material-ui/core": "^3.7.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   },
@@ -48,6 +49,7 @@
     "node-sass": "^4.10.0",
     "nodemon": "^1.18.7",
     "postcss-loader": "^3.0.0",
+    "re-resizable": "^4.11.0",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",

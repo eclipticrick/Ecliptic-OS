@@ -9,7 +9,7 @@ export interface IReducerConfig {
 
 const initialState: IReducerConfig = {
     taskbar: {
-        height: 25
+        height: 30
     }
 };
 

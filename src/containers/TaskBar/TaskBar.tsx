@@ -3,6 +3,8 @@ import * as classes from './TaskBar.module.scss';
 import {IStore} from '../../store/initialize';
 import * as actions from '../../store/actions';
 import {connect} from 'react-redux';
+import Resizable from 're-resizable';
+import StartButton from './StartButton/StartButton';
 
 export interface ITaskbarProps {
     height: number
@@ -12,16 +14,23 @@ export interface ITaskbarProps {
 export class TaskBar extends React.Component<ITaskbarProps, {}> {
     public render() {
         const { props, props: { height } } = this;
-
+        console.info('height', height)
         return (
-            <div className={classes.root} style={{ height }}>
-                <button onClick={() => props.setTaskbarHeight(Math.floor(Math.random() * 30) + 15)}
-                style={{ background: 'transparent', border: 0, cursor: 'pointer', width: '100%', height: '100%' }}>
-                    set random taskbar height with redux
-                </button>
+            <div className={classes.root}>
+                <Resizable
+                    size={{ height }}
+                    enable={{top: true}}
+                    minHeight={30}
+                    maxHeight={50}
+                    onResizeStop={(e, direction, ref, d) => {
+                        props.setTaskbarHeight(height + d.height);
+                    }}>
+                    <StartButton/>
+                </Resizable>
             </div>
         );
     }
+
 }
 const mapStateToProps = (state: IStore) => {
     const { taskbar: { height } } = state.config;
