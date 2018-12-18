@@ -131,6 +131,10 @@ module.exports = {
                 test: /\.module\.(sa|sc|c)ss$/,
                 use: styleLoaders({ withCssModules: true })
             },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                loader: 'file-loader'
+            }
         ]
     },
 
