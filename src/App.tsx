@@ -1,5 +1,5 @@
 import * as React from 'react';
-import OperatingSystem from './components/OperatingSystem/OperatingSystem';
+import OperatingSystem from './containers/OperatingSystem/OperatingSystem';
 import { Provider } from 'react-redux';
 import store from './store/initialize';
 
