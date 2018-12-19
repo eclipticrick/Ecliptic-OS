@@ -4,6 +4,8 @@ import TaskBar from '../TaskBar/TaskBar';
 import LoginScreen from '../LoginScreen/LoginScreen';
 import {IStore} from '../../store/initialize';
 import {connect} from 'react-redux';
+import {CSSTransition} from 'react-transition-group';
+import '../../transitions/zoom.scss';
 
 export interface IOperatingSystemProps {
     isLoggedIn: boolean
@@ -12,13 +14,22 @@ export interface IOperatingSystemProps {
 export class OperatingSystem extends React.Component<IOperatingSystemProps, {}> {
     public render() {
         const { isLoggedIn } = this.props;
-        if (!isLoggedIn) {
-            return <LoginScreen/>
-        }
+        // if (!isLoggedIn) {
+        //     return <LoginScreen/>
+        // }
         return (
             <>
-                <Desktop/>
-                <TaskBar/>
+                <CSSTransition in={isLoggedIn} timeout={240} classNames={'transition-zoom'}>
+                    <>
+                        <Desktop/>
+                        <TaskBar/>
+                    </>
+                </CSSTransition>
+                <CSSTransition in={!isLoggedIn} timeout={240} classNames={'transition-zoom'}>
+
+                    <LoginScreen/>
+
+                </CSSTransition>
             </>
         );
     }

@@ -1,0 +1,36 @@
+.transition-zoom-appear {
+  opacity: 0;
+  transform: scale(1.1);
+}
+.transition-zoom-appear.transition-zoom-appear-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 240ms linear;
+}
+
+.transition-zoom-exit {
+  opacity: 1;
+}
+
+.transition-zoom-exit.transition-zoom-exit-active {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 240ms linear;
+}
+.transition-zoom-exit-done {
+  display: none;
+}
+
+.transition-zoom-enter {
+  opacity: 0;
+  transform: scale(1.1);
+}
+.transition-zoom-enter.transition-zoom-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 240ms linear;
+}
+.transition-zoom-enter-done {
+  opacity: 1;
+  transform: scale(1);
+}
