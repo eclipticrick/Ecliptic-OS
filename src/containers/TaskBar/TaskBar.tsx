@@ -14,7 +14,7 @@ export interface ITaskbarProps {
 export class TaskBar extends React.Component<ITaskbarProps, {}> {
     public render() {
         const { props, props: { height } } = this;
-        console.info('height', height)
+        
         return (
             <div className={classes.root}>
                 <Resizable
