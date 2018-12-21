@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classes from './TaskBar.module.scss';
 import {IStore} from '../../store/initialize';
-import * as actions from '../../store/actions';
+import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
 import Resizable from 're-resizable';
 import StartButton from './StartButton/StartButton';

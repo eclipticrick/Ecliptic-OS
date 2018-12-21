@@ -1,0 +1,73 @@
+$titleBarHeight: 25px;
+
+.root {
+  border: 1px solid #0153EE;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow:
+          0 3px 6px rgba(0,0,0,0.16),
+          0 3px 6px rgba(0,0,0,0.23);
+  margin: 4px;
+
+  div.titleBar {
+    display: flex;
+    justify-content: space-between;
+    line-height: 0;
+    background: #0153EE;
+    color: #f9f9f9;
+    font-size: 12px;
+    height: $titleBarHeight;
+    padding: 5px;
+    div.left {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      img {
+        height: 12px;
+        margin-right: 6px;
+      }
+      span.title {}
+    }
+    div.right {
+      min-width: 65px;
+      display: inline-block;
+      margin: -2px;
+      text-align: right;
+      button {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        outline: none;
+        font-size: 12px;
+        padding: 2px;
+        line-height: 0;
+        border-radius: 4px;
+        color: #f9f9f9;
+        .icon {
+          font-size: 12px;
+        }
+        &:not(:first-child) {
+          margin-left: 2px;
+        }
+      }
+      button.minimize,
+      button.maximize {
+        background: #015aff;
+        &:hover {
+          background: #337AFF;
+        }
+      }
+      button.close {
+        background: #D75C35;
+        &:hover {
+          background: #ff6e3d;
+        }
+      }
+    }
+  }
+  .content {
+    background: #e8e8e8;
+    overflow: auto;
+    height: calc(100% - #{$titleBarHeight});
+  }
+}
