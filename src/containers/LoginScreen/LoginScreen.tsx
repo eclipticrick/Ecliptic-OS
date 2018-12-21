@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as classes from './LoginScreen.module.scss';
 import * as actions from '../../store/actions';
 import {connect} from 'react-redux';
-import * as userImageSrc from '../../assets/images/profilePic.jpg';
+import * as userImageSrc from '../../assets/images/admin.jpg';
 
 export interface ILoginScreenProps {
     login: () => void
@@ -30,7 +30,7 @@ export class LoginScreen extends React.Component<ILoginScreenProps, {}> {
                             <img src={userImageSrc}/>
                         </div>
                         <div className={classes.userName}>
-                            Subway Rick
+                            Admin
                         </div>
                         <div className={classes.userPassword}>
                             <input id='password'
