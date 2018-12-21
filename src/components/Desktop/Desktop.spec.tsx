@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {configure, shallow} from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import {Desktop} from './Desktop';
+import {Desktop, IDesktopProps} from './Desktop';
 import Background from './Background/Background';
 import IconGrid from './IconGrid/IconGrid';
 
@@ -13,7 +13,9 @@ describe('<Desktop />', () => {
     let wrapper: any;
 
     beforeEach(() => {
-        const props = {};
+        const props: IDesktopProps = {
+            taskbarHeight: 25
+        };
         wrapper = shallow(<Desktop {...props} />);
     });
 
