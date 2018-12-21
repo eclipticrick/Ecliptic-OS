@@ -74,7 +74,7 @@ module.exports = {
     // A map from regular expressions to module names that allow to stub out resources with a single module
     // moduleNameMapper: {},
     moduleNameMapper: {
-        '\.(scss|jpg|svg|png|gif)$': path.resolve(__dirname, 'jest.stub.js')
+        '\.(scss|jpg|png|gif|svg)$': path.resolve(__dirname, 'jest.stub.js')
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

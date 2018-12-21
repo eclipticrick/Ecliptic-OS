@@ -1,0 +1,34 @@
+div.root {
+  width: 60px;
+  cursor: pointer;
+  margin: 12px;
+  align-self: flex-start;
+
+  > div.iconWrapper {
+    overflow: hidden;
+    transition: transform .12s;
+    > img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+  }
+  div.nameWrapper {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+  }
+
+  &:hover {
+    > div.iconWrapper {
+      transform: scale(1.05)
+    }
+  }
+  &:active {
+    > div.iconWrapper {
+      transform: scale(0.95)
+    }
+  }
+}
