@@ -19,8 +19,14 @@ const initialState: IReducerDesktop = {
     },
     shortcuts: [
         ApplicationId.INTERNET_EXPLORER,
-        ApplicationId.WORD,
-        ApplicationId.GOOGLE_CHROME
+        ApplicationId.LIME_WIRE,
+        ApplicationId.OUTLOOK,
+        ApplicationId.NOTEPAD,
+        ApplicationId.TODO_LIST,
+        ApplicationId.WHATSAPP,
+        ApplicationId.CALCULATOR,
+        ApplicationId.COMPUTER,
+        ApplicationId.PAINT
     ]
 };
 
