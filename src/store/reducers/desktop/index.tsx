@@ -1,5 +1,6 @@
 import Actions, {IAction} from '../../actionTypes';
 import functions from './functions';
+import {ApplicationId} from '../../../appdata/applications';
 
 export interface IReducerDesktop {
     background: {
@@ -8,7 +9,7 @@ export interface IReducerDesktop {
     }
 
     // A list of application id's to be shown as icons on the desktop
-    shortcuts: any[]
+    shortcuts: ApplicationId[]
 }
 
 const initialState: IReducerDesktop = {
@@ -16,7 +17,11 @@ const initialState: IReducerDesktop = {
         type: 'image',
         value: 'temp'
     },
-    shortcuts: []
+    shortcuts: [
+        ApplicationId.INTERNET_EXPLORER,
+        ApplicationId.WORD,
+        ApplicationId.GOOGLE_CHROME
+    ]
 };
 
 const REDUCER = ( state: IReducerDesktop = initialState, action: IAction & any ) => {

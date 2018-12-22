@@ -14,7 +14,10 @@ describe('<Desktop />', () => {
 
     beforeEach(() => {
         const props: IDesktopProps = {
-            taskbarHeight: 25
+            taskbarHeight: 25,
+            windows: [],
+            shortcuts: [],
+            openWindow: () => { return }
         };
         wrapper = shallow(<Desktop {...props} />);
     });

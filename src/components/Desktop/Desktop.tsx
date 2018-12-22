@@ -2,35 +2,40 @@ import * as React from 'react';
 import * as classes from './Desktop.module.scss';
 import Background from './Background/Background';
 import IconGrid from './IconGrid/IconGrid';
-import InternetExplorer from '../../containers/InternetExplorer/InternetExplorer';
 import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
-import GoogleChrome from '../../containers/GoogleChrome/GoogleChrome';
-import Word from '../../containers/Word/Word';
+
+import applications, {ApplicationId} from '../../appdata/applications';
+import {IWindow} from '../../appdata/window';
+import * as actions from '../../store/actions';
 
 export interface IDesktopProps {
     taskbarHeight: number
+    windows: IWindow[]
+    shortcuts: ApplicationId[]
+    openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
 }
 
 export class Desktop extends React.Component<IDesktopProps, {}> {
     public render() {
-        const { taskbarHeight } = this.props;
+        const { props, props: { taskbarHeight, windows, shortcuts } } = this;
 
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
 
                 <Background taskbarHeight={taskbarHeight}/>
-                <IconGrid/>
+                <IconGrid shortcuts={shortcuts} openWindow={props.openWindow}/>
 
-                <div className={classes.windowWrapper}>
-                    <Word/>
-                </div>
-                <div className={classes.windowWrapper}>
-                    <InternetExplorer/>
-                </div>
-                <div className={classes.windowWrapper}>
-                    <GoogleChrome/>
-                </div>
+                {windows.map(window => {
+                    const application = applications.find(app => app.id === window.applicationId);
+                    const { Component } = application.window;
+
+                    return (
+                        <div key={`window-${application.id}`} className={classes.windowWrapper}>
+                            <Component applicationId={application.id} maximized={window.maximized} minimized={window.minimized}/>
+                        </div>
+                    )
+                })}
 
             </div>
         );
@@ -38,7 +43,12 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
 }
 const mapStateToProps = (state: IStore) => {
     const { taskbar } = state.config;
-    return { taskbarHeight: taskbar.height }
+    const { windows } = state.windows;
+    const { shortcuts } = state.desktop;
+    return { taskbarHeight: taskbar.height, windows, shortcuts }
 };
 
-export default connect(mapStateToProps)(Desktop);
+const mapDispatchToProps = (dispatch: any): Partial<IDesktopProps> => ({
+    openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Desktop);

@@ -8,8 +8,14 @@ $titleBarHeight: 25px;
   box-shadow:
           0 3px 6px rgba(0,0,0,0.16),
           0 3px 6px rgba(0,0,0,0.23);
-  // margin: 4px;
 
+  &.maximized {
+    border-radius: 6px 6px 0 0;
+    border: 0;
+  }
+  &.minimized {
+    display: none;
+  }
   div.titleBar {
     display: flex;
     justify-content: space-between;
@@ -43,6 +49,7 @@ $titleBarHeight: 25px;
         line-height: 0;
         border-radius: 4px;
         color: #f9f9f9;
+        pointer-events: all;
         .icon {
           font-size: 12px;
         }

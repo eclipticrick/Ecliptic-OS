@@ -1,12 +1,19 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import * as classes from './Window.module.scss';
 import Draggable, {DraggableData} from 'react-draggable';
 import Resizable, {ResizableDirection} from 're-resizable';
 import {Icon} from '@material-ui/core';
+import {connect} from 'react-redux';
+import {ApplicationId} from '../../appdata/applications';
+import * as actions from '../../store/actions';
 
-interface IWindowProps {
+export interface IWindowProps {
+    applicationId: ApplicationId
     title: string
     iconSrc: string
+    maximized: boolean
+    minimized: boolean
     minHeight?: number
     minWidth?: number
     defaultPosition?: {
@@ -14,8 +21,15 @@ interface IWindowProps {
         y: number
     }
 }
-
+interface IWindowPassedProps {
+    closeWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+    selectWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+    minimizeWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+    maximizeWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+    normalizeWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+}
 interface IWindowState {
+    disableDragging: boolean
     position: {
         x: number
         y: number
@@ -35,8 +49,9 @@ const defaultProps: Partial<IWindowProps> = {
     }
 };
 
-class Window extends React.Component<IWindowProps, IWindowState> {
+class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowState> {
     public state = {
+        disableDragging: false,
         position: {
             x: 0,
             y: 0
@@ -48,16 +63,35 @@ class Window extends React.Component<IWindowProps, IWindowState> {
     };
 
     public componentWillMount() {
-        const { defaultPosition } = this.props;
+        const { defaultPosition, maximized } = this.props;
         this.setState({
-            position: defaultPosition || defaultProps.defaultPosition
+            position: maximized ? { x: 0, y: 0 } : defaultPosition || defaultProps.defaultPosition
         })
     }
 
     public render() {
-        const { title, iconSrc, minHeight, minWidth, defaultPosition, children } = this.props;
+        const {
+            props,
+            props: { applicationId, title, iconSrc, maximized, minimized, minHeight, minWidth, defaultPosition, children }
+        } = this;
+
         const { position, resizeLimit } = this.state;
 
+        const disableDragging = () => {
+            this.setState({
+                disableDragging: true
+            });
+        };
+        const enableDragging = () => {
+            this.setState({
+                disableDragging: false
+            });
+        };
+        const handleDraggingStart = (): false | void => {
+            if (maximized || this.state.disableDragging) {
+                return false
+            }
+        };
         const handleDraggingStop = (e: MouseEvent, data: DraggableData) => {
             this.setState({
                 position: {
@@ -81,38 +115,70 @@ class Window extends React.Component<IWindowProps, IWindowState> {
         };
 
         return (
-            <Draggable  defaultClassName={classes.root}
+            <Draggable defaultClassName={classNames(
+                                            classes.root,
+                                            maximized ? classes.maximized : null,
+                                            minimized ? classes.minimized : null
+                                        )}
                        handle={`.${classes.titleBar}`}
                        bounds='parent'
                        position={ position }
                        defaultPosition={ defaultPosition || defaultProps.defaultPosition }
-                       onStop={handleDraggingStop}>
+                       onStart={handleDraggingStart}
+                       onStop={handleDraggingStop}
+                       onMouseDown={() => props.selectWindow(applicationId)}>
 
-                <Resizable enable={{ bottom: true, bottomRight: true, right: true }}
+                <Resizable enable={ maximized ? {} : { bottom: true, bottomRight: true, right: true }}
                            minWidth={ minWidth || defaultProps.minWidth }
                            minHeight={ minHeight || defaultProps.minHeight }
-                           maxWidth={ resizeLimit.w }
-                           maxHeight={ resizeLimit.h }
+                           maxWidth={ maximized ? null : resizeLimit.w }
+                           maxHeight={ maximized ? null : resizeLimit.h }
                            defaultSize={{
                                width: minWidth || defaultProps.minWidth,
                                height: minHeight || defaultProps.minHeight,
                            }}
+                           size={maximized ? { width: '100%', height: '100%' } : null}
                            onResizeStart={handleResizeStart}>
 
-                    <div className={classes.titleBar}>
+                    <div className={classes.titleBar}
+                         onMouseEnter={enableDragging}
+                         onDoubleClick={
+                        () => maximized ? this._handleNormalizeWindow(applicationId) : this._handleMaximizeWindow(applicationId)
+                    }>
 
                         <div className={classes.left}>
                             <img src={iconSrc} />
                             <span className={classes.title}>{title}</span>
                         </div>
                         <div className={classes.right}>
-                            <button type='button' className={classes.minimize}>
+                            <button type='button'
+                                    onClick={() => props.minimizeWindow(applicationId)}
+                                    className={classes.minimize}
+                                    onMouseEnter={disableDragging}
+                                    onMouseLeave={enableDragging}>
                                 <Icon className={classes.icon}>minimize</Icon>
                             </button>
-                            <button type='button' className={classes.maximize}>
-                                <Icon className={classes.icon}>fullscreen</Icon>
-                            </button>
-                            <button type='button' className={classes.close}>
+                            {maximized ?
+                                <button type='button'
+                                        onClick={() => this._handleNormalizeWindow(applicationId)}
+                                        className={classes.maximize}
+                                        onMouseEnter={disableDragging}
+                                        onMouseLeave={enableDragging}>
+                                    <Icon className={classes.icon}>fullscreen_exit</Icon>
+                                </button>
+                            :
+                                <button type='button'
+                                        onClick={() => this._handleMaximizeWindow(applicationId)}
+                                        className={classes.maximize}
+                                        onMouseEnter={disableDragging}
+                                        onMouseLeave={enableDragging}>
+                                    <Icon className={classes.icon}>fullscreen</Icon>
+                                </button>}
+                            <button type='button'
+                                    onClick={() => props.closeWindow(applicationId)}
+                                    className={classes.close}
+                                    onMouseEnter={disableDragging}
+                                    onMouseLeave={enableDragging}>
                                 <Icon className={classes.icon}>close</Icon>
                             </button>
                         </div>
@@ -126,5 +192,30 @@ class Window extends React.Component<IWindowProps, IWindowState> {
             </Draggable>
         )
     }
+
+    private _handleMaximizeWindow(applicationId: ApplicationId) {
+        this.props.maximizeWindow(applicationId);
+        this.setState({
+            position: { x: 0, y: 0 }
+        });
+    }
+    private _handleNormalizeWindow(applicationId: ApplicationId) {
+        const { defaultPosition } = this.props;
+
+        this.props.normalizeWindow(applicationId);
+        this.setState({
+            position: defaultPosition || defaultProps.defaultPosition
+        })
+    }
 }
-export default Window;
+
+const mapDispatchToProps = (dispatch: any): Partial<IWindowPassedProps> => ({
+    closeWindow: (id: ApplicationId) => dispatch(actions.closeWindow(id)),
+    selectWindow: (id: ApplicationId) => dispatch(actions.selectWindow(id)),
+    minimizeWindow: (id: ApplicationId) => dispatch(actions.minimizeWindow(id)),
+    maximizeWindow: (id: ApplicationId) => dispatch(actions.maximizeWindow(id)),
+    normalizeWindow: (id: ApplicationId) => dispatch(actions.normalizeWindow(id))
+});
+export default connect<Partial<IWindowPassedProps>, Partial<IWindowPassedProps>, IWindowProps>(
+    null, mapDispatchToProps
+)(Window);

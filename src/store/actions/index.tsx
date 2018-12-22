@@ -5,7 +5,12 @@ export {
     login,
 } from './user';
 export {
-    openWindow
+    openWindow,
+    closeWindow,
+    selectWindow,
+    minimizeWindow,
+    maximizeWindow,
+    normalizeWindow
 } from './windows';
 
 export {

@@ -1,17 +1,16 @@
 import * as React from 'react';
 import * as classes from './Word.module.scss';
-import Window from '../../components/Window/Window';
-import applications from '../../appdata/applications';
+import GenericWindow, {IGenericWindowProps} from '../GenericWindow/GenericWindow';
 
-export class Word extends React.Component<{}, {}> {
+export class Word extends React.Component<IGenericWindowProps, {}> {
     public render() {
-        const { name, iconSrc, minWidth, minHeight } = applications.find(a => a.id === 'word');
+        const { applicationId, maximized, minimized } = this.props;
         return (
-            <Window title={name} minWidth={minWidth} minHeight={minHeight} iconSrc={iconSrc}>
+            <GenericWindow applicationId={applicationId} minimized={minimized} maximized={maximized}>
                 <div className={classes.root}>
                     word
                 </div>
-            </Window>
+            </GenericWindow>
         );
     }
 }
