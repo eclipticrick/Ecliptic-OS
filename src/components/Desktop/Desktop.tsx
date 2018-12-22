@@ -18,6 +18,7 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
 
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
+
                 <Background taskbarHeight={taskbarHeight}/>
                 <IconGrid/>
 
