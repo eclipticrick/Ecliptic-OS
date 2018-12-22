@@ -11,7 +11,8 @@ export interface IStore {
 const rootReducer = combineReducers({
     config: configReducer,
     user: userReducer,
-    // desktop: desktopReducer
+    // desktop: desktopReducer,
+    // windows: windowsReducer
 });
 
 // const windowIfDefined = typeof window === 'undefined' ? null : window as any;
