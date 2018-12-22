@@ -1,5 +1,5 @@
 import * as React from 'react';
-import GenericWindow, {IGenericWindowProps} from '../GenericWindow/GenericWindow';
+import GenericWindow, {IGenericWindowProps} from '../../components/Window/GenericWindow';
 
 export class Paint extends React.Component<IGenericWindowProps, {}> {
     public render() {

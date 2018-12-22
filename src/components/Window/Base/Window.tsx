@@ -5,8 +5,8 @@ import Draggable, {DraggableData} from 'react-draggable';
 import Resizable, {ResizableDirection} from 're-resizable';
 import {Icon} from '@material-ui/core';
 import {connect} from 'react-redux';
-import {ApplicationId} from '../../appdata/applications';
-import * as actions from '../../store/actions';
+import {ApplicationId} from '../../../appdata/applications';
+import * as actions from '../../../store/actions/index';
 
 export interface IWindowProps {
     applicationId: ApplicationId

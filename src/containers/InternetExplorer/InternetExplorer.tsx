@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classes from './InternetExplorer.module.scss';
-import GenericWindow, {IGenericWindowProps} from '../GenericWindow/GenericWindow';
+import GenericWindow, {IGenericWindowProps} from '../../components/Window/GenericWindow';
 
 export class InternetExplorer extends React.Component<IGenericWindowProps, {}> {
     public render() {

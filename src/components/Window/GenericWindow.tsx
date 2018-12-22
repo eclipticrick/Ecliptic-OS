@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Window from '../../components/Window/Window';
+import Window from './Base/Window';
 import applications, {ApplicationId} from '../../appdata/applications';
 
 export interface IGenericWindowProps {

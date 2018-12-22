@@ -15,7 +15,7 @@ export interface IReducerDesktop {
 const initialState: IReducerDesktop = {
     background: {
         type: 'image',
-        value: 'temp'
+        value: 'temp' // TODO
     },
     shortcuts: [
         ApplicationId.INTERNET_EXPLORER,
