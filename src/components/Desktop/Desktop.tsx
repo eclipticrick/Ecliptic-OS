@@ -26,13 +26,16 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
                 <Background taskbarHeight={taskbarHeight}/>
                 <IconGrid shortcuts={shortcuts} openWindow={props.openWindow}/>
 
-                {windows.map(window => {
+                {windows.map((window, i: number) => {
                     const application = applications.find(app => app.id === window.applicationId);
                     const { Component } = application.window;
 
                     return (
                         <div key={`window-${application.id}`} className={classes.windowWrapper}>
-                            <Component applicationId={application.id} maximized={window.maximized} minimized={window.minimized}/>
+                            <Component applicationId={application.id}
+                                       maximized={window.maximized}
+                                       minimized={window.minimized}
+                                       selected={windows.length - 1 === i}/>
                         </div>
                     )
                 })}

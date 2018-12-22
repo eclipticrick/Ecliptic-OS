@@ -14,6 +14,7 @@ export interface IWindowProps {
     iconSrc: string
     maximized: boolean
     minimized: boolean
+    selected: boolean
     minHeight?: number
     minWidth?: number
     defaultPosition?: {
@@ -72,7 +73,18 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
     public render() {
         const {
             props,
-            props: { applicationId, title, iconSrc, maximized, minimized, minHeight, minWidth, defaultPosition, children }
+            props: {
+                applicationId,
+                title,
+                iconSrc,
+                minimized,
+                maximized,
+                selected,
+                minHeight,
+                minWidth,
+                defaultPosition,
+                children
+            }
         } = this;
 
         const { position, resizeLimit } = this.state;
@@ -116,10 +128,11 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
 
         return (
             <Draggable defaultClassName={classNames(
-                                            classes.root,
-                                            maximized ? classes.maximized : null,
-                                            minimized ? classes.minimized : null
-                                        )}
+                classes.root,
+                maximized ? classes.maximized : null,
+                minimized ? classes.minimized : null,
+                selected ? classes.selected : null
+            )}
                        handle={`.${classes.titleBar}`}
                        bounds='parent'
                        position={ position }

@@ -4,9 +4,9 @@ import GenericWindow, {IGenericWindowProps} from '../GenericWindow/GenericWindow
 
 export class GoogleChrome extends React.Component<IGenericWindowProps, {}> {
     public render() {
-        const { applicationId, maximized, minimized } = this.props;
+        const { applicationId, maximized, minimized, selected } = this.props;
         return (
-            <GenericWindow applicationId={applicationId} minimized={minimized} maximized={maximized}>
+            <GenericWindow applicationId={applicationId} minimized={minimized} maximized={maximized} selected={selected}>
                 <div className={classes.root}>
                     InternetExplorer
                 </div>

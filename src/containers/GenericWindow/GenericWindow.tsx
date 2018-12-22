@@ -6,10 +6,11 @@ export interface IGenericWindowProps {
     applicationId: ApplicationId
     minimized: boolean
     maximized: boolean
+    selected: boolean
     children?: any // TODO inherit from React.Props ?
 }
 
-const genericWindow = ({ applicationId, minimized, maximized, children }: IGenericWindowProps) => {
+const genericWindow = ({ applicationId, minimized, maximized, selected, children }: IGenericWindowProps) => {
     const { id, icon, window: {title, minWidth, minHeight} } = applications.find(a => a.id === applicationId);
 
     return (
@@ -19,7 +20,8 @@ const genericWindow = ({ applicationId, minimized, maximized, children }: IGener
                 minHeight={minHeight}
                 iconSrc={icon.src}
                 minimized={minimized}
-                maximized={maximized}>
+                maximized={maximized}
+                selected={selected}>
             { children }
         </Window>
     );
