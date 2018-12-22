@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as classes from './Window.module.scss';
-import Draggable from 'react-draggable';
+import Draggable, {DraggableData} from 'react-draggable';
 import Resizable, {ResizableDirection} from 're-resizable';
-import * as iconSrc from '../../assets/images/windows-logo.svg';
 import {Icon} from '@material-ui/core';
 
 interface IWindowProps {
     title: string
+    iconSrc: string
     minHeight?: number
     minWidth?: number
     defaultPosition?: {
@@ -55,10 +55,10 @@ class Window extends React.Component<IWindowProps, IWindowState> {
     }
 
     public render() {
-        const { title, minHeight, minWidth, defaultPosition, children } = this.props;
+        const { title, iconSrc, minHeight, minWidth, defaultPosition, children } = this.props;
         const { position, resizeLimit } = this.state;
 
-        const handleDraggingStop = (e: MouseEvent, data: any) => {
+        const handleDraggingStop = (e: MouseEvent, data: DraggableData) => {
             this.setState({
                 position: {
                     x: data.lastX,
@@ -81,17 +81,18 @@ class Window extends React.Component<IWindowProps, IWindowState> {
         };
 
         return (
-            <Draggable defaultClassName={classes.root}
+            <Draggable  defaultClassName={classes.root}
                        handle={`.${classes.titleBar}`}
                        bounds='parent'
                        position={ position }
                        defaultPosition={ defaultPosition || defaultProps.defaultPosition }
                        onStop={handleDraggingStop}>
+
                 <Resizable enable={{ bottom: true, bottomRight: true, right: true }}
                            minWidth={ minWidth || defaultProps.minWidth }
                            minHeight={ minHeight || defaultProps.minHeight }
-                           maxWidth={resizeLimit.w}
-                           maxHeight={resizeLimit.h}
+                           maxWidth={ resizeLimit.w }
+                           maxHeight={ resizeLimit.h }
                            defaultSize={{
                                width: minWidth || defaultProps.minWidth,
                                height: minHeight || defaultProps.minHeight,

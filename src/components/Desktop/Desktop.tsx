@@ -5,6 +5,8 @@ import IconGrid from './IconGrid/IconGrid';
 import InternetExplorer from '../../containers/InternetExplorer/InternetExplorer';
 import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
+import GoogleChrome from '../../containers/GoogleChrome/GoogleChrome';
+import Word from '../../containers/Word/Word';
 
 export interface IDesktopProps {
     taskbarHeight: number
@@ -15,10 +17,20 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
         const { taskbarHeight } = this.props;
 
         return (
-            <div className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
+            <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
                 <Background taskbarHeight={taskbarHeight}/>
                 <IconGrid/>
-                <InternetExplorer/>
+
+                <div className={classes.windowWrapper}>
+                    <Word/>
+                </div>
+                <div className={classes.windowWrapper}>
+                    <InternetExplorer/>
+                </div>
+                <div className={classes.windowWrapper}>
+                    <GoogleChrome/>
+                </div>
+
             </div>
         );
     }
