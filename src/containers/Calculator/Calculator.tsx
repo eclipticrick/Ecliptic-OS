@@ -4,7 +4,7 @@ import Window from '../../components/Window/Base/Window';
 import applications from '../../appdata/applications';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
-import {Button, Grid} from '@material-ui/core';
+import {Button, Grid, Tooltip} from '@material-ui/core';
 
 interface ICalculatorState {
     entry: number
@@ -91,7 +91,7 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                     newState.entry = 0;
                     if (!state.operator) {
                         newState.store = state.entry;
-                    } else {
+                    } else if (!operators.includes(String(state.currChar))) {
                         newState.store = calculate(state.store, state.operator, state.entry)
                     }
                     newState.operator = char;
@@ -115,7 +115,6 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                     }
                 } else if (memory.includes(char)) {
                     if (char === 'MC') {
-                        newState.entry = 0;
                         newState.memory = 0;
                     } else if (char === 'MR') {
                         newState.entry = state.memory;
@@ -153,7 +152,10 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
 
                     <Grid container>
                         <Grid item xs>
-                            <input disabled value={this.state.entry.toString()}/>
+                            <div className={classes.inputContainer}>
+                                <div className={classes.store}>{this.state.store || null} {this.state.operator}</div>
+                                <input disabled value={this.state.entry.toString()}/>
+                            </div>
                         </Grid>
                     </Grid>
                     <Grid container>
@@ -161,9 +163,16 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
 
                             <Grid container direction='column'>
                                 <Grid item>
-                                    <Button disabled>
-                                        <></>
-                                    </Button>
+                                    <Tooltip title={this.state.memory} placement='right'>
+                                        <Button className={classes.memory}
+                                                disabled={!this.state.memory}
+                                                style={this.state.memory ? {cursor: 'help'} : {}}
+                                                disableRipple
+                                                disableFocusRipple>
+                                            {this.state.memory ? 'M' : null}
+                                        </Button>
+                                    </Tooltip>
+
                                 </Grid>
                                 <Grid item>
                                     <Button onClick={() => handleButtonClick('MC')} color='secondary'>

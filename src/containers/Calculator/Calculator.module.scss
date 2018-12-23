@@ -1,32 +1,53 @@
+$spacing: 6px;
+$inputPadding: 20px;
+$buttonPadding: 8px;
+$borderRadius: 6px;
+
 div.root {
-  padding: 6px;
-  div {
-    // box-shadow: 0 0 0 1px rgba(0,0,0,.1);
-  }
-  input {
-    font-family: "Courier New", sans-serif;
-    margin: 6px;
-    width: calc(100% - 12px);
-    height: 60px;
-    text-align: right;
-    border-radius: 6px;
-    border: 0;
+  padding: $spacing;
+  div.inputContainer {
+    position: relative;
+    background: #f9f9f9;
+    padding: 0 $inputPadding;
+    margin: $spacing;
+    border-radius: $borderRadius;
     box-shadow:
             0 3px 6px rgba(0,0,0,0.16),
             0 3px 6px rgba(0,0,0,0.23);
-    padding: 0 20px;
-    &:disabled {
-      background: #f9f9f9;
+    div.store {
+      position: absolute;
+      font-size: 11px;
+      top: $spacing;
+      right: $inputPadding;
+      color: #B0B0B0;
+    }
+    input {
+      font-family: "Courier New", sans-serif;
+      width: 100%;
+      height: 60px;
+      text-align: right;
+      border: 0;
+      &:disabled {
+        background: transparent;
+      }
     }
   }
   button {
     text-transform: unset;
     min-width: unset;
     min-height: unset;
-    width: calc(100% - 12px);
+    width: calc(100% - #{$spacing + $spacing});
     height: 45px;
-    padding: 0 8px;
-    border-radius: 6px;
-    margin: 6px;
+    padding: 0 $buttonPadding;
+    border-radius: $borderRadius;
+    margin: $spacing;
+    &.memory {
+      color: #242424;
+      font-weight: bold;
+      cursor: default;
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 }
