@@ -1,0 +1,39 @@
+$menuHeight: 21px;
+
+div.root {
+  display: flex;
+  height: $menuHeight;
+  border-bottom: 1px solid grey;
+
+  div.menuGroup {
+    height: $menuHeight;
+    font-size: 11px;
+    padding: 0 8px;
+    position: relative;
+    border-right: 1px solid grey;
+    display: flex;
+    align-items: center;
+
+    div.menuGroupContent{
+      position: absolute;
+      left: -1px;
+      top: $menuHeight - 1;
+      display: none;
+      border: 1px solid grey;
+      > div {
+        width: 120px;
+        padding: 3px 8px;
+        &:hover {
+          background: rgba(0, 0, 0, 0.15);
+        }
+      }
+
+    }
+    &:hover {
+      div.menuGroupContent{
+        display: block;
+
+      }
+    }
+  }
+}

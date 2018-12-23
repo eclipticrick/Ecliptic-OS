@@ -126,10 +126,7 @@ const applications: IApplication[] = [
         },
         window: {
             Component: Calculator,
-            title: 'Calculator',
-            minWidth: 200,
-            minHeight: 400,
-            maximizable: false
+            title: 'Calculator'
         }
     },
     {
