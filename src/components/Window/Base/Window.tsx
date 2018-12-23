@@ -15,6 +15,7 @@ export interface IWindowProps {
     maximized: boolean
     minimized: boolean
     selected: boolean
+    maximizable: boolean
     minHeight?: number
     minWidth?: number
     defaultPosition?: {
@@ -79,6 +80,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                 iconSrc,
                 minimized,
                 maximized,
+                maximizable,
                 selected,
                 minHeight,
                 minWidth,
@@ -141,7 +143,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                        onStop={handleDraggingStop}
                        onMouseDown={() => props.selectWindow(applicationId)}>
 
-                <Resizable enable={ maximized ? {} : { bottom: true, bottomRight: true, right: true }}
+                <Resizable enable={ maximized || !maximizable ? {} : { bottom: true, bottomRight: true, right: true }}
                            minWidth={ minWidth || defaultProps.minWidth }
                            minHeight={ minHeight || defaultProps.minHeight }
                            maxWidth={ maximized ? null : resizeLimit.w }
@@ -156,7 +158,12 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                     <div className={classes.titleBar}
                          onMouseEnter={enableDragging}
                          onDoubleClick={
-                        () => maximized ? this._handleNormalizeWindow(applicationId) : this._handleMaximizeWindow(applicationId)
+                        () =>
+                            maximizable ?
+                                maximized ?
+                                    this._handleNormalizeWindow(applicationId) :
+                                    this._handleMaximizeWindow(applicationId) :
+                            null
                     }>
 
                         <div className={classes.left}>
@@ -165,7 +172,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                         </div>
                         <div className={classes.right}>
                             <button type='button'
-                                    onClick={() => props.minimizeWindow(applicationId)}
+                                    onMouseUp={() => props.minimizeWindow(applicationId)}
                                     className={classes.minimize}
                                     onMouseEnter={disableDragging}
                                     onMouseLeave={enableDragging}>
@@ -173,7 +180,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                             </button>
                             {maximized ?
                                 <button type='button'
-                                        onClick={() => this._handleNormalizeWindow(applicationId)}
+                                        onMouseUp={() => this._handleNormalizeWindow(applicationId)}
                                         className={classes.maximize}
                                         onMouseEnter={disableDragging}
                                         onMouseLeave={enableDragging}>
@@ -181,14 +188,15 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                                 </button>
                             :
                                 <button type='button'
-                                        onClick={() => this._handleMaximizeWindow(applicationId)}
+                                        onMouseUp={() => this._handleMaximizeWindow(applicationId)}
                                         className={classes.maximize}
                                         onMouseEnter={disableDragging}
-                                        onMouseLeave={enableDragging}>
+                                        onMouseLeave={enableDragging}
+                                        disabled={!maximizable}>
                                     <Icon className={classes.icon}>fullscreen</Icon>
                                 </button>}
                             <button type='button'
-                                    onClick={() => props.closeWindow(applicationId)}
+                                    onMouseUp={() => props.closeWindow(applicationId)}
                                     className={classes.close}
                                     onMouseEnter={disableDragging}
                                     onMouseLeave={enableDragging}>

@@ -1,6 +1,10 @@
 import * as React from 'react';
 import GenericWindow, {IGenericWindowProps} from '../../components/Window/GenericWindow';
 
+interface ICalculatorState {
+    state: 'normal'
+}
+
 export class Calculator extends React.Component<IGenericWindowProps, {}> {
     public render() {
         const { applicationId, maximized, minimized, selected } = this.props;

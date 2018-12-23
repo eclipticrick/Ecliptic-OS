@@ -21,6 +21,11 @@ $titleBarHeight: 25px;
             0 6px 6px rgba(0,0,0,0.23);
     div.titleBar {
       background: #0153EE;
+      div.right {
+        button:disabled {
+          opacity: 0.5;
+        }
+      }
     }
   }
   &:not(.selected) {
@@ -33,7 +38,7 @@ $titleBarHeight: 25px;
       div.right {
         button {
           opacity: 0.5;
-          &:hover {
+          &:not(:disabled):hover {
             opacity: 1;
           }
         }
@@ -73,6 +78,7 @@ $titleBarHeight: 25px;
         border-radius: 4px;
         color: #f9f9f9;
         pointer-events: all;
+        background: transparent;
         .icon {
           font-size: 12px;
         }
@@ -80,14 +86,14 @@ $titleBarHeight: 25px;
           margin-left: 2px;
         }
       }
-      button.minimize,
-      button.maximize {
+      button:not(:disabled).minimize,
+      button:not(:disabled).maximize {
         background: #015aff;
         &:hover {
           background: #337AFF;
         }
       }
-      button.close {
+      button:not(:disabled).close {
         background: #D75C35;
         &:hover {
           background: #ff6e3d;

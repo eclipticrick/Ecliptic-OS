@@ -11,7 +11,7 @@ export interface IGenericWindowProps {
 }
 
 const genericWindow = ({ applicationId, minimized, maximized, selected, children }: IGenericWindowProps) => {
-    const { id, icon, window: {title, minWidth, minHeight} } = applications.find(a => a.id === applicationId);
+    const { id, icon, window: {title, minWidth, minHeight, maximizable} } = applications.find(a => a.id === applicationId);
 
     return (
         <Window applicationId={id}
@@ -21,6 +21,7 @@ const genericWindow = ({ applicationId, minimized, maximized, selected, children
                 iconSrc={icon.src}
                 minimized={minimized}
                 maximized={maximized}
+                maximizable={typeof maximizable === 'undefined' ? true : maximizable}
                 selected={selected}>
             { children }
         </Window>

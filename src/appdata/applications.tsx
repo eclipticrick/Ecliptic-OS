@@ -44,6 +44,7 @@ export interface IApplication {
         title?: string
         minHeight?: number
         minWidth?: number
+        maximizable?: boolean
     }
 }
 
@@ -125,7 +126,10 @@ const applications: IApplication[] = [
         },
         window: {
             Component: Calculator,
-            title: 'Calculator'
+            title: 'Calculator',
+            minWidth: 200,
+            minHeight: 400,
+            maximizable: false
         }
     },
     {
