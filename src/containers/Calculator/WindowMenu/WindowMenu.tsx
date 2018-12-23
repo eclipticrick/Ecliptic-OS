@@ -3,7 +3,11 @@ import * as React from 'react';
 import * as classes from './WindowMenu.module.scss';
 
 export interface IWindowMenuProps {
-    menuTree: any // TODO
+    menuTree: {
+        [menuCategory: string]: {
+            [menuCategoryItem: string]: string
+        }
+    }
 }
 
 const windowMenu = ({ menuTree }: IWindowMenuProps) => {
@@ -16,7 +20,7 @@ const windowMenu = ({ menuTree }: IWindowMenuProps) => {
                     <div className={classes.menuGroupContent}>
 
                         {Object.keys(menuTree[menuCategory]).map(menuItem => (
-                            <div key={`menu-${menuCategory}-${menuItem}`} onClick={menuTree[menuCategory][menuItem]}>
+                            <div key={`menu-${menuCategory}-${menuItem}`} onClick={() => menuTree[menuCategory][menuItem]}>
                                 {menuItem}
                             </div>
                         ))}

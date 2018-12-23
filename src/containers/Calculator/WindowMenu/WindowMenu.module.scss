@@ -6,13 +6,14 @@ div.root {
   border-bottom: 1px solid grey;
 
   div.menuGroup {
-    height: $menuHeight;
+    height: $menuHeight - 1;
     font-size: 11px;
     padding: 0 8px;
     position: relative;
     border-right: 1px solid grey;
     display: flex;
     align-items: center;
+    background: #e1e1e1;
 
     div.menuGroupContent{
       position: absolute;
@@ -20,11 +21,12 @@ div.root {
       top: $menuHeight - 1;
       display: none;
       border: 1px solid grey;
+      background: #e1e1e1;
       > div {
         width: 120px;
         padding: 3px 8px;
         &:hover {
-          background: rgba(0, 0, 0, 0.15);
+          background: #bebebe;
         }
       }
 

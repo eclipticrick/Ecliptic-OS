@@ -1,0 +1,32 @@
+div.root {
+  padding: 6px;
+  div {
+    // box-shadow: 0 0 0 1px rgba(0,0,0,.1);
+  }
+  input {
+    font-family: "Courier New", sans-serif;
+    margin: 6px;
+    width: calc(100% - 12px);
+    height: 60px;
+    text-align: right;
+    border-radius: 6px;
+    border: 0;
+    box-shadow:
+            0 3px 6px rgba(0,0,0,0.16),
+            0 3px 6px rgba(0,0,0,0.23);
+    padding: 0 20px;
+    &:disabled {
+      background: #f9f9f9;
+    }
+  }
+  button {
+    text-transform: unset;
+    min-width: unset;
+    min-height: unset;
+    width: calc(100% - 12px);
+    height: 45px;
+    padding: 0 8px;
+    border-radius: 6px;
+    margin: 6px;
+  }
+}
