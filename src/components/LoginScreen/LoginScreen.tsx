@@ -37,7 +37,9 @@ export class LoginScreen extends React.Component<ILoginScreenProps, {}> {
                                    type='password'
                                    placeholder='Enter Password'
                                    className={classes.password}
-                                   onKeyPress={handleKeyPress}/>
+                                   onKeyPress={handleKeyPress}
+                                   autoFocus
+                                   autoComplete='off'/>
                         </div>
                     </div>
                 </div>

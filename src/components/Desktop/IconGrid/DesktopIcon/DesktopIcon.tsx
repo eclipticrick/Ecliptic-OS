@@ -16,7 +16,7 @@ const desktopIcon = (props: IDesktopIconProps) => {
     return (
         <div className={classes.root} onClick={() => props.openWindow(applicationId)}>
             <div className={classes.iconWrapper}>
-                <img src={iconSrc} style={{ transform: `scale(${scale ? scale : 1})` }} />
+                <img src={iconSrc} style={{ transform: `scale(${scale ? scale : 1})` }} draggable={false} />
             </div>
             <div className={classes.nameWrapper}>
                 {name}
