@@ -3,30 +3,43 @@ $menuHeight: 21px;
 div.root {
   display: flex;
   height: $menuHeight;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  z-index: 1;
 
   div.menuGroup {
     height: $menuHeight - 1;
     font-size: 11px;
     padding: 0 8px;
     position: relative;
-    border-right: 1px solid grey;
+    border-right: 1px solid #ccc;
     display: flex;
     align-items: center;
     background: #e1e1e1;
+    &:hover {
+      background: #bebebe;
+    }
 
     div.menuGroupContent{
       position: absolute;
       left: -1px;
       top: $menuHeight - 1;
       display: none;
-      border: 1px solid grey;
+      border: 1px solid #ccc;
       background: #e1e1e1;
       > div {
         width: 120px;
         padding: 3px 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         &:hover {
           background: #bebebe;
+        }
+
+        // optional right text of a menuItem
+        span:last-child {
+          font-size: 70%;
         }
       }
 
@@ -34,7 +47,6 @@ div.root {
     &:hover {
       div.menuGroupContent{
         display: block;
-
       }
     }
   }

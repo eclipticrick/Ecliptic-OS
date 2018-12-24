@@ -22,8 +22,8 @@ enum Clicked {
 }
 const menuTree = {
     Edit: {
-        copy: Clicked.COPY,
-        paste: Clicked.PASTE
+        copy: [Clicked.COPY, 'CTRL + C'],
+        paste: [Clicked.PASTE, 'CTRL + V']
     },
     View: {
         history: Clicked.HISTORY,
@@ -45,6 +45,10 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
     public render() {
         const { applicationId, maximized, minimized, selected } = this.props;
         const { id, icon, window } = applications.find(a => a.id === applicationId);
+
+        const menuItemClickedHandler = (menuItem: Clicked) => {
+            console.log(menuItem, 'clicked')
+        };
 
         const handleButtonClick = (char: string | number) => {
 
@@ -150,7 +154,9 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                     maximized={maximized}
                     maximizable={false}
                     selected={selected}>
-                <WindowMenu menuTree={menuTree}/>
+
+                <WindowMenu menuTree={menuTree} onItemClicked={menuItemClickedHandler}/>
+
                 <div className={classes.root}>
 
                     <Grid container>
@@ -172,7 +178,7 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                                                 style={this.state.memory ? {cursor: 'help'} : {}}
                                                 disableRipple
                                                 disableFocusRipple>
-                                            {this.state.memory ? 'M' : null}
+                                            {this.state.memory ? 'M' : <></>}
                                         </Button>
                                     </Tooltip>
 
