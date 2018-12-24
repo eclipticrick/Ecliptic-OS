@@ -9,14 +9,8 @@ import {Button, Grid, Tooltip} from '@material-ui/core';
 interface ICalculatorState {
     entry: number
     store: number
-
     operator: string
-
-    prevChar: number | string
-    currChar: number | string
-
-    // sum: Array<number & string>
-    // history: Array<Array<number & string>>
+    lastChar: number | string
     memory: number
 }
 
@@ -44,10 +38,7 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
         entry: 0,
         store: 0,
         operator: null as string,
-        currChar: null as number | string,
-        prevChar: null as number | string,
-        // sum: [] as Array<number & string>,
-        // history: [] as Array<Array<number & string>>,
+        lastChar: null as number | string,
         memory: 0
     };
 
@@ -64,6 +55,16 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                 if (o === '+') return n1 + n2;
                 if (o === '-') return n1 - n2;
                 else return -1 // should never happen
+            };
+            const calculatePercentage = (nr: number, o: string, perc: number): number => {
+                const amount = (nr * perc) / 100;
+                // if (o === '/' && n2 === 0) return +'NaN :)';
+                if (o === '/') return nr / amount;
+                if (o === '*') return nr * amount;
+                if (o === '+') return nr + amount;
+                if (o === '-') return nr - amount;
+                else return -1 // should never happen
+
             };
 
             const operators = ['/', '+', '*', '-'];
@@ -84,14 +85,13 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                     newState.store = 0;
                     newState.entry = 0;
                     newState.operator = null;
-                    newState.prevChar = null;
                 } else if (char === 'CE') {
                     newState.entry = 0;
                 } else if (operators.includes(char)) {
                     newState.entry = 0;
                     if (!state.operator) {
                         newState.store = state.entry;
-                    } else if (!operators.includes(String(state.currChar))) {
+                    } else if (!operators.includes(String(state.lastChar))) {
                         newState.store = calculate(state.store, state.operator, state.entry)
                     }
                     newState.operator = char;
@@ -105,13 +105,19 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                             newState.entry = calculate(state.store, state.operator, state.entry);
                         }
                     } else if (char === 'sqrt') {
-                        console.log('sqrt')
+                        newState.entry = Math.sqrt(state.entry)
                     } else if (char === '1/x') {
-                        console.log('1/x')
+                        newState.entry = Math.pow(state.entry, -1)
                     } else if (char === '+/-') {
                         newState.entry = state.entry >= 0 ? -Math.abs(state.entry) : Math.abs(state.entry);
                     } else if (char === '%') {
-                        console.log('%')
+                        newState.operator = null;
+                        newState.store = 0;
+                        if (!state.store) {
+                            newState.entry = state.entry;
+                        } else {
+                            newState.entry = calculatePercentage(state.store, state.operator, state.entry);
+                        }
                     }
                 } else if (memory.includes(char)) {
                     if (char === 'MC') {
@@ -125,14 +131,11 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
                     }
                 }
 
-                const x = {
+                return {
                     ...state,
                     ...newState,
-                    currChar: char,
-                    prevChar: state.currChar,
-                };
-                console.log(x);
-                return x
+                    lastChar: char
+                }
             });
 
         };
