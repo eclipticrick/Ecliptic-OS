@@ -4,6 +4,7 @@ import Window from '../../components/Window/Base/Window';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
 import {Button, Grid, Tooltip} from '@material-ui/core';
+import * as classNames from 'classNames';
 
 interface ICalculatorState {
     entry: number
@@ -56,23 +57,18 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
                 if (o === '*') return n1 * n2;
                 if (o === '+') return n1 + n2;
                 if (o === '-') return n1 - n2;
-                else return -1 // should never happen
             };
             const calculatePercentage = (nr: number, o: string, perc: number): number => {
                 const amount = (nr * perc) / 100;
-                // if (o === '/' && n2 === 0) return +'NaN :)';
                 if (o === '/') return nr / amount;
                 if (o === '*') return nr * amount;
                 if (o === '+') return nr + amount;
                 if (o === '-') return nr - amount;
-                else return -1 // should never happen
-
             };
 
             const operators = ['/', '+', '*', '-'];
             const calculations = ['=', 'sqrt', '1/x', '+/-', '%'];
             const memory = ['M+', 'MS', 'MR', 'MC'];
-            console.log(char);
 
             const newState: Partial<ICalculatorState> = {};
             this.setState((state: ICalculatorState) => {
@@ -168,16 +164,21 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
 
                             <Grid container direction='column'>
                                 <Grid item>
-                                    <Tooltip title={this.state.memory} placement='right'>
-                                        <Button className={classes.memory}
-                                                disabled={!this.state.memory}
-                                                style={this.state.memory ? {cursor: 'help'} : {}}
+                                    {this.state.memory ?
+                                        <Tooltip title={this.state.memory} placement='right'>
+                                            <Button className={classes.memory}
+                                                    disableRipple
+                                                    disableFocusRipple>
+                                                M
+                                            </Button>
+                                        </Tooltip>
+                                        :
+                                        <Button className={classes.noMemory}
                                                 disableRipple
                                                 disableFocusRipple>
-                                            {this.state.memory ? 'M' : <></>}
+                                            <></>
                                         </Button>
-                                    </Tooltip>
-
+                                    }
                                 </Grid>
                                 <Grid item>
                                     <Button onClick={() => handleButtonClick('MC')} color='secondary'>

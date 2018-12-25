@@ -41,10 +41,16 @@ div.root {
     padding: 0 $buttonPadding;
     border-radius: $borderRadius;
     margin: $spacing;
-    &.memory {
-      color: #242424;
-      font-weight: bold;
-      cursor: default;
+
+    &.memory, &.noMemory {
+      &.memory {
+        color: #242424;
+        font-weight: bold;
+        cursor: help;
+      }
+      &.noMemory {
+        cursor: default;
+      }
       &:hover {
         background-color: transparent;
       }
