@@ -3,9 +3,9 @@ import GenericWindow, {IGenericWindowProps} from '../../components/Window/Generi
 
 export class LimeWire extends React.Component<IGenericWindowProps, {}> {
     public render() {
-        const { applicationId, maximized, minimized, selected } = this.props;
+        const { windowInstance, application, selected } = this.props;
         return (
-            <GenericWindow applicationId={applicationId} minimized={minimized} maximized={maximized} selected={selected}>
+            <GenericWindow windowInstance={windowInstance} application={application} selected={selected}>
                 <div style={{ padding: 12 }}>
                     LimeWire
                 </div>

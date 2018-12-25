@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {IGenericWindowProps} from '../../components/Window/GenericWindow';
 import Window from '../../components/Window/Base/Window';
-import applications from '../../appdata/applications';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
 import {Button, Grid, Tooltip} from '@material-ui/core';
@@ -43,8 +42,7 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
     };
 
     public render() {
-        const { applicationId, maximized, minimized, selected } = this.props;
-        const { id, icon, window } = applications.find(a => a.id === applicationId);
+        const { windowInstance, application, selected } = this.props;
 
         const menuItemClickedHandler = (menuItem: Clicked) => {
             console.log(menuItem, 'clicked')
@@ -145,13 +143,14 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
         };
 
         return (
-            <Window applicationId={id}
-                    title={window.title}
+            <Window instanceId={windowInstance.instanceId}
+                    applicationId={application.id}
+                    title={application.window.title}
                     minWidth={350}
                     minHeight={417}
-                    iconSrc={icon.src}
-                    minimized={minimized}
-                    maximized={maximized}
+                    iconSrc={application.icon.src}
+                    minimized={windowInstance.minimized}
+                    maximized={windowInstance.maximized}
                     maximizable={false}
                     selected={selected}>
 

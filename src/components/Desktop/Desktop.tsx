@@ -31,11 +31,8 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
                     const { Component } = application.window;
 
                     return (
-                        <div key={`window-${application.id}`} className={classes.windowWrapper}>
-                            <Component applicationId={application.id}
-                                       maximized={window.maximized}
-                                       minimized={window.minimized}
-                                       selected={windows.length - 1 === i}/>
+                        <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
+                            <Component windowInstance={window} application={application} selected={windows.length - 1 === i}/>
                         </div>
                     )
                 })}

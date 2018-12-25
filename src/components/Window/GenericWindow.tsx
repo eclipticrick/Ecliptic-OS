@@ -1,26 +1,27 @@
 import * as React from 'react';
 import Window from './Base/Window';
-import applications, {ApplicationId} from '../../appdata/applications';
+import applications, {IApplication} from '../../appdata/applications';
+import {IWindowInstance} from '../../appdata/window';
 
 export interface IGenericWindowProps {
-    applicationId: ApplicationId
-    minimized: boolean
-    maximized: boolean
+    windowInstance: IWindowInstance
+    application: IApplication
     selected: boolean
     children?: any // TODO inherit from React.Props ?
 }
 
-const genericWindow = ({ applicationId, minimized, maximized, selected, children }: IGenericWindowProps) => {
-    const { id, icon, window: {title, minWidth, minHeight, maximizable} } = applications.find(a => a.id === applicationId);
+const genericWindow = ({ windowInstance, application, selected, children }: IGenericWindowProps) => {
+    const { id, icon, window: {title, minWidth, minHeight, maximizable} } = applications.find(a => a.id === application.id);
 
     return (
-        <Window applicationId={id}
+        <Window instanceId={windowInstance.instanceId}
+                applicationId={id}
                 title={title}
                 minWidth={minWidth}
                 minHeight={minHeight}
                 iconSrc={icon.src}
-                minimized={minimized}
-                maximized={maximized}
+                minimized={windowInstance.minimized}
+                maximized={windowInstance.maximized}
                 maximizable={typeof maximizable === 'undefined' ? true : maximizable}
                 selected={selected}>
             { children }
