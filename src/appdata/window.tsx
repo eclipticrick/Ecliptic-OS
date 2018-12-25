@@ -1,7 +1,7 @@
 import {ApplicationId} from './applications';
 
-export interface IWindow {
+export interface IWindowInstance {
+    applicationId: ApplicationId
     maximized: boolean
     minimized: boolean
-    applicationId: ApplicationId
 }

@@ -1,9 +1,9 @@
 import Actions, {IAction} from '../../actionTypes';
 import functions from './functions';
-import {IWindow} from '../../../appdata/window';
+import {IWindowInstance} from '../../../appdata/window';
 
 export interface IReducerWindows {
-    windows: IWindow[]
+    windows: IWindowInstance[]
 }
 
 const initialState: IReducerWindows = {

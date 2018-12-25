@@ -6,12 +6,12 @@ import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
 
 import applications, {ApplicationId} from '../../appdata/applications';
-import {IWindow} from '../../appdata/window';
+import {IWindowInstance} from '../../appdata/window';
 import * as actions from '../../store/actions';
 
 export interface IDesktopProps {
     taskbarHeight: number
-    windows: IWindow[]
+    windows: IWindowInstance[]
     shortcuts: ApplicationId[]
     openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
 }

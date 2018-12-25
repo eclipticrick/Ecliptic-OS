@@ -1,6 +1,6 @@
 import {IReducerWindows} from './index';
 import {IAction} from '../../actionTypes';
-import {IWindow} from '../../../appdata/window';
+import {IWindowInstance} from '../../../appdata/window';
 
 export default {
 
@@ -8,7 +8,7 @@ export default {
         const { applicationId } = action.payload;
 
         let windows = [...oldState.windows];
-        let window: IWindow = windows.find(w => w.applicationId === applicationId);
+        let window: IWindowInstance = windows.find(w => w.applicationId === applicationId);
 
         if (!window) {
             window = {
