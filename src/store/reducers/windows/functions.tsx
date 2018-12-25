@@ -6,11 +6,12 @@ export default {
 
     open: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
         const { applicationId } = action.payload;
+        const uniqueInstanceCounter = oldState.uniqueInstanceCounter + 1;
 
         const windows: IWindowInstance[] = [...oldState.windows];
 
         const window: IWindowInstance = {
-            instanceId: windows.length + 1,
+            instanceId: uniqueInstanceCounter,
             applicationId,
             maximized: false,
             minimized: false
@@ -19,6 +20,7 @@ export default {
 
         return {
             ...oldState,
+            uniqueInstanceCounter,
             windows
         };
     },

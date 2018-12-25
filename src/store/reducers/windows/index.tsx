@@ -3,10 +3,12 @@ import functions from './functions';
 import {IWindowInstance} from '../../../appdata/window';
 
 export interface IReducerWindows {
+    uniqueInstanceCounter: number
     windows: IWindowInstance[]
 }
 
 const initialState: IReducerWindows = {
+    uniqueInstanceCounter: 0,
     windows: []
 };
 
