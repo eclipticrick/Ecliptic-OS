@@ -15,21 +15,6 @@ export default {
             maximized: false,
             minimized: false
         };
-        // let window: IWindowInstance = windows.find(w => w.applicationId === applicationId);
-
-        // if (!window) {
-        //     window = {
-        //         applicationId,
-        //         maximized: false,
-        //         minimized: false
-        //     };
-        // } else {
-
-        //     // this: return this.select(oldState, action)
-        //     // or:
-        //     windows = windows.filter(w => w.applicationId !== applicationId);
-        //     window.minimized = false;
-        // }
         windows.push(window);
 
         return {

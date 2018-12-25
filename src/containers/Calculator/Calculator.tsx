@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IGenericWindowProps} from '../../components/Window/GenericWindow';
+import {IDefaultApplicationWindowProps} from '../../components/Window/DefaultApplicationWindow';
 import Window from '../../components/Window/Base/Window';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
@@ -32,7 +32,7 @@ const menuTree = {
     }
 };
 
-export class Calculator extends React.Component<IGenericWindowProps, ICalculatorState> {
+export class Calculator extends React.Component<IDefaultApplicationWindowProps, ICalculatorState> {
     public state = {
         entry: 0,
         store: 0,
@@ -143,14 +143,11 @@ export class Calculator extends React.Component<IGenericWindowProps, ICalculator
         };
 
         return (
-            <Window instanceId={windowInstance.instanceId}
-                    applicationId={application.id}
+            <Window windowInstance={windowInstance}
                     title={application.window.title}
                     minWidth={350}
                     minHeight={417}
                     iconSrc={application.icon.src}
-                    minimized={windowInstance.minimized}
-                    maximized={windowInstance.maximized}
                     maximizable={false}
                     selected={selected}>
 
