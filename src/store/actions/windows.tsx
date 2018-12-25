@@ -6,27 +6,27 @@ export const openWindow = (applicationId: ApplicationId) => ({
     payload: { applicationId }
 });
 
-export const closeWindow = (applicationId: ApplicationId) => ({
+export const closeWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____CLOSE,
-    payload: { applicationId }
+    payload: { instanceId }
 });
 
-export const selectWindow = (applicationId: ApplicationId) => ({
+export const selectWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____SELECT,
-    payload: { applicationId }
+    payload: { instanceId }
 });
 
-export const minimizeWindow = (applicationId: ApplicationId) => ({
+export const minimizeWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____MINIMIZE,
-    payload: { applicationId }
+    payload: { instanceId }
 });
 
-export const maximizeWindow = (applicationId: ApplicationId) => ({
+export const maximizeWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____MAXIMIZE,
-    payload: { applicationId }
+    payload: { instanceId }
 });
 
-export const normalizeWindow = (applicationId: ApplicationId) => ({
+export const normalizeWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____NORMALIZE,
-    payload: { applicationId }
+    payload: { instanceId }
 });

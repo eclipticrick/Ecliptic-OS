@@ -38,10 +38,10 @@ export default {
         };
     },
     close: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { applicationId } = action.payload;
+        const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        windows = windows.filter(w => w.applicationId !== applicationId);
+        windows = windows.filter(w => w.instanceId !== instanceId);
 
         return {
             ...oldState,
@@ -49,12 +49,12 @@ export default {
         };
     },
     select: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { applicationId } = action.payload;
+        const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.applicationId === applicationId);
+        const window = windows.find(w => w.instanceId === instanceId);
         window.minimized = false;
-        windows = windows.filter(w => w.applicationId !== applicationId);
+        windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
 
         return {
@@ -63,12 +63,12 @@ export default {
         };
     },
     minimize: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { applicationId } = action.payload;
+        const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.applicationId === applicationId);
+        const window = windows.find(w => w.instanceId === instanceId);
         window.minimized = true;
-        windows = windows.filter(w => w.applicationId !== applicationId);
+        windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
 
         return {
@@ -77,12 +77,12 @@ export default {
         };
     },
     maximize: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { applicationId } = action.payload;
+        const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.applicationId === applicationId);
+        const window = windows.find(w => w.instanceId === instanceId);
         window.maximized = true;
-        windows = windows.filter(w => w.applicationId !== applicationId);
+        windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
 
         return {
@@ -91,12 +91,12 @@ export default {
         };
     },
     normalize: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { applicationId } = action.payload;
+        const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.applicationId === applicationId);
+        const window = windows.find(w => w.instanceId === instanceId);
         window.maximized = false;
-        windows = windows.filter(w => w.applicationId !== applicationId);
+        windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
 
         return {
