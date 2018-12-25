@@ -7,22 +7,29 @@ export default {
     open: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
         const { applicationId } = action.payload;
 
-        let windows = [...oldState.windows];
-        let window: IWindowInstance = windows.find(w => w.applicationId === applicationId);
+        const windows: IWindowInstance[] = [...oldState.windows];
 
-        if (!window) {
-            window = {
-                applicationId,
-                maximized: false,
-                minimized: false
-            };
-        } else {
+        const window: IWindowInstance = {
+            instanceId: windows.length + 1,
+            applicationId,
+            maximized: false,
+            minimized: false
+        };
+        // let window: IWindowInstance = windows.find(w => w.applicationId === applicationId);
 
-            // this: return this.select(oldState, action)
-            // or:
-            windows = windows.filter(w => w.applicationId !== applicationId);
-            window.minimized = false;
-        }
+        // if (!window) {
+        //     window = {
+        //         applicationId,
+        //         maximized: false,
+        //         minimized: false
+        //     };
+        // } else {
+
+        //     // this: return this.select(oldState, action)
+        //     // or:
+        //     windows = windows.filter(w => w.applicationId !== applicationId);
+        //     window.minimized = false;
+        // }
         windows.push(window);
 
         return {
