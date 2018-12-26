@@ -49,7 +49,6 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
             console.log(menuItem, 'clicked')
         };
 
-        // todo: beautify code of this function and remove comments
         const handleButtonClick = (char: string | number) => {
 
             const trimNr = (nr: string) => {
@@ -64,105 +63,70 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
                     return nr
                 }
             };
-
+            const defaultCalculation = (nr1: number, operator: string, nr2: number): number => {
+                if (operator === '/') return nr1 / nr2;
+                if (operator === '*') return nr1 * nr2;
+                if (operator === '+') return nr1 + nr2;
+                if (operator === '-') return nr1 - nr2;
+            };
             const calculate = (nr1: string, operator: string, nr2: string): string => {
                 nr1 = trimNr(nr1);
                 nr2 = trimNr(nr2);
                 if (operator === '/' && nr2 === '0') return 'Fatal Division by 0 error';
-                if (operator === '/') return (Number(nr1) / Number(nr2)).toString();
-                if (operator === '*') return (Number(nr1) * Number(nr2)).toString();
-                if (operator === '+') return (Number(nr1) + Number(nr2)).toString();
-                if (operator === '-') return (Number(nr1) - Number(nr2)).toString();
+                return defaultCalculation(Number(nr1), operator, Number(nr2)).toString();
             };
             const calculatePercentage = (nr: string, operator: string, perc: string): string => {
                 nr = trimNr(nr);
                 perc = trimNr(perc);
-
                 const amount = (Number(nr) * Number(perc)) / 100;
-                if (operator === '/') return (Number(nr) / Number(amount)).toString();
-                if (operator === '*') return (Number(nr) * Number(amount)).toString();
-                if (operator === '+') return (Number(nr) + Number(amount)).toString();
-                if (operator === '-') return (Number(nr) - Number(amount)).toString();
+                return defaultCalculation(Number(nr), operator, amount).toString();
             };
 
             const operators = ['/', '+', '*', '-'];
             const calculations = ['=', 'sqrt', '1/x', '+/-', '%'];
             const memory = ['M+', 'MS', 'MR', 'MC'];
 
+            const isScientificNotation = (nr: string) => nr.includes('e');
+            const maxLengthReached = (nr: string) => nr.length >= 21;
+
             const newState: Partial<ICalculatorState> = {};
             this.setState((state: ICalculatorState) => {
 
                 if (typeof char === 'number') {
-
-                    // if the entry is not equal to 0
-                    if (state.entry !== '0') {
-
-                        // replace the entry when the number contains an e+ / e-
-                        if (state.entry.includes('e')) {
-                            newState.entry = String(char)
-                        } else if (state.entry.length >= 21) {
-                            // else if: max length of 21 chars has been reached (including the dot)
-
-                            // don't add anything to the entry
+                    if (state.entry === '0') {
+                        newState.entry = char.toString()
+                    } else {
+                        if (isScientificNotation(state.entry)) {
+                            newState.entry = char.toString()
+                        } else if (maxLengthReached(state.entry)) {
                             newState.entry = state.entry
                             // todo: play sound?
                         } else {
-                            // else: add the number to the end of the entry
                             newState.entry = state.entry += char
                         }
-
-                    } else {
-
-                        // else: replace the 0 with the typed number
-                        newState.entry = String(char)
                     }
                 } else if (char === '.') {
-
-                    // the max has not been reached yet
-                    if (state.entry.length < 21) {
-
-                        // if there is an NO e in the entry
-                        if (!state.entry.includes('e')) {
-                            // if there is not dot yet
-                            if (!state.entry.includes('.')) {
-                                // add it
-                                newState.entry = state.entry += char
-
-                            } else if (state.entry.includes('.')) {
-                                // else if: there already is a dot and no e
-
-                                // don't add another dot
-                                newState.entry = state.entry
-                                // todo: play sound?
-                            }
-                        } else {
-                            // else: make it '0.'
-                            newState.entry = '0' + char
-                        }
-                    } else {
-
-                        // if the number contains an e
-                        if (state.entry.includes('e')) {
-                            // make it '0.'
+                    if (maxLengthReached(state.entry)) {
+                        if (isScientificNotation(state.entry)) {
                             newState.entry = '0' + char
                         } else {
-                            // don't add another dot
                             newState.entry = state.entry
                             // todo: play sound?
                         }
+                    } else {
+                        if (isScientificNotation(state.entry)) {
+                            newState.entry = '0' + char
+                        } else if (state.entry.includes('.')) {
+                            newState.entry = state.entry
+                            // todo: play sound?
+                        } else {
+                            newState.entry = state.entry += char
+                        }
                     }
-
                 } else if (char === 'Backspace') {
-
-                    // if there is only one char left in the entry
                     if (state.entry.length === 1) {
-
-                        // change it to 0
                         newState.entry = '0'
-                    } else if (!state.entry.includes('e')) {
-                        // else if: the number does not contain an e+ / e-
-
-                        // cut the last char off
+                    } else if (!isScientificNotation(state.entry)) {
                         newState.entry = state.entry.slice(0, -1)
                     }
                 } else if (char === 'C') {
@@ -173,28 +137,16 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
                     newState.entry = '0';
                 } else if (operators.includes(char)) {
                     newState.entry = '0';
-
-                    // if no operator was specified before
+                    newState.operator = char;
                     if (!state.operator) {
-
-                        // trim the entry & move it to the store
                         newState.store = trimNr(state.entry);
                     } else if (!operators.includes(String(state.lastChar))) {
-                        // else if the previous charachter was NOT an operator
-
-                        // calculate the new store with the [oldStore, operator, entry]
                         newState.store = calculate(state.store, state.operator, state.entry)
                     }
-
-                    // put the operator in the state
-                    newState.operator = char;
                 } else if (calculations.includes(char)) {
                     if (char === '=') {
                         newState.operator = null;
                         newState.store = null;
-
-                        // is it possible that operator === null? if so.. add another else if
-
                         if (!state.store) {
                             newState.entry = state.entry;
                         } else {
@@ -205,11 +157,11 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
                     } else if (char === '1/x') {
                         newState.entry = Math.pow(Number(trimNr(state.entry)), -1).toString()
                     } else if (char === '+/-') {
-                        newState.entry = String(
+                        newState.entry = (
                             Number(trimNr(state.entry)) >= 0 ?
                                 -Math.abs(Number(trimNr(state.entry))) :
                                 Math.abs(Number(trimNr(state.entry)))
-                        );
+                        ).toString();
                     } else if (char === '%') {
                         newState.operator = null;
                         newState.store = null;
