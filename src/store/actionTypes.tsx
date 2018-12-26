@@ -6,7 +6,8 @@ export interface IAction {
 
 enum Actions {
 
-    CONFIG_____SET_TASKBAR_HEIGHT = 'CONFIG_____SET_TASKBAR_HEIGHT',
+    TASKBAR_____SET_HEIGHT = 'TASKBAR_____SET_HEIGHT',
+    TASKBAR_____SET_QUICK_ACCESS_WIDTH = 'TASKBAR_____SET_QUICK_ACCESS_WIDTH',
 
     USER_____LOGIN = 'USER_____LOGIN',
 

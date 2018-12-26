@@ -5,16 +5,22 @@ import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
 import Resizable from 're-resizable';
 import StartButton from './StartButton/StartButton';
+import QuickAccess from './QuickAccess/QuickAccess';
+import {ApplicationId} from '../../appdata/applications';
 
 export interface ITaskbarProps {
     height: number
-    setTaskbarHeight: (height: number) => void
+    quickAccessWidth: number
+    quickAccessShortcuts: ApplicationId[]
+    setTaskbarHeight: (height: number) => void // TODO: generalize
+    setQuickAccessWidth: (width: number) => void // TODO: generalize
+    openWindow: (applicationId: ApplicationId) => void // TODO: generalize?
 }
 
 export class TaskBar extends React.Component<ITaskbarProps, {}> {
     public render() {
-        const { props, props: { height } } = this;
-        
+        const { props, props: { height, quickAccessShortcuts, quickAccessWidth } } = this;
+
         return (
             <div className={classes.root}>
                 <Resizable
@@ -25,7 +31,13 @@ export class TaskBar extends React.Component<ITaskbarProps, {}> {
                     onResizeStop={(e, direction, ref, d) => {
                         props.setTaskbarHeight(height + d.height);
                     }}>
-                    <StartButton taskBarHeight={height}/>
+                    <div className={classes.taskBarContent}>
+                        <StartButton taskBarHeight={height}/>
+                        <QuickAccess shortcuts={quickAccessShortcuts}
+                                     width={quickAccessWidth}
+                                     openWindow={props.openWindow}
+                                     setQuickAccessWidth={props.setQuickAccessWidth}/>
+                    </div>
                 </Resizable>
             </div>
         );
@@ -33,11 +45,13 @@ export class TaskBar extends React.Component<ITaskbarProps, {}> {
 
 }
 const mapStateToProps = (state: IStore) => {
-    const { taskbar: { height } } = state.config;
-    return { height }
+    const { height, quickAccessShortcuts, quickAccessWidth } = state.taskbar;
+    return { height, quickAccessShortcuts, quickAccessWidth }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<ITaskbarProps> => ({
     setTaskbarHeight: (height: number) => dispatch(actions.setTaskbarHeight(height)),
+    setQuickAccessWidth: (width: number) => dispatch(actions.setQuickAccessWidth(width)),
+    openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TaskBar);

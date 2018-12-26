@@ -1,6 +1,7 @@
 export {
+    setQuickAccessWidth,
     setTaskbarHeight,
-} from './config';
+} from './taskbar';
 export {
     login,
 } from './user';

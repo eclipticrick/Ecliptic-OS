@@ -50,10 +50,10 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
     }
 }
 const mapStateToProps = (state: IStore) => {
-    const { taskbar } = state.config;
+    const { height } = state.taskbar;
     const { windows, popup } = state.windows;
     const { shortcuts } = state.desktop;
-    return { taskbarHeight: taskbar.height, windows, shortcuts, popup }
+    return { taskbarHeight: height, windows, shortcuts, popup }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<IDesktopProps> => ({

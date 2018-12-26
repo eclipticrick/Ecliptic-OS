@@ -1,19 +1,19 @@
 import { combineReducers, compose, createStore } from 'redux';
-import configReducer, {IReducerConfig} from './reducers/config/index';
+import taskbarReducer, {IReducerTaskBar} from './reducers/taskbar/index';
 import userReducer, {IReducerUser} from './reducers/user/index';
 import desktopReducer, {IReducerDesktop} from './reducers/desktop/index';
 import windowsReducer, {IReducerWindows} from './reducers/windows/index';
 import middlewares from './middlewares';
 
 export interface IStore {
-    config: IReducerConfig
+    taskbar: IReducerTaskBar
     user: IReducerUser
     desktop: IReducerDesktop
     windows: IReducerWindows
 }
 
 const rootReducer = combineReducers({
-    config: configReducer,
+    taskbar: taskbarReducer,
     user: userReducer,
     desktop: desktopReducer,
     windows: windowsReducer
