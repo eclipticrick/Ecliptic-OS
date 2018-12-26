@@ -6,15 +6,15 @@ import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
 
 import applications, {ApplicationId} from '../../appdata/applications';
-import {IPopUpInstance, IWindowInstance} from '../../appdata/window';
+import {IPopupInstance, IWindowInstance} from '../../appdata/window';
 import * as actions from '../../store/actions';
-import PopUp from '../Window/Base/PopUp/PopUp';
+import PopupWindow from '../Window/Base/PopupWindow';
 
 export interface IDesktopProps {
     taskbarHeight: number
     windows: IWindowInstance[]
     shortcuts: ApplicationId[]
-    popup: IPopUpInstance
+    popup: IPopupInstance
     openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
 }
 
@@ -41,7 +41,7 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
 
                 {popup ? (
                     <div className={classes.popupWrapper}>
-                        <PopUp popup={popup}/>
+                        <PopupWindow popup={popup}>{ popup.children }</PopupWindow>
                     </div>
                 ) : null}
 

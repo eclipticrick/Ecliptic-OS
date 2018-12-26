@@ -1,13 +1,13 @@
 import Actions from '../actionTypes';
 import {ApplicationId} from '../../appdata/applications';
-import {IPopUpInstance} from '../../appdata/window';
+import {IPopupInstance} from '../../appdata/window';
 
 export const openWindow = (applicationId: ApplicationId) => ({
     type: Actions.WINDOWS_____OPEN,
     payload: { applicationId }
 });
 
-export const openPopup = (popup: IPopUpInstance) => ({
+export const openPopup = (popup: IPopupInstance) => ({
     type: Actions.WINDOWS_____OPEN_POPUP,
     payload: { popup }
 });

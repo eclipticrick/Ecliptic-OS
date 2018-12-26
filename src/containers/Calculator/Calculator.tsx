@@ -6,7 +6,7 @@ import * as classes from './Calculator.module.scss';
 import {Button, Grid, Tooltip} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
-import {IPopUpInstance} from '../../appdata/window';
+import {IPopupInstance, PopupType} from '../../appdata/window';
 
 interface ICalculatorState {
     entry: string
@@ -16,7 +16,7 @@ interface ICalculatorState {
     memory: string
 }
 interface ICalculatorPassedProps {
-    openPopup: (popup: IPopUpInstance) => any // TODO: generalize
+    openPopup: (popup: IPopupInstance) => any // TODO: generalize
 }
 enum Clicked {
     COPY = 'COPY',
@@ -50,9 +50,9 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps &
                 document.execCommand('copy');
             } else if (menuItem === Clicked.ABOUT) {
                 this.props.openPopup({
-                    type: 'info',
+                    type: PopupType.INFO,
                     title: 'About Calculator',
-                    content: (<>
+                    children: (<>
                         Version 0.0.1<br/>
                         © Wesley Veenendaal
                     </>)
@@ -409,7 +409,7 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps &
 }
 
 const mapDispatchToProps = (dispatch: any): Partial<ICalculatorPassedProps> => ({
-    openPopup: (popup: IPopUpInstance) => dispatch(actions.openPopup(popup))
+    openPopup: (popup: IPopupInstance) => dispatch(actions.openPopup(popup))
 });
 export default connect<Partial<ICalculatorPassedProps>, Partial<ICalculatorPassedProps>, IWindowProps>(
     null, mapDispatchToProps

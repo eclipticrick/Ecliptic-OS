@@ -6,8 +6,16 @@ export interface IWindowInstance {
     maximized: boolean
     minimized: boolean
 }
-export interface IPopUpInstance {
+
+export enum PopupType {
+    INFO = 'INFO',
+    HELP = 'HELP',
+    WARNING = 'WARNING',
+    ERROR = 'ERROR'
+}
+
+export interface IPopupInstance {
     title: string
-    type: 'info' | 'warning' | 'error'
-    content: any // TODO: JSX or string
+    type: PopupType
+    children: any // TODO: JSX or string
 }

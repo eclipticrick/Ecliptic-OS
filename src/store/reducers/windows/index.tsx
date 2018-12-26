@@ -1,11 +1,11 @@
 import Actions, {IAction} from '../../actionTypes';
 import functions from './functions';
-import {IPopUpInstance, IWindowInstance} from '../../../appdata/window';
+import {IPopupInstance, IWindowInstance} from '../../../appdata/window';
 
 export interface IReducerWindows {
     uniqueInstanceCounter: number
     windows: IWindowInstance[]
-    popup: IPopUpInstance
+    popup: IPopupInstance
 }
 
 const initialState: IReducerWindows = {
