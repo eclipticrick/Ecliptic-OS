@@ -14,18 +14,12 @@ interface ICalculatorState {
 }
 
 enum Clicked {
-    ABOUT = 'ABOUT',
-    HISTORY = 'HISTORY',
     COPY = 'COPY',
-    PASTE = 'PASTE',
+    ABOUT = 'ABOUT'
 }
 const menuTree = {
     Edit: {
-        copy: [Clicked.COPY, 'CTRL + C'],
-        paste: [Clicked.PASTE, 'CTRL + V']
-    },
-    View: {
-        history: Clicked.HISTORY,
+        copy: [Clicked.COPY, 'CTRL + C']
     },
     Help: {
         about: Clicked.ABOUT
@@ -40,13 +34,19 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
         lastChar: null as number | string,
         memory: null as string
     };
+    private inputRef: any = React.createRef();
 
     public render() {
         const { windowInstance, application, selected } = this.props;
 
         // todo: implement
         const menuItemClickedHandler = (menuItem: Clicked) => {
-            console.log(menuItem, 'clicked')
+            if (menuItem === Clicked.COPY) {
+                this.inputRef.current.select();
+                document.execCommand('copy');
+            } else {
+                console.log(menuItem, 'clicked');
+            }
         };
 
         const handleButtonClick = (char: string | number) => {
@@ -209,7 +209,9 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps, 
                         <Grid item xs>
                             <div className={classes.inputContainer}>
                                 <div className={classes.store}>{this.state.store || null} {this.state.operator}</div>
-                                <input disabled value={this.state.entry.toString()}
+                                <input readOnly
+                                       ref={this.inputRef}
+                                       value={this.state.entry.toString()}
                                        style={this.state.entry.length > 21 ? { fontSize: '14px' } : {}}/>
                             </div>
                         </Grid>

@@ -27,7 +27,9 @@ div.root {
       height: 60px;
       text-align: right;
       border: 0;
-      &:disabled {
+      outline: none;
+      background: transparent;
+      &:focus {
         background: transparent;
       }
     }
