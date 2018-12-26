@@ -6,19 +6,21 @@ import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
 
 import applications, {ApplicationId} from '../../appdata/applications';
-import {IWindowInstance} from '../../appdata/window';
+import {IPopUpInstance, IWindowInstance} from '../../appdata/window';
 import * as actions from '../../store/actions';
+import PopUp from '../Window/Base/PopUp/PopUp';
 
 export interface IDesktopProps {
     taskbarHeight: number
     windows: IWindowInstance[]
     shortcuts: ApplicationId[]
+    popup: IPopUpInstance
     openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
 }
 
 export class Desktop extends React.Component<IDesktopProps, {}> {
     public render() {
-        const { props, props: { taskbarHeight, windows, shortcuts } } = this;
+        const { props, props: { taskbarHeight, windows, shortcuts, popup } } = this;
 
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
@@ -32,10 +34,16 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
 
                     return (
                         <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                            <Component windowInstance={window} application={application} selected={windows.length - 1 === i}/>
+                            <Component windowInstance={window} application={application} selected={windows.length - 1 === i && !popup}/>
                         </div>
                     )
                 })}
+
+                {popup ? (
+                    <div className={classes.popupWrapper}>
+                        <PopUp popup={popup}/>
+                    </div>
+                ) : null}
 
             </div>
         );
@@ -43,9 +51,9 @@ export class Desktop extends React.Component<IDesktopProps, {}> {
 }
 const mapStateToProps = (state: IStore) => {
     const { taskbar } = state.config;
-    const { windows } = state.windows;
+    const { windows, popup } = state.windows;
     const { shortcuts } = state.desktop;
-    return { taskbarHeight: taskbar.height, windows, shortcuts }
+    return { taskbarHeight: taskbar.height, windows, shortcuts, popup }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<IDesktopProps> => ({

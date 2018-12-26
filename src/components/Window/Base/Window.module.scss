@@ -105,5 +105,10 @@ $titleBarHeight: 25px;
     background: #e8e8e8;
     overflow: auto;
     height: calc(100% - #{$titleBarHeight});
+    &.popupContent {
+      font-size: 13px;
+      padding: 12px;
+      min-width: 200px;
+    }
   }
 }

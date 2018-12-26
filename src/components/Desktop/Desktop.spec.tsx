@@ -17,6 +17,7 @@ describe('<Desktop />', () => {
             taskbarHeight: 25,
             windows: [],
             shortcuts: [],
+            popup: null,
             openWindow: () => { return }
         };
         wrapper = shallow(<Desktop {...props} />);

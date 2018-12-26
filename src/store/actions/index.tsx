@@ -6,11 +6,13 @@ export {
 } from './user';
 export {
     openWindow,
+    openPopup,
     closeWindow,
+    closePopup,
     selectWindow,
     minimizeWindow,
     maximizeWindow,
-    normalizeWindow
+    normalizeWindow,
 } from './windows';
 
 export {

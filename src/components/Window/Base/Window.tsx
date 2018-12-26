@@ -154,13 +154,13 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                     <div className={classes.titleBar}
                          onMouseEnter={enableDragging}
                          onDoubleClick={
-                        () =>
-                            maximizable ?
-                                windowInstance.maximized ?
-                                    this._handleNormalizeWindow(windowInstance.instanceId) :
-                                    this._handleMaximizeWindow(windowInstance.instanceId) :
-                            null
-                    }>
+                             () =>
+                                 maximizable ?
+                                     windowInstance.maximized ?
+                                         this._handleNormalizeWindow(windowInstance.instanceId) :
+                                         this._handleMaximizeWindow(windowInstance.instanceId) :
+                                     null
+                         }>
 
                         <div className={classes.left}>
                             <img src={iconSrc} />
@@ -182,7 +182,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                                         onMouseLeave={enableDragging}>
                                     <Icon className={classes.icon}>fullscreen_exit</Icon>
                                 </button>
-                            :
+                                :
                                 <button type='button'
                                         onMouseUp={() => this._handleMaximizeWindow(windowInstance.instanceId)}
                                         className={classes.maximize}

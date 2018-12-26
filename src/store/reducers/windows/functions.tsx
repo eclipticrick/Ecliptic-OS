@@ -24,6 +24,19 @@ export default {
             windows
         };
     },
+    openPopup: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
+        const { popup } = action.payload;
+        return {
+            ...oldState,
+            popup
+        };
+    },
+    closePopUp: (oldState: IReducerWindows): IReducerWindows => {
+        return {
+            ...oldState,
+            popup: null
+        };
+    },
     close: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
         const { instanceId } = action.payload;
 

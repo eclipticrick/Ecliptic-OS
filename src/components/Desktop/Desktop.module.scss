@@ -1,7 +1,7 @@
 div.root {
   position: absolute;
   width: 100%;
-
+  div.popupWrapper,
   div.windowWrapper {
     position: absolute;
     pointer-events: none;
@@ -9,6 +9,10 @@ div.root {
     right: 0;
     bottom: 0;
     left: 0;
+    &.popupWrapper {
+      background: rgba(0,0,0,.3);
+      pointer-events: auto;
+    }
     * {
       pointer-events: auto;
     }
