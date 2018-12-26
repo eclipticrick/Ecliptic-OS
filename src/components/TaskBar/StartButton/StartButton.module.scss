@@ -1,16 +1,26 @@
-.root {
+$size: 80px;
+$backgroundColor: #38913A;
+
+button.root {
   height: 100%;
   display: inline-block;
-  background: #38913A;
-
-  // button
-  > button {
-    border-radius: 0;
-    min-height: 0;
-    padding: 0;
-    height: 100%;
-    img {
-      height: 20px;
-    }
+  background: $backgroundColor;
+  border-radius: 0 10px 10px 0;
+  padding: 0 12px 0 0;
+  width: $size;
+  transition: box-shadow .24s, border-radius .24s;
+  box-shadow:
+          0 0 0 #{$size / 2} transparent inset,
+          0 1px 3px rgba(0,0,0,0.12),
+          0 1px 2px rgba(0,0,0,0.24);
+  &:hover {
+    background: $backgroundColor;
+    box-shadow:
+            0 0 0 #{$size / 2} rgba(0, 0, 0, 0.15) inset,
+            0 1px 3px rgba(0,0,0,0.12),
+            0 1px 2px rgba(0,0,0,0.24);
+  }
+  img {
+    height: 20px;
   }
 }

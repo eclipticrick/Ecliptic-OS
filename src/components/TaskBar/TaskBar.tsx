@@ -20,12 +20,12 @@ export class TaskBar extends React.Component<ITaskbarProps, {}> {
                 <Resizable
                     size={{ height }}
                     enable={{top: true}}
-                    minHeight={30}
+                    minHeight={36}
                     maxHeight={50}
                     onResizeStop={(e, direction, ref, d) => {
                         props.setTaskbarHeight(height + d.height);
                     }}>
-                    <StartButton/>
+                    <StartButton taskBarHeight={height}/>
                 </Resizable>
             </div>
         );
