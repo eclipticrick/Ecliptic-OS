@@ -1,7 +1,16 @@
 div.root {
-  background: #4888FF;
-
-  flex-basis: 150px;
   flex-shrink: 0;
+  flex-grow: 1;
+
+  background: #4078e2;
   margin-left: 12px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  div.clock {
+    padding: 0 12px;
+    font-size: 14px;
+    color: #e8e8e8
+  }
 }

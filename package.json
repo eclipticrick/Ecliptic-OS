@@ -23,7 +23,7 @@
   "homepage": "https://github.com/eclipticrick/Ecliptic-OS#readme",
   "dependencies": {
     "@material-ui/core": "^3.7.0",
-    "react": "^16.6.3",
+    "react": "^16.7.0",
     "react-dom": "^16.6.3",
     "react-draggable": "^3.1.1"
   },
