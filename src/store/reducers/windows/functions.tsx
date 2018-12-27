@@ -52,7 +52,7 @@ export default {
         const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.instanceId === instanceId);
+        const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)}; // maybe dont copy?
         window.minimized = false;
         windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
@@ -66,7 +66,7 @@ export default {
         const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.instanceId === instanceId);
+        const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)};
         window.minimized = true;
         windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
@@ -80,7 +80,7 @@ export default {
         const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.instanceId === instanceId);
+        const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)};
         window.maximized = true;
         windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
@@ -94,7 +94,7 @@ export default {
         const { instanceId } = action.payload;
 
         let windows = [...oldState.windows];
-        const window = windows.find(w => w.instanceId === instanceId);
+        const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)};
         window.maximized = false;
         windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);

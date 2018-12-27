@@ -30,9 +30,10 @@ const activeWindows = (props: IQuickAccessProps) => {
                     const application = applications.find(app => app.id === window.applicationId);
                     const isSelected = selectedInstanceId === window.instanceId;
                     return (
-                        <div className={classes.itemInnerWrapper} style={{ width: `${100 / windowInstances.length}%` }}>
-                            <div key={`taskbar-active-window-${window.instanceId}`}
-                                 className={classNames(classes.item, isSelected ? classes.selected : null)}
+                        <div key={`taskbar-${window.instanceId}`}
+                             className={classes.itemInnerWrapper}
+                             style={{ width: `${100 / windowInstances.length}%` }}>
+                            <div className={classNames(classes.item, isSelected ? classes.selected : null)}
                                  onClick={
                                      () => isSelected ? props.minimizeWindow(window.instanceId) : props.selectWindow(window.instanceId)
                                  }>
