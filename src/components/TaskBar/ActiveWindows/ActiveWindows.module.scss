@@ -1,0 +1,44 @@
+div.root {
+  flex-grow: 0;
+  flex-basis: 100%;
+  position: relative;
+  div.itemsWrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left:0;
+    display: flex;
+    div.itemSizeContainer {
+      flex: 1 1 200px;
+      max-width: 200px;
+      height: 100%;
+      padding: 4px 2px;
+      div.item {
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        height: 100%;
+        overflow: hidden;
+        box-shadow:
+                0 1px 3px rgba(0,0,0,0.12),
+                0 1px 2px rgba(0,0,0,0.24);
+        background: #3f71dc;
+        border-radius: 6px;
+        img {
+          width: 20px;
+          height: 20px;
+          object-fit: contain;
+        }
+        span {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 14px;
+          margin-left: 6px;
+          color: #e8e8e8
+        }
+      }
+    }
+  }
+}

@@ -10,5 +10,11 @@ div.root {
   div.taskBarContent {
     display: flex;
     height: 100%;
+    div.activeWindowsAndSystemTrayWrapper {
+      // width: 100%;
+      // display: flex;
+      // justify-content: space-between;
+      // width: 100%;
+    }
   }
 }

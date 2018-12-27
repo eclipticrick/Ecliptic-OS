@@ -3,10 +3,11 @@ $backgroundColor: #38913A;
 
 button.root {
   height: 100%;
-  display: inline-block;
+  // display: inline-block;
   background: $backgroundColor;
   border-radius: 0 10px 10px 0;
   padding: 0 12px 0 0;
+  min-width: $size;
   width: $size;
   transition: box-shadow .24s, border-radius .24s;
   box-shadow:
