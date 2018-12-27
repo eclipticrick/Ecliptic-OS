@@ -2,14 +2,21 @@ import * as React from 'react';
 import * as classes from './ActiveWindows.module.scss';
 import {IWindowInstance} from '../../../appdata/window';
 import applications from '../../../appdata/applications';
+import classNames from 'classnames';
 
 export interface IQuickAccessProps {
     windowInstances: IWindowInstance[]
     selectWindow: (instanceId: number) => void // TODO: generalize?
+    minimizeWindow: (instanceId: number) => void // TODO: generalize?
 }
 
 const activeWindows = (props: IQuickAccessProps) => {
     const { windowInstances } = props;
+    const unMinimizedInstances = [...windowInstances].filter(window => window.minimized === false);
+    let selectedInstanceId: number;
+    if (unMinimizedInstances.length) {
+        selectedInstanceId = unMinimizedInstances[unMinimizedInstances.length - 1].instanceId
+    }
     const sortedWindowInstances = [...windowInstances].sort((a, b) => {
         if (a.instanceId < b.instanceId) return -1;
         if (a.instanceId > b.instanceId) return 1;
@@ -18,14 +25,17 @@ const activeWindows = (props: IQuickAccessProps) => {
 );
     return (
         <div className={classes.root}>
-            <div className={classes.itemsWrapper}>
+            <div className={classes.itemsOuterWrapper}>
                 {sortedWindowInstances.map(window => {
                     const application = applications.find(app => app.id === window.applicationId);
+                    const isSelected = selectedInstanceId === window.instanceId;
                     return (
-                        <div className={classes.itemSizeContainer} style={{ width: `${100 / windowInstances.length}%` }}>
+                        <div className={classes.itemInnerWrapper} style={{ width: `${100 / windowInstances.length}%` }}>
                             <div key={`taskbar-active-window-${window.instanceId}`}
-                                 className={classes.item}
-                            >
+                                 className={classNames(classes.item, isSelected ? classes.selected : null)}
+                                 onClick={
+                                     () => isSelected ? props.minimizeWindow(window.instanceId) : props.selectWindow(window.instanceId)
+                                 }>
                                 <img src={application.icon.src} /><span>{application.window.title}</span>
                             </div>
                         </div>

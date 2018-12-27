@@ -20,6 +20,7 @@ export interface ITaskbarProps {
     setQuickAccessWidth: (width: number) => void // TODO: generalize
     openWindow: (applicationId: ApplicationId) => void // TODO: generalize?
     selectWindow: (instanceId: number) => void // TODO: generalize?
+    minimizeWindow: (instanceId: number) => void // TODO: generalize?
 }
 
 export class TaskBar extends React.Component<ITaskbarProps, {}> {
@@ -45,7 +46,9 @@ export class TaskBar extends React.Component<ITaskbarProps, {}> {
                                      openWindow={props.openWindow}
                                      setQuickAccessWidth={props.setQuickAccessWidth}/>
 
-                        <ActiveWindows windowInstances={windowInstances} selectWindow={props.selectWindow}/>
+                        <ActiveWindows windowInstances={windowInstances}
+                                       selectWindow={props.selectWindow}
+                                       minimizeWindow={props.minimizeWindow}/>
 
                         <SystemTray/>
 
@@ -69,5 +72,6 @@ const mapDispatchToProps = (dispatch: any): Partial<ITaskbarProps> => ({
     setQuickAccessWidth: (width: number) => dispatch(actions.setQuickAccessWidth(width)),
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
+    minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TaskBar);
