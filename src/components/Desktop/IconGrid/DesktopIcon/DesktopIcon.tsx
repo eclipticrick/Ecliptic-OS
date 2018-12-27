@@ -4,10 +4,10 @@ import {ApplicationId} from '../../../../appdata/applications';
 
 export interface IDesktopIconProps {
     applicationId: ApplicationId
-    openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
     iconSrc: string
     name: string
     scale?: number
+    openWindow: (applicationId: ApplicationId) => void
 }
 
 const desktopIcon = (props: IDesktopIconProps) => {

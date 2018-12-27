@@ -22,10 +22,10 @@ const iconSrc = {
 
 export interface IPopUpProps {
     popup: IPopupInstance
-    children: any // TODO
+    children: any // TODO inherit from React.Props?
 }
 interface IPopupPassedProps {
-    closePopup: () => any // TODO: generalize
+    closePopup: () => void
 }
 interface IPopupState {
     disableDragging: boolean

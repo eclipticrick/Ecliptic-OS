@@ -16,7 +16,7 @@ interface ICalculatorState {
     memory: string
 }
 interface ICalculatorPassedProps {
-    openPopup: (popup: IPopupInstance) => any // TODO: generalize
+    openPopup: (popup: IPopupInstance) => void
 }
 enum Clicked {
     COPY = 'COPY',

@@ -16,14 +16,17 @@ export interface ITaskbarProps {
     quickAccessWidth: number
     quickAccessShortcuts: ApplicationId[]
     windowInstances: IWindowInstance[]
-    setTaskbarHeight: (height: number) => void // TODO: generalize
-    setQuickAccessWidth: (width: number) => void // TODO: generalize
-    openWindow: (applicationId: ApplicationId) => void // TODO: generalize?
-    selectWindow: (instanceId: number) => void // TODO: generalize?
-    minimizeWindow: (instanceId: number) => void // TODO: generalize?
 }
 
-export class TaskBar extends React.Component<ITaskbarProps, {}> {
+export interface ITaskbarPassedProps {
+    setTaskbarHeight: (height: number) => void
+    setQuickAccessWidth: (width: number) => void
+    openWindow: (applicationId: ApplicationId) => void
+    selectWindow: (instanceId: number) => void
+    minimizeWindow: (instanceId: number) => void
+}
+
+export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps, {}> {
     public render() {
         const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances } } = this;
 
@@ -52,8 +55,6 @@ export class TaskBar extends React.Component<ITaskbarProps, {}> {
 
                         <SystemTray/>
 
-                        {/* <div className={classes.activeWindowsAndSystemTrayWrapper}></div> */}
-
                     </div>
                 </Resizable>
             </div>
@@ -67,7 +68,7 @@ const mapStateToProps = (state: IStore) => {
     return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows }
 };
 
-const mapDispatchToProps = (dispatch: any): Partial<ITaskbarProps> => ({
+const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
     setTaskbarHeight: (height: number) => dispatch(actions.setTaskbarHeight(height)),
     setQuickAccessWidth: (width: number) => dispatch(actions.setQuickAccessWidth(width)),
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),

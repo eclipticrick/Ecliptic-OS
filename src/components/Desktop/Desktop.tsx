@@ -15,10 +15,12 @@ export interface IDesktopProps {
     windows: IWindowInstance[]
     shortcuts: ApplicationId[]
     popup: IPopupInstance
-    openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+}
+export interface IDesktopPassedProps {
+    openWindow: (id: ApplicationId) => void
 }
 
-export class Desktop extends React.Component<IDesktopProps, {}> {
+export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps, {}> {
     public render() {
         const { props, props: { taskbarHeight, windows, shortcuts, popup } } = this;
 
@@ -56,7 +58,7 @@ const mapStateToProps = (state: IStore) => {
     return { taskbarHeight: height, windows, shortcuts, popup }
 };
 
-const mapDispatchToProps = (dispatch: any): Partial<IDesktopProps> => ({
+const mapDispatchToProps = (dispatch: any): Partial<IDesktopPassedProps> => ({
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Desktop);

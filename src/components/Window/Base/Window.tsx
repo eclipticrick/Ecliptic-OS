@@ -23,11 +23,11 @@ export interface IWindowProps {
     }
 }
 interface IWindowPassedProps {
-    closeWindow: (instanceId: number) => any // TODO: generalize?
-    selectWindow: (instanceId: number) => any // TODO: generalize?
-    minimizeWindow: (instanceId: number) => any // TODO: generalize?
-    maximizeWindow: (instanceId: number) => any // TODO: generalize?
-    normalizeWindow: (instanceId: number) => any // TODO: generalize?
+    closeWindow: (instanceId: number) => void
+    selectWindow: (instanceId: number) => void
+    minimizeWindow: (instanceId: number) => void
+    maximizeWindow: (instanceId: number) => void
+    normalizeWindow: (instanceId: number) => void
 }
 interface IWindowState {
     disableDragging: boolean
@@ -210,7 +210,7 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
     }
 }
 
-const mapDispatchToProps = (dispatch: any): Partial<IWindowPassedProps> => ({
+const mapDispatchToProps = (dispatch: any): IWindowPassedProps => ({
     closeWindow: (id: number) => dispatch(actions.closeWindow(id)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
     minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),

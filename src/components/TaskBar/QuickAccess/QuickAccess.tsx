@@ -8,8 +8,8 @@ import Resizable from 're-resizable';
 export interface IQuickAccessProps {
     shortcuts: ApplicationId[]
     width: number
-    setQuickAccessWidth: (width: number) => void // TODO: generalize
-    openWindow: (applicationId: ApplicationId) => void // TODO: generalize?
+    setQuickAccessWidth: (width: number) => void
+    openWindow: (applicationId: ApplicationId) => void
 }
 
 const quickAccess = (props: IQuickAccessProps) => {

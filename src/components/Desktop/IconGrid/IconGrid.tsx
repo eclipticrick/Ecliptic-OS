@@ -1,12 +1,11 @@
 import * as React from 'react';
 import * as classes from './IconGrid.module.scss';
 import DesktopIcon from './DesktopIcon/DesktopIcon';
-
 import applications, {ApplicationId} from '../../../appdata/applications';
 
 export interface IIconGridProps {
     shortcuts: ApplicationId[],
-    openWindow: (applicationId: ApplicationId) => any // TODO: generalize?
+    openWindow: (applicationId: ApplicationId) => void
 }
 
 const iconGrid = ({shortcuts, openWindow}: IIconGridProps) => {
