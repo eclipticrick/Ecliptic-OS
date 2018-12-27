@@ -9,7 +9,8 @@ import QuickAccess from './QuickAccess/QuickAccess';
 import ActiveWindows from './ActiveWindows/ActiveWindows';
 import SystemTray from './SystemTray/SystemTray';
 import {ApplicationId} from '../../appdata/applications';
-import {IWindowInstance} from '../../appdata/window';
+import {IPopupInstance, IWindowInstance} from '../../appdata/window';
+import classNames from 'classnames';
 
 export interface ITaskbarProps {
     height: number
@@ -19,6 +20,7 @@ export interface ITaskbarProps {
 }
 
 export interface ITaskbarPassedProps {
+    popup: IPopupInstance
     setTaskbarHeight: (height: number) => void
     setQuickAccessWidth: (width: number) => void
     openWindow: (applicationId: ApplicationId) => void
@@ -28,10 +30,10 @@ export interface ITaskbarPassedProps {
 
 export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps, {}> {
     public render() {
-        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances } } = this;
+        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances, popup } } = this;
 
         return (
-            <div className={classes.root}>
+            <div className={classNames(classes.root, popup ? classes.unClickable : null)}>
                 <Resizable
                     size={{ height }}
                     enable={{top: true}}
@@ -64,8 +66,8 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
 }
 const mapStateToProps = (state: IStore) => {
     const { height, quickAccessShortcuts, quickAccessWidth } = state.taskbar;
-    const { windows } = state.windows;
-    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows }
+    const { windows, popup } = state.windows;
+    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, popup }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
