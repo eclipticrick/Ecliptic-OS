@@ -7,6 +7,7 @@ export default {
         const { applicationId } = action.payload;
 
         const shortcuts = [...oldState.shortcuts];
+        if (!shortcuts.find(appId => appId === applicationId))
         shortcuts.push(applicationId);
 
         return {
@@ -17,8 +18,7 @@ export default {
     removeShortcut: (oldState: IReducerDesktop, action: IAction): IReducerDesktop => {
         const { applicationId } = action.payload;
 
-        const shortcuts = [...oldState.shortcuts];
-        shortcuts.filter(id => id !== applicationId);
+        const shortcuts = [...oldState.shortcuts].filter(id => id !== applicationId);
 
         return {
             ...oldState,

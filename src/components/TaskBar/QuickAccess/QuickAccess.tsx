@@ -4,6 +4,7 @@ import {ApplicationId} from '../../../appdata/applications';
 import applications from '../../../appdata/applications';
 import {Button} from '@material-ui/core';
 import Resizable from 're-resizable';
+import ApplicationContextMenu, {OuterContextType} from '../../ContextMenu/specific/ApplicationContextMenu';
 
 export interface IQuickAccessProps {
     shortcuts: ApplicationId[]
@@ -35,14 +36,18 @@ const quickAccess = (props: IQuickAccessProps) => {
                     {shortcuts.map(shortcut => {
                         const application = applications.find(app => app.id === shortcut);
                         return (
-                            <Button key={`quick-access-${application.id}`}
-                                    onClick={() => props.openWindow(application.id)}
-                                    variant={'contained'}
-                                    style={{ width: imageButtonSize, height: imageButtonSize }}>
-                                <img src={application.icon.src}
-                                     aria-label={application.icon.name}
-                                     style={{ width: imageSize, height: imageSize }}/>
-                            </Button>
+                            <ApplicationContextMenu uniquePrefix={'quick-access'}
+                                                    applicationId={application.id}
+                                                    context={OuterContextType.TASKBAR_QUICKACCESS}>
+                                <Button key={`quick-access-${application.id}`}
+                                        onClick={() => props.openWindow(application.id)}
+                                        variant={'contained'}
+                                        style={{ width: imageButtonSize, height: imageButtonSize }}>
+                                    <img src={application.icon.src}
+                                         aria-label={application.icon.name}
+                                         style={{ width: imageSize, height: imageSize }}/>
+                                </Button>
+                            </ApplicationContextMenu>
                         )
                     })}
                 </Resizable>
