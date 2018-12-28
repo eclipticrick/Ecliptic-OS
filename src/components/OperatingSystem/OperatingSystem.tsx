@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Desktop from '../Desktop/Desktop';
+import StartMenu from '../StartMenu/StartMenu';
 import TaskBar from '../TaskBar/TaskBar';
 import LoginScreen from '../LoginScreen/LoginScreen';
 import {IStore} from '../../store/initialize';
@@ -22,6 +23,7 @@ export class OperatingSystem extends React.Component<IOperatingSystemProps, {}> 
                 <CSSTransition in={isLoggedIn} timeout={240} classNames={'transition-zoom'}>
                     <>
                         <Desktop/>
+                        <StartMenu/>
                         <TaskBar/>
                     </>
                 </CSSTransition>

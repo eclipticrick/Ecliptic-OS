@@ -18,17 +18,23 @@ export interface IDesktopProps {
 }
 export interface IDesktopPassedProps {
     openWindow: (id: ApplicationId) => void
+    addRecentApplicationToStartMenu: (id: ApplicationId) => void
 }
 
 export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps, {}> {
     public render() {
         const { props, props: { taskbarHeight, windows, shortcuts, popup } } = this;
 
+        const openWindow = (applicationId: ApplicationId) => {
+            props.openWindow(applicationId);
+            props.addRecentApplicationToStartMenu(applicationId);
+        };
+
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
 
                 <Background taskbarHeight={taskbarHeight}/>
-                <IconGrid shortcuts={shortcuts} openWindow={props.openWindow}/>
+                <IconGrid shortcuts={shortcuts} openWindow={openWindow}/>
 
                 {windows.map((window, i: number) => {
                     const application = applications.find(app => app.id === window.applicationId);
@@ -60,5 +66,6 @@ const mapStateToProps = (state: IStore) => {
 
 const mapDispatchToProps = (dispatch: any): Partial<IDesktopPassedProps> => ({
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
+    addRecentApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.addRecentApplicationToStartMenu(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Desktop);

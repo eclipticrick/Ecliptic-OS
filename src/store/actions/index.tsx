@@ -3,6 +3,11 @@ export {
     setTaskbarHeight,
 } from './taskbar';
 export {
+    openStartMenu,
+    closeStartMenu,
+    addRecentApplicationToStartMenu
+} from './startmenu';
+export {
     login,
 } from './user';
 export {
@@ -15,7 +20,6 @@ export {
     maximizeWindow,
     normalizeWindow,
 } from './windows';
-
 export {
     addDesktopShortcut,
     removeDesktopShortcut

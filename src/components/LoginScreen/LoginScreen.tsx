@@ -2,16 +2,18 @@ import * as React from 'react';
 import * as classes from './LoginScreen.module.scss';
 import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
-import * as userImageSrc from '../../assets/images/admin.jpg';
+import {IStore} from '../../store/initialize';
 
-export interface ILoginScreenProps {
+export interface ILoginScreenPassedProps {
     login: () => void
+    userName: string
+    userImageSrc: string
 }
 
-export class LoginScreen extends React.Component<ILoginScreenProps, {}> {
+export class LoginScreen extends React.Component<ILoginScreenPassedProps, {}> {
 
     public render() {
-        const { props } = this;
+        const { props, props: { userName, userImageSrc } } = this;
 
         const handleKeyPress = (e: any) => {
             if (e.key === 'Enter') {
@@ -30,7 +32,7 @@ export class LoginScreen extends React.Component<ILoginScreenProps, {}> {
                             <img src={userImageSrc}/>
                         </div>
                         <div className={classes.userName}>
-                            Admin
+                            {userName}
                         </div>
                         <div className={classes.userPassword}>
                             <input id='password'
@@ -52,7 +54,11 @@ export class LoginScreen extends React.Component<ILoginScreenProps, {}> {
     }
 }
 
-const mapDispatchToProps = (dispatch: any): Partial<ILoginScreenProps> => ({
+const mapStateToProps = (state: IStore) => {
+    const { name, imageSrc } = state.user;
+    return { userName: name, userImageSrc: imageSrc }
+};
+const mapDispatchToProps = (dispatch: any): Partial<ILoginScreenPassedProps> => ({
     login: () => dispatch(actions.login()),
 });
-export default connect(null, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

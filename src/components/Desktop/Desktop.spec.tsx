@@ -18,7 +18,8 @@ describe('<Desktop />', () => {
             windows: [],
             shortcuts: [],
             popup: null,
-            openWindow: () => 0
+            openWindow: () => 0,
+            addRecentApplicationToStartMenu: () => 0
         };
         wrapper = shallow(<Desktop {...props} />);
     });

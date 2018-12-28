@@ -1,0 +1,121 @@
+$width: 360px;
+$height: 500px;
+$blueBarsHeights: 60px;
+$tileSpacing: 12px;
+
+div.root {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  &.closed {
+    display: none;
+  }
+  div.startMenu {
+
+    position: absolute;
+    width: $width;
+    height: $height;
+    max-width: 100%;
+    max-height: calc(100% - 75px);
+    box-shadow:
+            0 3px 6px rgba(0,0,0,0.16),
+            0 3px 6px rgba(0,0,0,0.23);
+    border-radius: 0 6px 0 0;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    div.top,
+    div.bottom {
+      padding: 0 12px;
+      flex: 0 0 $blueBarsHeights;
+      background: #2577DF;
+      color: #e8e8e8;
+      display: flex;
+      align-items: center;
+    }
+    div.top {
+      img {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        border-radius: 50%;
+        box-shadow:
+                0 1px 3px rgba(0,0,0,0.12),
+                0 1px 2px rgba(0,0,0,0.24);
+        overflow: hidden;
+        margin-right: 12px;
+      }
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-shadow:
+                0 1px 3px rgba(0,0,0,0.12),
+                0 1px 2px rgba(0,0,0,0.24);
+      }
+    }
+    div.bottom {
+      justify-content: flex-end;
+      .button {
+        &:not(:first-child) {
+          margin-left: 6px;
+        }
+        .icon {
+          margin-right: 8px
+        }
+        color: #e8e8e8;
+      }
+    }
+    div.content {
+      flex: 1 1 auto;
+      display: flex;
+      background: #D3E5FA;
+      div.left,
+      div.right {
+        flex: 0 0 #{$width / 2};
+        max-width: #{$width / 2};
+        div.title {
+          font-weight: 100;
+          font-size: 11px;
+          text-transform: uppercase;
+          color: rgba(0, 0, 0, 0.65);
+          padding: $tileSpacing $tileSpacing 0 $tileSpacing;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        div.recentContainer {
+          overflow: hidden;
+        }
+        div.noItemsMessage {
+          font-size: 11px;
+          color: rgba(0, 0, 0, 0.5);
+          padding: $tileSpacing;
+
+        }
+        hr {
+          margin: 0 12px;
+          border: 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        div.tileWrapper {
+          padding: 2px $tileSpacing;
+          &:last-child {
+            padding: 2px $tileSpacing $tileSpacing $tileSpacing
+          }
+        }
+      }
+      div.left {
+        background: #f9f9f9;
+        border-right: 1px solid #AFCDF2;
+      }
+      div.right {
+
+      }
+    }
+  }
+}

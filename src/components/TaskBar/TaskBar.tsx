@@ -21,16 +21,25 @@ export interface ITaskbarProps {
 
 export interface ITaskbarPassedProps {
     popup: IPopupInstance
+    startMenuIsOpen: boolean
     setTaskbarHeight: (height: number) => void
     setQuickAccessWidth: (width: number) => void
     openWindow: (applicationId: ApplicationId) => void
+    addRecentApplicationToStartMenu: (id: ApplicationId) => void
     selectWindow: (instanceId: number) => void
     minimizeWindow: (instanceId: number) => void
+    openStartMenu: () => void
+    closeStartMenu: () => void
 }
 
 export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps, {}> {
     public render() {
-        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances, popup } } = this;
+        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances, popup, startMenuIsOpen } } = this;
+
+        const openWindow = (applicationId: ApplicationId) => {
+            props.openWindow(applicationId);
+            props.addRecentApplicationToStartMenu(applicationId);
+        };
 
         return (
             <div className={classNames(classes.root, popup ? classes.unClickable : null)}>
@@ -44,11 +53,14 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
                     }}>
                     <div className={classes.taskBarContent}>
 
-                        <StartButton taskBarHeight={height}/>
+                        <StartButton taskBarHeight={height}
+                                     startMenuIsOpen={startMenuIsOpen}
+                                     openStartMenu={props.openStartMenu}
+                                     closeStartMenu={props.closeStartMenu}/>
 
                         <QuickAccess shortcuts={quickAccessShortcuts}
                                      width={quickAccessWidth}
-                                     openWindow={props.openWindow}
+                                     openWindow={openWindow}
                                      setQuickAccessWidth={props.setQuickAccessWidth}/>
 
                         <ActiveWindows windowInstances={windowInstances}
@@ -67,7 +79,8 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
 const mapStateToProps = (state: IStore) => {
     const { height, quickAccessShortcuts, quickAccessWidth } = state.taskbar;
     const { windows, popup } = state.windows;
-    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, popup }
+    const { opened } = state.startmenu;
+    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, popup, startMenuIsOpen: opened }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
@@ -76,5 +89,8 @@ const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
     minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
+    openStartMenu: () => dispatch(actions.openStartMenu()),
+    closeStartMenu: () => dispatch(actions.closeStartMenu()),
+    addRecentApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.addRecentApplicationToStartMenu(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TaskBar);
