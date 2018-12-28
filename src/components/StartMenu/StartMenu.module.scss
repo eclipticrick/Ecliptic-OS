@@ -78,6 +78,7 @@ div.root {
       div.right {
         flex: 0 0 #{$width / 2};
         max-width: #{$width / 2};
+        overflow: hidden;
         div.title {
           font-weight: 100;
           font-size: 11px;
@@ -87,9 +88,6 @@ div.root {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-        div.recentContainer {
-          overflow: hidden;
         }
         div.noItemsMessage {
           font-size: 11px;

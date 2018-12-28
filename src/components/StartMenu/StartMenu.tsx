@@ -30,6 +30,7 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, {}> {
             props.openWindow(applicationId);
             props.addRecentApplicationToStartMenu(applicationId);
         };
+        const maxAppsShownOnTheLeft = 8;
 
         return (
             <div className={classNames(classes.root, !opened ? classes.closed : null)}
@@ -47,7 +48,7 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, {}> {
                                 <>
                                     <div className={classes.title}>Pinned</div>
                                     <div>
-                                        {pinnedApplications.map(appId => (
+                                        {pinnedApplications.slice(0, maxAppsShownOnTheLeft).map(appId => (
                                             <div key={`start-menu-tile-pinned-${appId}`} className={classes.tileWrapper}>
                                                 <StartMenuTile applicationId={appId}
                                                                closeStartMenu={props.closeStartMenu}
@@ -55,27 +56,34 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, {}> {
                                             </div>
                                         ))}
                                     </div>
-                                    <hr/>
+                                {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : <hr/>}
                                 </>
                             ) : null}
 
-                            <div className={classes.title}>Recent</div>
-                            <div className={classes.recentContainer}>
-                                {recentApplications.length ?
-                                    recentApplications.slice(0, 6).map(appId => (
-                                        <div key={`start-menu-tile-recent-${appId}`} className={classes.tileWrapper}>
-                                            <StartMenuTile applicationId={appId}
-                                                           closeStartMenu={props.closeStartMenu}
-                                                           openWindow={openWindow}/>
-                                        </div>
-                                    ))
-                                    :
-                                    (<div className={classes.noItemsMessage}>No applications were opened recently</div>)
-                                }
-                            </div>
+                            {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : (
+                                <>
+                                    <div className={classes.title}>Recent</div>
+                                    <div>
+                                        {pinnedApplications.length >= maxAppsShownOnTheLeft ? null :
+                                            recentApplications.length ?
+                                                recentApplications
+                                                    .slice(0, maxAppsShownOnTheLeft - pinnedApplications.length)
+                                                    .map(appId => (
+                                                        <div key={`start-menu-tile-recent-${appId}`} className={classes.tileWrapper}>
+                                                            <StartMenuTile applicationId={appId}
+                                                                           closeStartMenu={props.closeStartMenu}
+                                                                           openWindow={openWindow}/>
+                                                        </div>
+                                                    ))
+                                                :
+                                                (<div className={classes.noItemsMessage}>No applications were opened recently</div>)
+                                        }
+                                    </div>
+                                </>
+                            )}
                         </div>
                         <div className={classes.right}>
-                            right
+
                         </div>
                     </div>
                     <div className={classes.bottom}>
