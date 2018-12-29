@@ -19,8 +19,8 @@ export interface IApplicationContextMenuPassedProps {
     openWindow: (id: ApplicationId) => void
     addDesktopShortcut: (id: ApplicationId) => void
     removeDesktopShortcut: (id: ApplicationId) => void
-    addQuickAccesShortcut: (id: ApplicationId) => void
-    removeQuickAccesShortcut: (id: ApplicationId) => void
+    addQuickAccessShortcut: (id: ApplicationId) => void
+    removeQuickAccessShortcut: (id: ApplicationId) => void
     pinApplicationToStartMenu: (id: ApplicationId) => void
     unpinApplicationToStartMenu: (id: ApplicationId) => void
 }
@@ -30,9 +30,9 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         const { props, props: {applicationId, context, children} } = this;
 
         let contextSpecificItems = [] as IContextItem[];
+
         if (context === OuterContextType.DESKTOP) {
             contextSpecificItems = [
-                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Remove',
@@ -50,7 +50,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
                         {
                             type: ContextMenuType.MENUITEM,
                             name: 'Task bar (make shortcut)',
-                            onClick: () => props.addQuickAccesShortcut(applicationId)
+                            onClick: () => props.addQuickAccessShortcut(applicationId)
                         }
                     ] as IContextItem[]
                 }
@@ -58,11 +58,10 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         }
         if (context === OuterContextType.TASKBAR_QUICKACCESS) {
             contextSpecificItems = [
-                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Remove',
-                    onClick: () => props.removeQuickAccesShortcut(applicationId)
+                    onClick: () => props.removeQuickAccessShortcut(applicationId)
                 },
                 {
                     type: ContextMenuType.SUBMENU,
@@ -84,7 +83,6 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         }
         if (context === OuterContextType.STARTMENU_PINNED) {
             contextSpecificItems = [
-                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Unpin',
@@ -102,7 +100,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
                         {
                             type: ContextMenuType.MENUITEM,
                             name: 'Task bar (make shortcut)',
-                            onClick: () => props.addQuickAccesShortcut(applicationId)
+                            onClick: () => props.addQuickAccessShortcut(applicationId)
                         }
                     ] as IContextItem[]
                 }
@@ -110,7 +108,25 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         }
         const items: IContextItem[] = [
             { type: ContextMenuType.MENUITEM, name: 'Open', onClick: () => props.openWindow(applicationId) },
-            ...contextSpecificItems
+            { type: ContextMenuType.SEPERATOR },
+            ...contextSpecificItems,
+            {
+                type: ContextMenuType.SUBMENU,
+                name: 'test',
+                items: [
+                    { type: ContextMenuType.MENUITEM, name: 'test' },
+                    { type: ContextMenuType.MENUITEM, name: 'test' },
+                    { type: ContextMenuType.SEPERATOR },
+                    {
+                        type: ContextMenuType.SUBMENU,
+                        name: 'test',
+                        items: [
+                            { type: ContextMenuType.MENUITEM, name: 'test' },
+                            { type: ContextMenuType.MENUITEM, name: 'test' },
+                        ]
+                    }
+                ]
+            }
         ];
 
         const menu = { items } as IContextMenu;
@@ -133,8 +149,8 @@ const mapDispatchToProps = (dispatch: any): Partial<IApplicationContextMenuPasse
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
     addDesktopShortcut: (id: ApplicationId) => dispatch(actions.addDesktopShortcut(id)),
     removeDesktopShortcut: (id: ApplicationId) => dispatch(actions.removeDesktopShortcut(id)),
-    addQuickAccesShortcut: (id: ApplicationId) => dispatch(actions.addQuickAccesShortcut(id)),
-    removeQuickAccesShortcut: (id: ApplicationId) => dispatch(actions.removeQuickAccesShortcut(id)),
+    addQuickAccessShortcut: (id: ApplicationId) => dispatch(actions.addQuickAccessShortcut(id)),
+    removeQuickAccessShortcut: (id: ApplicationId) => dispatch(actions.removeQuickAccessShortcut(id)),
     pinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.pinApplicationToStartMenu(id)),
     unpinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.unpinApplicationToStartMenu(id)),
 });

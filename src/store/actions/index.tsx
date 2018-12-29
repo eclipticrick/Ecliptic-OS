@@ -1,8 +1,8 @@
 export {
     setQuickAccessWidth,
     setTaskbarHeight,
-    addQuickAccesShortcut,
-    removeQuickAccesShortcut
+    addQuickAccessShortcut,
+    removeQuickAccessShortcut
 } from './taskbar';
 export {
     openStartMenu,

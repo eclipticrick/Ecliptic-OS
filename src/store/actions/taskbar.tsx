@@ -11,11 +11,11 @@ export const setQuickAccessWidth = (width: number) => ({
     payload: { width }
 });
 
-export const addQuickAccesShortcut = (applicationId: ApplicationId) => ({
+export const addQuickAccessShortcut = (applicationId: ApplicationId) => ({
     type: Actions.TASKBAR_____QUICKACCESS_ADD_SHORTCUT,
     payload: { applicationId }
 });
-export const removeQuickAccesShortcut = (applicationId: ApplicationId) => ({
+export const removeQuickAccessShortcut = (applicationId: ApplicationId) => ({
     type: Actions.TASKBAR_____QUICKACCESS_REMOVE_SHORTCUT,
     payload: { applicationId }
 });

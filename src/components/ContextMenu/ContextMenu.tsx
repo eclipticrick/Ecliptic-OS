@@ -56,7 +56,7 @@ const contextMenu = ({uid, children, menu}: IContextMenuProps) => (
         <MenuProvider id={`menu-${uid}`} style={{ boxShadow: '0 0 1px purple inset', display: 'inline-flex' }}>
             {children}
         </MenuProvider>
-        <Menu id={`menu-${uid}`} animation={animation.zoom}>
+        <Menu id={`menu-${uid}`} animation={animation.fade}>
             {innerContextMenu(uid, menu.items)}
         </Menu>
     </>

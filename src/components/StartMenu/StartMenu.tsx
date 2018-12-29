@@ -50,14 +50,15 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, {}> {
                                     <div className={classes.title}>Pinned</div>
                                     <div>
                                         {pinnedApplications.slice(0, maxAppsShownOnTheLeft).map(appId => (
-                                            <div key={`start-menu-tile-pinned-${appId}`} className={classes.tileWrapper}>
+                                            <React.Fragment key={`start-menu-tile-pinned-${appId}`}>
                                                 <ApplicationContextMenu applicationId={appId} context={OuterContextType.STARTMENU_PINNED}>
-                                                    {/* TODO: for some reason it thinks this functional component is being referenced */}
-                                                    <StartMenuTile applicationId={appId}
-                                                                   closeStartMenu={props.closeStartMenu}
-                                                                   openWindow={openWindow}/>
+                                                    <div className={classes.tileWrapper}>
+                                                            <StartMenuTile applicationId={appId}
+                                                                           closeStartMenu={props.closeStartMenu}
+                                                                           openWindow={openWindow}/>
+                                                    </div>
                                                 </ApplicationContextMenu>
-                                            </div>
+                                            </React.Fragment>
                                         ))}
                                     </div>
                                 {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : <hr/>}
