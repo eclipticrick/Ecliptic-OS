@@ -1,14 +1,18 @@
 export {
     setQuickAccessWidth,
     setTaskbarHeight,
+    addQuickAccesShortcut,
+    removeQuickAccesShortcut
 } from './taskbar';
 export {
     openStartMenu,
     closeStartMenu,
-    addRecentApplicationToStartMenu
+    addRecentApplicationToStartMenu,
+    pinApplicationToStartMenu,
+    unpinApplicationToStartMenu
 } from './startmenu';
 export {
-    login,
+    login
 } from './user';
 export {
     openWindow,
@@ -18,7 +22,7 @@ export {
     selectWindow,
     minimizeWindow,
     maximizeWindow,
-    normalizeWindow,
+    normalizeWindow
 } from './windows';
 export {
     addDesktopShortcut,

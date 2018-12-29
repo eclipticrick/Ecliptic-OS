@@ -28,6 +28,8 @@ const REDUCER = ( state: IReducerTaskBar = initialState, action: IAction & any )
     switch ( action.type ) {
         case Actions.TASKBAR_____SET_HEIGHT : return functions.setHeight(state, action);
         case Actions.TASKBAR_____SET_QUICK_ACCESS_WIDTH : return functions.setQuickAccesWidth(state, action);
+        case Actions.TASKBAR_____QUICKACCESS_ADD_SHORTCUT : return functions.addQuickAccesShortcut(state, action);
+        case Actions.TASKBAR_____QUICKACCESS_REMOVE_SHORTCUT : return functions.removeQuickAccesShortcut(state, action);
     }
     return state;
 };

@@ -13,3 +13,13 @@ export const addRecentApplicationToStartMenu = (applicationId: ApplicationId) =>
     type: Actions.STARTMENU_____ADD_RECENT_APPLICATION,
     payload: { applicationId }
 });
+
+export const pinApplicationToStartMenu = (applicationId: ApplicationId) => ({
+    type: Actions.STARTMENU_____PIN_APPLICATION,
+    payload: { applicationId }
+});
+
+export const unpinApplicationToStartMenu = (applicationId: ApplicationId) => ({
+    type: Actions.STARTMENU_____UNPIN_APPLICATION,
+    payload: { applicationId }
+});

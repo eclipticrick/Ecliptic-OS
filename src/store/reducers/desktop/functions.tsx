@@ -7,8 +7,9 @@ export default {
         const { applicationId } = action.payload;
 
         const shortcuts = [...oldState.shortcuts];
-        if (!shortcuts.find(appId => appId === applicationId))
-        shortcuts.push(applicationId);
+        if (!shortcuts.find(appId => appId === applicationId)) {
+            shortcuts.push(applicationId);
+        }
 
         return {
             ...oldState,

@@ -15,7 +15,7 @@ export default {
             opened: false
         };
     },
-    addRecentApp: (oldState: IReducerStartMenu, action: IAction): IReducerStartMenu => {
+    addRecentApplication: (oldState: IReducerStartMenu, action: IAction): IReducerStartMenu => {
         const { applicationId } = action.payload;
         const recentApplications = [...oldState.recentApplications].filter(appId => appId !== applicationId);
         recentApplications.unshift(applicationId);
@@ -24,6 +24,28 @@ export default {
             ...oldState,
             recentApplications
         };
-    }
+    },
+    pinApplication: (oldState: IReducerStartMenu, action: IAction): IReducerStartMenu => {
+        const { applicationId } = action.payload;
 
+        const pinnedApplications = [...oldState.pinnedApplications];
+        if (!pinnedApplications.find(appId => appId === applicationId)) {
+            pinnedApplications.push(applicationId);
+        }
+
+        return {
+            ...oldState,
+            pinnedApplications
+        };
+    },
+    unpinApplication: (oldState: IReducerStartMenu, action: IAction): IReducerStartMenu => {
+        const { applicationId } = action.payload;
+
+        const pinnedApplications = [...oldState.pinnedApplications].filter(id => id !== applicationId);
+
+        return {
+            ...oldState,
+            pinnedApplications
+        };
+    }
 }

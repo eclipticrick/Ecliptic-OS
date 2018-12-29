@@ -18,6 +18,29 @@ export default {
             ...oldState,
             quickAccessWidth: width
         };
+    },
+    addQuickAccesShortcut: (oldState: IReducerTaskBar, action: IAction): IReducerTaskBar => {
+        const { applicationId } = action.payload;
+
+        const quickAccessShortcuts = [...oldState.quickAccessShortcuts];
+        if (!quickAccessShortcuts.find(appId => appId === applicationId)) {
+            quickAccessShortcuts.push(applicationId);
+        }
+
+        return {
+            ...oldState,
+            quickAccessShortcuts
+        };
+    },
+    removeQuickAccesShortcut: (oldState: IReducerTaskBar, action: IAction): IReducerTaskBar => {
+        const { applicationId } = action.payload;
+
+        const quickAccessShortcuts = [...oldState.quickAccessShortcuts].filter(id => id !== applicationId);
+
+        return {
+            ...oldState,
+            quickAccessShortcuts
+        };
     }
 
 }
