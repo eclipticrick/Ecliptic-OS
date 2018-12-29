@@ -8,6 +8,7 @@ import {ApplicationId} from '../../appdata/applications';
 import classNames from 'classnames';
 import {Button, Icon} from '@material-ui/core';
 import StartMenuTile from './StartMenuTile/StartMenuTile';
+import ApplicationContextMenu, {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu';
 
 export interface IStartMenuPassedProps {
     opened: boolean
@@ -50,9 +51,12 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, {}> {
                                     <div>
                                         {pinnedApplications.slice(0, maxAppsShownOnTheLeft).map(appId => (
                                             <div key={`start-menu-tile-pinned-${appId}`} className={classes.tileWrapper}>
-                                                <StartMenuTile applicationId={appId}
-                                                               closeStartMenu={props.closeStartMenu}
-                                                               openWindow={openWindow}/>
+                                                <ApplicationContextMenu applicationId={appId} context={OuterContextType.STARTMENU_PINNED}>
+                                                    {/* TODO: for some reason it thinks this functional component is being referenced */}
+                                                    <StartMenuTile applicationId={appId}
+                                                                   closeStartMenu={props.closeStartMenu}
+                                                                   openWindow={openWindow}/>
+                                                </ApplicationContextMenu>
                                             </div>
                                         ))}
                                     </div>

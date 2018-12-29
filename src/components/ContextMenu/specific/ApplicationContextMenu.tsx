@@ -11,7 +11,6 @@ export enum OuterContextType {
     TASKBAR_QUICKACCESS = 'TASKBAR_QUICKACCESS'
 }
 export interface IApplicationContextMenuProps {
-    uniquePrefix: string
     applicationId: ApplicationId
     context: OuterContextType
     children: any // todo: inherit from react props?
@@ -20,23 +19,39 @@ export interface IApplicationContextMenuPassedProps {
     openWindow: (id: ApplicationId) => void
     addDesktopShortcut: (id: ApplicationId) => void
     removeDesktopShortcut: (id: ApplicationId) => void
+    addQuickAccesShortcut: (id: ApplicationId) => void
+    removeQuickAccesShortcut: (id: ApplicationId) => void
+    pinApplicationToStartMenu: (id: ApplicationId) => void
+    unpinApplicationToStartMenu: (id: ApplicationId) => void
 }
 
 export class ApplicationContextMenu extends React.Component<IApplicationContextMenuProps & IApplicationContextMenuPassedProps, {}> {
     public render() {
-        const { props, props: {applicationId, uniquePrefix, context, children} } = this;
+        const { props, props: {applicationId, context, children} } = this;
 
         let contextSpecificItems = [] as IContextItem[];
         if (context === OuterContextType.DESKTOP) {
             contextSpecificItems = [
                 { type: ContextMenuType.SEPERATOR },
-                { type: ContextMenuType.MENUITEM, name: 'Remove', onClick: () => props.removeDesktopShortcut(applicationId) },
+                {
+                    type: ContextMenuType.MENUITEM,
+                    name: 'Remove',
+                    onClick: () => props.removeDesktopShortcut(applicationId)
+                },
                 {
                     type: ContextMenuType.SUBMENU,
                     name: 'Copy to',
                     items: [
-                        { type: ContextMenuType.MENUITEM, name: 'Start menu (pin)' },
-                        { type: ContextMenuType.MENUITEM, name: 'Task bar (make shortcut)' }
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Start menu (pin)',
+                            onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        },
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Task bar (make shortcut)',
+                            onClick: () => props.addQuickAccesShortcut(applicationId)
+                        }
                     ] as IContextItem[]
                 }
             ];
@@ -45,22 +60,10 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
             contextSpecificItems = [
                 { type: ContextMenuType.SEPERATOR },
                 {
-                    type: ContextMenuType.SUBMENU,
-                    name: 'Copy to',
-                    items: [
-                        {
-                            type: ContextMenuType.MENUITEM,
-                            name: 'Desktop (make shortcut)',
-                            onClick: () => props.addDesktopShortcut(applicationId)
-                        },
-                        { type: ContextMenuType.MENUITEM, name: 'Start menu (pin)' }
-                    ] as IContextItem[]
-                }
-            ];
-        }
-        if (context === OuterContextType.STARTMENU_PINNED) {
-            contextSpecificItems = [
-                { type: ContextMenuType.SEPERATOR },
+                    type: ContextMenuType.MENUITEM,
+                    name: 'Remove',
+                    onClick: () => props.removeQuickAccesShortcut(applicationId)
+                },
                 {
                     type: ContextMenuType.SUBMENU,
                     name: 'Copy to',
@@ -70,7 +73,37 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
                             name: 'Desktop (make shortcut)',
                             onClick: () => props.addDesktopShortcut(applicationId)
                         },
-                        { type: ContextMenuType.MENUITEM, name: 'Task bar (make shortcut)' }
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Start menu (pin)',
+                            onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        }
+                    ] as IContextItem[]
+                }
+            ];
+        }
+        if (context === OuterContextType.STARTMENU_PINNED) {
+            contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
+                {
+                    type: ContextMenuType.MENUITEM,
+                    name: 'Unpin',
+                    onClick: () => props.unpinApplicationToStartMenu(applicationId)
+                },
+                {
+                    type: ContextMenuType.SUBMENU,
+                    name: 'Copy to',
+                    items: [
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Desktop (make shortcut)',
+                            onClick: () => props.addDesktopShortcut(applicationId)
+                        },
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Task bar (make shortcut)',
+                            onClick: () => props.addQuickAccesShortcut(applicationId)
+                        }
                     ] as IContextItem[]
                 }
             ];
@@ -83,7 +116,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         const menu = { items } as IContextMenu;
 
         return (
-            <ContextMenu uid={uniquePrefix + '-' + applicationId} menu={menu}>
+            <ContextMenu uid={`${context.toLowerCase()}-${applicationId}`} menu={menu}>
                 {children}
             </ContextMenu>
         );
@@ -100,5 +133,9 @@ const mapDispatchToProps = (dispatch: any): Partial<IApplicationContextMenuPasse
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
     addDesktopShortcut: (id: ApplicationId) => dispatch(actions.addDesktopShortcut(id)),
     removeDesktopShortcut: (id: ApplicationId) => dispatch(actions.removeDesktopShortcut(id)),
+    addQuickAccesShortcut: (id: ApplicationId) => dispatch(actions.addQuickAccesShortcut(id)),
+    removeQuickAccesShortcut: (id: ApplicationId) => dispatch(actions.removeQuickAccesShortcut(id)),
+    pinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.pinApplicationToStartMenu(id)),
+    unpinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.unpinApplicationToStartMenu(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationContextMenu);

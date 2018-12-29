@@ -36,18 +36,17 @@ const quickAccess = (props: IQuickAccessProps) => {
                     {shortcuts.map(shortcut => {
                         const application = applications.find(app => app.id === shortcut);
                         return (
-                            <ApplicationContextMenu uniquePrefix={'quick-access'}
-                                                    applicationId={application.id}
-                                                    context={OuterContextType.TASKBAR_QUICKACCESS}>
-                                <Button key={`quick-access-${application.id}`}
-                                        onClick={() => props.openWindow(application.id)}
-                                        variant={'contained'}
-                                        style={{ width: imageButtonSize, height: imageButtonSize }}>
-                                    <img src={application.icon.src}
-                                         aria-label={application.icon.name}
-                                         style={{ width: imageSize, height: imageSize }}/>
-                                </Button>
-                            </ApplicationContextMenu>
+                            <React.Fragment key={`quick-access-${application.id}`}>
+                                <ApplicationContextMenu applicationId={application.id} context={OuterContextType.TASKBAR_QUICKACCESS}>
+                                    <Button onClick={() => props.openWindow(application.id)}
+                                            variant={'contained'}
+                                            style={{ width: imageButtonSize, height: imageButtonSize }}>
+                                        <img src={application.icon.src}
+                                             aria-label={application.icon.name}
+                                             style={{ width: imageSize, height: imageSize }}/>
+                                    </Button>
+                                </ApplicationContextMenu>
+                            </React.Fragment>
                         )
                     })}
                 </Resizable>

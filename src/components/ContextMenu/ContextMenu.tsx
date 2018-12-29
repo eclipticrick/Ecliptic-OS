@@ -24,7 +24,7 @@ export interface IContextMenuProps {
     menu: IContextMenu
 }
 
-const onClick = ({ event, props }: any) => console.log('NO ONCLICK HANDLER GIVEN', event, props);
+const onClick = ({ event, props }: any) => console.log('[ContextMenu.tsx] NO ONCLICK HANDLER GIVEN', event, props);
 
 const innerContextMenu = (uniqueId: string | number, items: IContextItem[], depth = 0) => {
 

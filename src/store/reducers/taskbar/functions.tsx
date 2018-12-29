@@ -4,7 +4,7 @@ import {IAction} from '../../actionTypes';
 export default {
 
     setHeight: (oldState: IReducerTaskBar, action: IAction & { height: number }): IReducerTaskBar => {
-        const { height } = action;
+        const { height } = action.payload;
 
         return {
             ...oldState,
@@ -12,7 +12,7 @@ export default {
         };
     },
     setQuickAccesWidth: (oldState: IReducerTaskBar, action: IAction & { width: number }): IReducerTaskBar => {
-        const { width } = action;
+        const { width } = action.payload;
 
         return {
             ...oldState,
