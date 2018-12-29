@@ -8,6 +8,8 @@ import ContextMenu, {IContextItem, IContextMenu, ContextMenuType} from '../Conte
 export enum OuterContextType {
     DESKTOP = 'DESKTOP',
     STARTMENU_PINNED = 'STARTMENU_PINNED',
+    STARTMENU_RECENT = 'STARTMENU_RECENT',
+    STARTMENU_ALL = 'STARTMENU_ALL',
     TASKBAR_QUICKACCESS = 'TASKBAR_QUICKACCESS'
 }
 export interface IApplicationContextMenuProps {
@@ -33,6 +35,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
 
         if (context === OuterContextType.DESKTOP) {
             contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Remove',
@@ -58,6 +61,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         }
         if (context === OuterContextType.TASKBAR_QUICKACCESS) {
             contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Remove',
@@ -83,6 +87,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         }
         if (context === OuterContextType.STARTMENU_PINNED) {
             contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
                 {
                     type: ContextMenuType.MENUITEM,
                     name: 'Unpin',
@@ -106,27 +111,61 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
                 }
             ];
         }
+        if (context === OuterContextType.STARTMENU_PINNED) {
+            contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
+                {
+                    type: ContextMenuType.MENUITEM,
+                    name: 'Pin',
+                    onClick: () => props.pinApplicationToStartMenu(applicationId)
+                },
+                {
+                    type: ContextMenuType.SUBMENU,
+                    name: 'Copy to',
+                    items: [
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Desktop (make shortcut)',
+                            onClick: () => props.addDesktopShortcut(applicationId)
+                        },
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Task bar (make shortcut)',
+                            onClick: () => props.addQuickAccessShortcut(applicationId)
+                        }
+                    ] as IContextItem[]
+                }
+            ];
+        }
+        if (context === OuterContextType.STARTMENU_ALL) {
+            contextSpecificItems = [
+                { type: ContextMenuType.SEPERATOR },
+                {
+                    type: ContextMenuType.SUBMENU,
+                    name: 'Copy to',
+                    items: [
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Start menu (pin)',
+                            onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        },
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Desktop (make shortcut)',
+                            onClick: () => props.addDesktopShortcut(applicationId)
+                        },
+                        {
+                            type: ContextMenuType.MENUITEM,
+                            name: 'Task bar (make shortcut)',
+                            onClick: () => props.addQuickAccessShortcut(applicationId)
+                        }
+                    ] as IContextItem[]
+                }
+            ];
+        }
         const items: IContextItem[] = [
             { type: ContextMenuType.MENUITEM, name: 'Open', onClick: () => props.openWindow(applicationId) },
-            { type: ContextMenuType.SEPERATOR },
-            ...contextSpecificItems,
-            {
-                type: ContextMenuType.SUBMENU,
-                name: 'test',
-                items: [
-                    { type: ContextMenuType.MENUITEM, name: 'test' },
-                    { type: ContextMenuType.MENUITEM, name: 'test' },
-                    { type: ContextMenuType.SEPERATOR },
-                    {
-                        type: ContextMenuType.SUBMENU,
-                        name: 'test',
-                        items: [
-                            { type: ContextMenuType.MENUITEM, name: 'test' },
-                            { type: ContextMenuType.MENUITEM, name: 'test' },
-                        ]
-                    }
-                ]
-            }
+            ...contextSpecificItems
         ];
 
         const menu = { items } as IContextMenu;

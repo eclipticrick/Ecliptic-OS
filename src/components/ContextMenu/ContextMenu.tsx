@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Menu, Item, Separator, Submenu, MenuProvider, animation } from 'react-contexify';
 import './ContextMenu.scss';
+import * as classes from './ContextMenu.module.scss';
 
 export interface IContextMenu {
     items: IContextItem[]
@@ -53,7 +54,7 @@ const innerContextMenu = (uniqueId: string | number, items: IContextItem[], dept
 
 const contextMenu = ({uid, children, menu}: IContextMenuProps) => (
     <>
-        <MenuProvider id={`menu-${uid}`} style={{ boxShadow: '0 0 1px purple inset', display: 'inline-flex' }}>
+        <MenuProvider id={`menu-${uid}`} className={classes.menuProviderDiv}>
             {children}
         </MenuProvider>
         <Menu id={`menu-${uid}`} animation={animation.fade}>

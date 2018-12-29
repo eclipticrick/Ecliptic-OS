@@ -2,6 +2,9 @@ $width: 360px;
 $height: 500px;
 $blueBarsHeights: 60px;
 $tileSpacing: 12px;
+$background: #D3E5FA;
+$leftBackground: #f9f9f9;
+$allProgramsButtonHeight: 44px;
 
 div.root {
   position: absolute;
@@ -9,9 +12,6 @@ div.root {
   right: 0;
   bottom: 0;
   left: 0;
-  &.closed {
-    display: none;
-  }
   div.startMenu {
 
     position: absolute;
@@ -73,12 +73,28 @@ div.root {
     div.content {
       flex: 1 1 auto;
       display: flex;
-      background: #D3E5FA;
+      background: $background;
       div.left,
       div.right {
+        position: relative;
         flex: 0 0 #{$width / 2};
         max-width: #{$width / 2};
         overflow: hidden;
+        hr {
+          margin: 0 12px;
+          border: 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        div.tileWrapper {
+          padding: 2px $tileSpacing;
+          &:last-child {
+            padding: 2px $tileSpacing $tileSpacing $tileSpacing
+          }
+        }
+      }
+      div.left {
+        background: $leftBackground;
+        border-right: 1px solid #AFCDF2;
         div.title {
           font-weight: 100;
           font-size: 11px;
@@ -93,23 +109,44 @@ div.root {
           font-size: 11px;
           color: rgba(0, 0, 0, 0.5);
           padding: $tileSpacing;
-
         }
-        hr {
-          margin: 0 12px;
-          border: 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.15);
+        div.allProgramsList {
+          margin-top: $tileSpacing;
+          overflow: auto;
+          height: calc(100% - #{$allProgramsButtonHeight} - #{$tileSpacing});
         }
-        div.tileWrapper {
-          padding: 2px $tileSpacing;
-          &:last-child {
-            padding: 2px $tileSpacing $tileSpacing $tileSpacing
+        div.allProgramsButton {
+          height: $allProgramsButtonHeight;
+          background: $leftBackground;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          font-size: 12px;
+          button {
+            width: 100%;
+            text-transform: unset;
+            border-radius: 0;
+            padding: $tileSpacing;
+            div.allProgramsButtonContent {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              > img {
+                width: 20px;
+                height: 20px;
+                object-fit: contain;
+                margin-left: 12px;
+                margin-right: 0;
+                &.flipped {
+                  transform: scaleX(-1);
+                  margin-left: 0;
+                  margin-right: 12px;
+                }
+              }
+            }
           }
         }
-      }
-      div.left {
-        background: #f9f9f9;
-        border-right: 1px solid #AFCDF2;
       }
       div.right {
 

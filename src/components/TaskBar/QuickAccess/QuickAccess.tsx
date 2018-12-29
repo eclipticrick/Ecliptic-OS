@@ -21,7 +21,7 @@ const quickAccess = (props: IQuickAccessProps) => {
     const imageButtonSizeMargin = 32;
     const extraSpacing = 12;
 
-    return (
+    return shortcuts.length ? (
         <div className={classes.root}>
             <div className={classes.innerRoot}>
                 <Resizable
@@ -36,23 +36,21 @@ const quickAccess = (props: IQuickAccessProps) => {
                     {shortcuts.map(shortcut => {
                         const application = applications.find(app => app.id === shortcut);
                         return (
-                            <React.Fragment key={`quick-access-${application.id}`}>
+                            <Button key={`quick-access-${application.id}`} onClick={() => props.openWindow(application.id)}
+                                    variant={'contained'}
+                                    style={{ width: imageButtonSize, height: imageButtonSize }}>
                                 <ApplicationContextMenu applicationId={application.id} context={OuterContextType.TASKBAR_QUICKACCESS}>
-                                    <Button onClick={() => props.openWindow(application.id)}
-                                            variant={'contained'}
-                                            style={{ width: imageButtonSize, height: imageButtonSize }}>
-                                        <img src={application.icon.src}
-                                             aria-label={application.icon.name}
-                                             style={{ width: imageSize, height: imageSize }}/>
-                                    </Button>
+                                    <img src={application.icon.src}
+                                         aria-label={application.icon.name}
+                                         style={{ width: imageSize, height: imageSize }}/>
                                 </ApplicationContextMenu>
-                            </React.Fragment>
+                            </Button>
                         )
                     })}
                 </Resizable>
             </div>
         </div>
-    );
+    ) : <div className={classes.rootNoItems}/>;
 };
 
 export default quickAccess;

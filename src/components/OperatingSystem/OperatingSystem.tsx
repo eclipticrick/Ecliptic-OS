@@ -10,20 +10,18 @@ import '../../transitions/zoom.scss';
 
 export interface IOperatingSystemProps {
     isLoggedIn: boolean
+    startMenuOpened: boolean
 }
 
 export class OperatingSystem extends React.Component<IOperatingSystemProps, {}> {
     public render() {
-        const { isLoggedIn } = this.props;
-        // if (!isLoggedIn) {
-        //     return <LoginScreen/>
-        // }
+        const { isLoggedIn, startMenuOpened } = this.props;
         return (
             <>
                 <CSSTransition in={isLoggedIn} timeout={240} classNames={'transition-zoom'}>
                     <>
                         <Desktop/>
-                        <StartMenu/>
+                        { startMenuOpened ? <StartMenu/> : null }
                         <TaskBar/>
                     </>
                 </CSSTransition>
@@ -39,7 +37,8 @@ export class OperatingSystem extends React.Component<IOperatingSystemProps, {}> 
 
 const mapStateToProps = (state: IStore) => {
     const { isLoggedIn } = state.user;
-    return { isLoggedIn }
+    const { opened } = state.startmenu;
+    return { isLoggedIn, startMenuOpened: opened }
 };
 
 export default connect(mapStateToProps)(OperatingSystem);

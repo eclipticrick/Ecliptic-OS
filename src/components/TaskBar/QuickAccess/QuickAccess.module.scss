@@ -1,9 +1,12 @@
+div.rootNoItems {
+  margin-right: 12px;
+}
 div.root {
   display: flex;
   align-items: center;
   margin: 0 12px;
   div.innerRoot {
-    height: 30px;
+    height: 32px;
     overflow: hidden;
     div.resizableDiv {
       border-right: 1px solid rgba(255, 255, 255, 0.15);

@@ -38,10 +38,12 @@ $borderRadius: 3px;
 
   border-radius: $borderRadius;
   .react-contexify__item:first-child > .react-contexify__item__content {
-    border-radius: $borderRadius $borderRadius 0 0;
+    border-top-left-radius: $borderRadius;
+    border-top-right-radius: $borderRadius;
   }
   .react-contexify__item:last-child > .react-contexify__item__content {
-    border-radius: 0 0 $borderRadius $borderRadius;
+    border-bottom-left-radius: $borderRadius;
+    border-bottom-right-radius: $borderRadius;
   }
 
   .react-contexify__item {

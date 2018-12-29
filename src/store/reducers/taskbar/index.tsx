@@ -11,17 +11,7 @@ export interface IReducerTaskBar {
 const initialState: IReducerTaskBar = {
     height: 36,
     quickAccessWidth: 44,
-    quickAccessShortcuts: [
-        ApplicationId.INTERNET_EXPLORER,
-        ApplicationId.LIME_WIRE,
-        ApplicationId.OUTLOOK,
-        ApplicationId.NOTEPAD,
-        ApplicationId.TODO_LIST,
-        ApplicationId.WHATSAPP,
-        ApplicationId.CALCULATOR,
-        ApplicationId.COMPUTER,
-        ApplicationId.PAINT
-    ]
+    quickAccessShortcuts: []
 };
 
 const REDUCER = ( state: IReducerTaskBar = initialState, action: IAction & any ) => {
