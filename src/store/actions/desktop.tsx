@@ -10,3 +10,7 @@ export const removeDesktopShortcut = (applicationId: ApplicationId) => ({
     type: Actions.DESKTOP_____REMOVE_SHORTCUT,
     payload: { applicationId }
 });
+
+export const toggleDesktopBackground = () => ({
+    type: Actions.DESKTOP_____TOGGLE_BACKGROUND
+});

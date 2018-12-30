@@ -4,4 +4,13 @@ div.root {
   height: 100%;
   border-radius: 8px;
   overflow: hidden;
+
+  // context menu
+  > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }

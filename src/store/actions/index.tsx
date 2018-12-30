@@ -26,5 +26,6 @@ export {
 } from './windows';
 export {
     addDesktopShortcut,
-    removeDesktopShortcut
+    removeDesktopShortcut,
+    toggleDesktopBackground
 } from './desktop';

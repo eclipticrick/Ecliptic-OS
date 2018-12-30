@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {IStore} from '../../../../store/initialize';
 import {ApplicationId} from '../../../../appdata/applications';
 import * as actions from '../../../../store/actions/index';
 import ContextMenu, {IContextItem, IContextMenu} from '../../ContextMenu';
@@ -43,12 +42,6 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
         );
     }
 }
-const mapStateToProps = (state: IStore) => {
-    const { height } = state.taskbar;
-    const { windows, popup } = state.windows;
-    const { shortcuts } = state.desktop;
-    return { taskbarHeight: height, windows, shortcuts, popup }
-};
 
 const mapDispatchToProps = (dispatch: any): Partial<IApplicationContextMenuPassedProps> => ({
     openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
@@ -59,4 +52,4 @@ const mapDispatchToProps = (dispatch: any): Partial<IApplicationContextMenuPasse
     pinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.pinApplicationToStartMenu(id)),
     unpinApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.unpinApplicationToStartMenu(id)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicationContextMenu);
+export default connect(null, mapDispatchToProps)(ApplicationContextMenu);

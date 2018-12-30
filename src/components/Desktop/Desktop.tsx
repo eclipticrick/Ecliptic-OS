@@ -9,6 +9,7 @@ import applications, {ApplicationId} from '../../appdata/applications';
 import {IPopupInstance, IWindowInstance} from '../../appdata/window';
 import * as actions from '../../store/actions';
 import PopupWindow from '../Window/Base/PopupWindow';
+import {IBackground} from '../../store/reducers/desktop';
 
 export interface IDesktopProps {
     taskbarHeight: number
@@ -17,13 +18,14 @@ export interface IDesktopProps {
     popup: IPopupInstance
 }
 export interface IDesktopPassedProps {
+    background: IBackground
     openWindow: (id: ApplicationId) => void
     addRecentApplicationToStartMenu: (id: ApplicationId) => void
 }
 
 export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps, {}> {
     public render() {
-        const { props, props: { taskbarHeight, windows, shortcuts, popup } } = this;
+        const { props, props: { taskbarHeight, windows, shortcuts, popup, background } } = this;
 
         const openWindow = (applicationId: ApplicationId) => {
             props.openWindow(applicationId);
@@ -32,8 +34,7 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
 
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
-
-                <Background taskbarHeight={taskbarHeight}/>
+                <Background taskbarHeight={taskbarHeight} background={background}/>
                 <IconGrid shortcuts={shortcuts} openWindow={openWindow}/>
 
                 {windows.map((window, i: number) => {
@@ -60,8 +61,8 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
 const mapStateToProps = (state: IStore) => {
     const { height } = state.taskbar;
     const { windows, popup } = state.windows;
-    const { shortcuts } = state.desktop;
-    return { taskbarHeight: height, windows, shortcuts, popup }
+    const { shortcuts, background } = state.desktop;
+    return { taskbarHeight: height, windows, shortcuts, popup, background }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<IDesktopPassedProps> => ({

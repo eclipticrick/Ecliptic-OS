@@ -4,7 +4,10 @@ div.root {
   margin: 12px;
 
   // the contextMenu around innerRoot
-  > * { width: $iconSize; }
+  > * {
+    pointer-events: auto;
+    width: $iconSize;
+  }
 
   div.innerRoot {
     width: $iconSize;
