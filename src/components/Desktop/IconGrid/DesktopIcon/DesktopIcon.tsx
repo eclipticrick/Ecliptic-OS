@@ -15,7 +15,7 @@ const desktopIcon = (props: IDesktopIconProps) => {
     const { applicationId, iconSrc, name, scale } = props;
 
     return (
-        <div className={classes.root} onClick={() => props.openWindow(applicationId)}>
+        <div className={classes.root}>
             <ApplicationContextMenu applicationId={applicationId} context={OuterContextType.DESKTOP}>
                 <div className={classes.innerRoot} onClick={() => props.openWindow(applicationId)}>
                     <div className={classes.iconWrapper}>

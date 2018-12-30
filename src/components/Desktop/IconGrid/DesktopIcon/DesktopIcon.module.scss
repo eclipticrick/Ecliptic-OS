@@ -1,7 +1,13 @@
+$iconSize: 60px;
+
 div.root {
   margin: 12px;
+
+  // the contextMenu around innerRoot
+  > * { width: $iconSize; }
+
   div.innerRoot {
-    width: 60px;
+    width: $iconSize;
     cursor: pointer;
     align-self: flex-start;
 
@@ -9,8 +15,8 @@ div.root {
       overflow: hidden;
       transition: transform .12s;
       > img {
-        width: 60px;
-        height: 60px;
+        width: $iconSize;
+        height: $iconSize;
         object-fit: contain;
       }
     }
