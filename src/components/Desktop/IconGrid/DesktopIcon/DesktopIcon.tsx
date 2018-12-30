@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classes from './DesktopIcon.module.scss';
 import {ApplicationId} from '../../../../appdata/applications';
-import ApplicationContextMenu, {OuterContextType} from '../../../ContextMenu/specific/ApplicationContextMenu';
+import ApplicationContextMenu, {OuterContextType} from '../../../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 
 export interface IDesktopIconProps {
     applicationId: ApplicationId

@@ -63,7 +63,14 @@ $borderRadius: 3px;
       text-align: left;
       white-space: nowrap;
       color: $itemColor;
-      position: relative
+      position: relative;
+      align-items: center;
+      justify-content: space-between;
+      img.icon {
+        width: $itemFontSize;
+        height: $itemFontSize;
+        object-fit: contain;
+      }
     }
     .react-contexify__submenu {
       position: absolute;

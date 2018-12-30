@@ -3,7 +3,7 @@ import * as classes from './StartMenuTile.module.scss';
 import {ApplicationId} from '../../../appdata/applications';
 import applications from '../../../appdata/applications';
 import {Button} from '@material-ui/core';
-import ApplicationContextMenu, {OuterContextType} from '../../ContextMenu/specific/ApplicationContextMenu';
+import ApplicationContextMenu, {OuterContextType} from '../../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 
 export interface IStartMenuTileProps {
     context: OuterContextType

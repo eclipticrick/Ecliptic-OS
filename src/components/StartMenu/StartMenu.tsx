@@ -7,7 +7,7 @@ import * as actions from '../../store/actions';
 import applications, {ApplicationId} from '../../appdata/applications';
 import {Button, Icon} from '@material-ui/core';
 import StartMenuTile from './StartMenuTile/StartMenuTile';
-import {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu';
+import {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 import * as allProgramsSrc from '../../assets/images/icons/073-play.svg';
 
 export interface IStartMenuPassedProps {

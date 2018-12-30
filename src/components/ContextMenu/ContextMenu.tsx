@@ -8,6 +8,7 @@ export interface IContextMenu {
 }
 export interface IContextItem {
     type: ContextMenuType
+    iconSrc?: string
     name?: string
     items?: IContextItem[]
     onClick?: ({event, props}: any) => any
@@ -42,6 +43,7 @@ const innerContextMenu = (uniqueId: string | number, items: IContextItem[], dept
                       onClick={(args) => item.onClick ? item.onClick(args) : onClick(args)}
                       disabled={item.disabled}>
                     {item.name}
+                    {item.iconSrc ? <img className='icon' src={item.iconSrc}/> : null}
                 </Item>
             )
         } else {

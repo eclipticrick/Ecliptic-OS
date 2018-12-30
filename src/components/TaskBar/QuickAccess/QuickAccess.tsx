@@ -4,7 +4,7 @@ import {ApplicationId} from '../../../appdata/applications';
 import applications from '../../../appdata/applications';
 import {Button} from '@material-ui/core';
 import Resizable from 're-resizable';
-import ApplicationContextMenu, {OuterContextType} from '../../ContextMenu/specific/ApplicationContextMenu';
+import ApplicationContextMenu, {OuterContextType} from '../../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 
 export interface IQuickAccessProps {
     shortcuts: ApplicationId[]
