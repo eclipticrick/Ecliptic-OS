@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classes from './ActiveWindows.module.scss';
-import {IWindowInstance} from '../../../appdata/window';
+import {IWindowInstance} from '../../../apptypings/window';
 import applications from '../../../appdata/applications';
 import classNames from 'classnames';
 
@@ -27,7 +27,7 @@ const activeWindows = (props: IQuickAccessProps) => {
         <div className={classes.root}>
             <div className={classes.itemsOuterWrapper}>
                 {sortedWindowInstances.map(window => {
-                    const application = applications.find(app => app.id === window.applicationId);
+                    const application = applications.find(app => app.id === window.application.id);
                     const isSelected = selectedInstanceId === window.instanceId;
                     return (
                         <div key={`taskbar-${window.instanceId}`}

@@ -8,8 +8,8 @@ import StartButton from './StartButton/StartButton';
 import QuickAccess from './QuickAccess/QuickAccess';
 import ActiveWindows from './ActiveWindows/ActiveWindows';
 import SystemTray from './SystemTray/SystemTray';
-import {ApplicationId} from '../../appdata/applications';
-import {IPopupInstance, IWindowInstance} from '../../appdata/window';
+import {ApplicationId, IApplication} from '../../appdata/applications';
+import {IWindowInstance} from '../../apptypings/window';
 import classNames from 'classnames';
 
 export interface ITaskbarProps {
@@ -20,11 +20,11 @@ export interface ITaskbarProps {
 }
 
 export interface ITaskbarPassedProps {
-    popup: IPopupInstance
+    // popup: IPopupInstance
     startMenuIsOpen: boolean
     setTaskbarHeight: (height: number) => void
     setQuickAccessWidth: (width: number) => void
-    openWindow: (applicationId: ApplicationId) => void
+    openWindow: (application: IApplication) => void
     addRecentApplicationToStartMenu: (id: ApplicationId) => void
     selectWindow: (instanceId: number) => void
     minimizeWindow: (instanceId: number) => void
@@ -34,15 +34,15 @@ export interface ITaskbarPassedProps {
 
 export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps, {}> {
     public render() {
-        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances, popup, startMenuIsOpen } } = this;
+        const { props, props: { height, quickAccessShortcuts, quickAccessWidth, windowInstances, startMenuIsOpen } } = this; // popup
 
-        const openWindow = (applicationId: ApplicationId) => {
-            props.openWindow(applicationId);
-            props.addRecentApplicationToStartMenu(applicationId);
+        const openWindow = (application: IApplication) => {
+            props.openWindow(application);
+            props.addRecentApplicationToStartMenu(application.id);
         };
 
         return (
-            <div className={classNames(classes.root, popup ? classes.unClickable : null)}>
+            <div className={classes.root}> {/* className={classNames(classes.root, popup ? classes. ((todo:)) unClickable : null)} */}
                 <Resizable
                     size={{ height }}
                     enable={{top: true}}
@@ -78,15 +78,15 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
 }
 const mapStateToProps = (state: IStore) => {
     const { height, quickAccessShortcuts, quickAccessWidth } = state.taskbar;
-    const { windows, popup } = state.windows;
+    const { windows } = state.windows; // popup
     const { opened } = state.startmenu;
-    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, popup, startMenuIsOpen: opened }
+    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, startMenuIsOpen: opened } // popup
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
     setTaskbarHeight: (height: number) => dispatch(actions.setTaskbarHeight(height)),
     setQuickAccessWidth: (width: number) => dispatch(actions.setQuickAccessWidth(width)),
-    openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
+    openWindow: (application: IApplication) => dispatch(actions.openWindow(application)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
     minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
     openStartMenu: () => dispatch(actions.openStartMenu()),

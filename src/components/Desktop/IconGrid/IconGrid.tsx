@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as classes from './IconGrid.module.scss';
 import DesktopIcon from './DesktopIcon/DesktopIcon';
-import applications, {ApplicationId} from '../../../appdata/applications';
+import applications, {ApplicationId, IApplication} from '../../../appdata/applications';
 
 export interface IIconGridProps {
     shortcuts: ApplicationId[],
-    openWindow: (applicationId: ApplicationId) => void
+    openWindow: (application: IApplication) => void
 }
 
 const iconGrid = ({shortcuts, openWindow}: IIconGridProps) => {
@@ -16,7 +16,7 @@ const iconGrid = ({shortcuts, openWindow}: IIconGridProps) => {
                 const { name, src, scale } = application.icon;
                 return (
                     <DesktopIcon key={`icon-${application.id}`}
-                                 applicationId={application.id}
+                                 application={application}
                                  name={name}
                                  iconSrc={src}
                                  scale={scale || 1}

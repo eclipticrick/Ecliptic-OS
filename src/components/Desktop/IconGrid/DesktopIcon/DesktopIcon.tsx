@@ -1,23 +1,23 @@
 import * as React from 'react';
 import * as classes from './DesktopIcon.module.scss';
-import {ApplicationId} from '../../../../appdata/applications';
+import {ApplicationId, IApplication} from '../../../../appdata/applications';
 import ApplicationContextMenu, {OuterContextType} from '../../../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 
 export interface IDesktopIconProps {
-    applicationId: ApplicationId
+    application: IApplication
     iconSrc: string
     name: string
     scale?: number
-    openWindow: (applicationId: ApplicationId) => void
+    openWindow: (application: IApplication) => void
 }
 
 const desktopIcon = (props: IDesktopIconProps) => {
-    const { applicationId, iconSrc, name, scale } = props;
+    const { application, iconSrc, name, scale } = props;
 
     return (
         <div className={classes.root}>
-            <ApplicationContextMenu applicationId={applicationId} context={OuterContextType.DESKTOP}>
-                <div className={classes.innerRoot} onClick={() => props.openWindow(applicationId)}>
+            <ApplicationContextMenu application={application} context={OuterContextType.DESKTOP}>
+                <div className={classes.innerRoot} onClick={() => props.openWindow(application)}>
                     <div className={classes.iconWrapper}>
                         <img src={iconSrc} style={{ transform: `scale(${scale ? scale : 1})` }} draggable={false} />
                     </div>

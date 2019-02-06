@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import '../../transitions/zoom.scss';
 import * as classes from './StartMenu.module.scss';
 import * as actions from '../../store/actions';
-import applications, {ApplicationId} from '../../appdata/applications';
+import applications, {ApplicationId, IApplication} from '../../appdata/applications';
 import {Button, Icon} from '@material-ui/core';
 import StartMenuTile from './StartMenuTile/StartMenuTile';
 import {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
@@ -16,7 +16,7 @@ export interface IStartMenuPassedProps {
     userName: string
     imageSrc: string
     closeStartMenu: () => void
-    openWindow: (applicationId: ApplicationId) => void
+    openWindow: (application: IApplication) => void
     addRecentApplicationToStartMenu: (id: ApplicationId) => void
     taskbarHeight: number
 }
@@ -33,9 +33,9 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
         const { allProgramsOpened } = this.state;
 
         let canCloseOnClick = true;
-        const openWindow = (applicationId: ApplicationId) => {
-            props.openWindow(applicationId);
-            props.addRecentApplicationToStartMenu(applicationId);
+        const openWindow = (application: IApplication) => {
+            props.openWindow(application);
+            props.addRecentApplicationToStartMenu(application.id);
         };
         const maxAppsShownOnTheLeft = 7;
 
@@ -152,7 +152,7 @@ const mapStateToProps = (state: IStore) => {
 
 const mapDispatchToProps = (dispatch: any): Partial<IStartMenuPassedProps> => ({
     closeStartMenu: () => dispatch(actions.closeStartMenu()),
-    openWindow: (applicationId: ApplicationId) => dispatch(actions.openWindow(applicationId)),
+    openWindow: (application: IApplication) => dispatch(actions.openWindow(application)),
     addRecentApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.addRecentApplicationToStartMenu(id)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(StartMenu);

@@ -6,30 +6,35 @@ import Resizable, {ResizableDirection} from 're-resizable';
 import {Icon} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
-import {IWindowInstance} from '../../../appdata/window';
-import {disableDragging, enableDragging, handleDraggingStop} from './sharedFunctions';
+import {IWindowInstance} from '../../../apptypings/window';
 
-export interface IWindowProps {
+export interface IWindowBaseProps {
     windowInstance: IWindowInstance
     title: string
     iconSrc: string
     selected: boolean
     maximizable: boolean
-    minHeight?: number
-    minWidth?: number
+    minHeight: number
+    minWidth: number
+
+
+    showMaximizeButton: boolean,
+    showMinimizeButton: boolean,
+
+
     defaultPosition?: {
         x: number
         y: number
     }
 }
-interface IWindowPassedProps {
+interface IWindowBasePassedProps {
     closeWindow: (instanceId: number) => void
     selectWindow: (instanceId: number) => void
     minimizeWindow: (instanceId: number) => void
     maximizeWindow: (instanceId: number) => void
     normalizeWindow: (instanceId: number) => void
 }
-interface IWindowState {
+interface IWindowBaseState {
     disableDragging: boolean
     position: {
         x: number
@@ -41,7 +46,7 @@ interface IWindowState {
     }
 }
 
-const defaultProps: Partial<IWindowProps> = {
+const defaultProps: Partial<IWindowBaseProps> = {
     minHeight: 250,
     minWidth: 250,
     defaultPosition: {
@@ -50,7 +55,26 @@ const defaultProps: Partial<IWindowProps> = {
     }
 };
 
-class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowState> {
+const disableDragging = (self: any) => {
+    self.setState({
+        disableDragging: true
+    });
+};
+const enableDragging = (self: any) => {
+    self.setState({
+        disableDragging: false
+    });
+};
+const handleDraggingStop = (e: MouseEvent, data: DraggableData, self: any) => {
+    self.setState({
+        position: {
+            x: data.lastX,
+            y: data.lastY
+        }
+    });
+};
+
+class WindowBase extends React.Component<IWindowBaseProps & IWindowBasePassedProps, IWindowBaseState> {
     public state = {
         disableDragging: false,
         position: {
@@ -82,6 +106,8 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                 minHeight,
                 minWidth,
                 defaultPosition,
+                showMaximizeButton,
+                showMinimizeButton,
                 children
             }
         } = this;
@@ -151,14 +177,16 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                             <span className={classes.title}>{title}</span>
                         </div>
                         <div className={classes.right}>
-                            <button type='button'
-                                    onMouseUp={() => props.minimizeWindow(windowInstance.instanceId)}
-                                    className={classes.minimize}
-                                    onMouseEnter={() => disableDragging(this)}
-                                    onMouseLeave={() => enableDragging(this)}>
-                                <Icon className={classes.icon}>minimize</Icon>
-                            </button>
-                            {windowInstance.maximized ?
+                            {!showMinimizeButton ? null : (
+                                <button type='button'
+                                        onMouseUp={() => props.minimizeWindow(windowInstance.instanceId)}
+                                        className={classes.minimize}
+                                        onMouseEnter={() => disableDragging(this)}
+                                        onMouseLeave={() => enableDragging(this)}>
+                                    <Icon className={classes.icon}>minimize</Icon>
+                                </button>
+                            )}
+                            {!showMaximizeButton ? null : windowInstance.maximized ?
                                 <button type='button'
                                         onMouseUp={() => this._handleNormalizeWindow(windowInstance.instanceId)}
                                         className={classes.maximize}
@@ -174,7 +202,8 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
                                         onMouseLeave={() => enableDragging(this)}
                                         disabled={!maximizable}>
                                     <Icon className={classes.icon}>fullscreen</Icon>
-                                </button>}
+                                </button>
+                            }
                             <button type='button'
                                     onMouseUp={() => props.closeWindow(windowInstance.instanceId)}
                                     className={classes.close}
@@ -210,13 +239,13 @@ class Window extends React.Component<IWindowProps & IWindowPassedProps, IWindowS
     }
 }
 
-const mapDispatchToProps = (dispatch: any): IWindowPassedProps => ({
+const mapDispatchToProps = (dispatch: any): IWindowBasePassedProps => ({
     closeWindow: (id: number) => dispatch(actions.closeWindow(id)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
     minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
     maximizeWindow: (id: number) => dispatch(actions.maximizeWindow(id)),
     normalizeWindow: (id: number) => dispatch(actions.normalizeWindow(id))
 });
-export default connect<Partial<IWindowPassedProps>, Partial<IWindowPassedProps>, IWindowProps>(
+export default connect<Partial<IWindowBasePassedProps>, Partial<IWindowBasePassedProps>, IWindowBaseProps>(
     null, mapDispatchToProps
-)(Window);
+)(WindowBase);

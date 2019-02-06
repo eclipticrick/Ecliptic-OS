@@ -19,8 +19,16 @@ import * as whatsappIcon from '../assets/images/icons/034-whatsapp.svg';
 import * as calculatorIcon from '../assets/images/icons/040-calculator.svg';
 import * as computerIcon from '../assets/images/icons/041-smart-tv.svg';
 import * as paintIcon from '../assets/images/icons/043-art.svg';
+import * as errorIcon from '../assets/images/icons/070-cancel.svg';
+import * as infoIcon from '../assets/images/icons/068-info.svg';
+import * as warningIcon from '../assets/images/icons/069-warning.svg';
+import * as helpIcon from '../assets/images/icons/071-question.svg';
+
+import Window from '../components/Window/Window';
 
 export enum ApplicationId {
+    POPUP_INFO = 'POPUP_INFO',
+
     INTERNET_EXPLORER = 'INTERNET_EXPLORER',
     LIME_WIRE         = 'LIME_WIRE',
     OUTLOOK           = 'OUTLOOK',
@@ -42,13 +50,24 @@ export interface IApplication {
     window: {
         Component: any
         title?: string
-        minHeight?: number
-        minWidth?: number
-        maximizable?: boolean
+        children?: any // todo: JSX or string
+        // minHeight?: number
+        // minWidth?: number
+        // maximizable?: boolean
     }
 }
 
 const applications: IApplication[] = [
+    {
+        id: ApplicationId.POPUP_INFO,
+        icon: {
+            name: 'Info',
+            src: infoIcon
+        },
+        window: {
+            Component: Window.Popup
+        }
+    },
     {
         id: ApplicationId.INTERNET_EXPLORER,
         icon: {
@@ -59,8 +78,8 @@ const applications: IApplication[] = [
         window: {
             Component: InternetExplorer,
             title: 'Internet Explorer',
-            minHeight: 300,
-            minWidth: 400,
+            // minHeight: 300,
+            // minWidth: 400,
         }
     },
     {

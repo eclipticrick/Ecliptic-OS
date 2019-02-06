@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {ApplicationId} from '../../../../appdata/applications';
+import {ApplicationId, IApplication} from '../../../../appdata/applications';
 import * as actions from '../../../../store/actions/index';
 import ContextMenu, {IContextItem, IContextMenu} from '../../ContextMenu';
 import contextMenuItems from './contextMenuItems';
@@ -13,12 +13,12 @@ export enum OuterContextType {
     TASKBAR_QUICKACCESS = 'TASKBAR_QUICKACCESS'
 }
 export interface IApplicationContextMenuProps {
-    applicationId: ApplicationId
+    application: IApplication
     context: OuterContextType
     children: any // todo: inherit from react props?
 }
 export interface IApplicationContextMenuPassedProps {
-    openWindow: (id: ApplicationId) => void
+    openWindow: (application: IApplication) => void
     addDesktopShortcut: (id: ApplicationId) => void
     removeDesktopShortcut: (id: ApplicationId) => void
     addQuickAccessShortcut: (id: ApplicationId) => void
@@ -29,14 +29,14 @@ export interface IApplicationContextMenuPassedProps {
 
 export class ApplicationContextMenu extends React.Component<IApplicationContextMenuProps & IApplicationContextMenuPassedProps, {}> {
     public render() {
-        const { props, props: {applicationId, context, children} } = this;
+        const { props, props: {application, context, children} } = this;
 
         const items: IContextItem[] = contextMenuItems(props);
 
         const menu = { items } as IContextMenu;
 
         return (
-            <ContextMenu uid={`${context.toLowerCase()}-${applicationId}`} menu={menu}>
+            <ContextMenu uid={`${context.toLowerCase()}-${application.id}`} menu={menu}>
                 {children}
             </ContextMenu>
         );
@@ -44,7 +44,7 @@ export class ApplicationContextMenu extends React.Component<IApplicationContextM
 }
 
 const mapDispatchToProps = (dispatch: any): Partial<IApplicationContextMenuPassedProps> => ({
-    openWindow: (id: ApplicationId) => dispatch(actions.openWindow(id)),
+    openWindow: (application: IApplication) => dispatch(actions.openWindow(application)),
     addDesktopShortcut: (id: ApplicationId) => dispatch(actions.addDesktopShortcut(id)),
     removeDesktopShortcut: (id: ApplicationId) => dispatch(actions.removeDesktopShortcut(id)),
     addQuickAccessShortcut: (id: ApplicationId) => dispatch(actions.addQuickAccessShortcut(id)),

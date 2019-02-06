@@ -3,9 +3,9 @@ import {IApplicationContextMenuPassedProps, IApplicationContextMenuProps, OuterC
 import applications from '../../../../appdata/applications';
 
 const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationContextMenuPassedProps): IContextItem[] => {
-    const {applicationId, context } = props;
+    const { application, context } = props;
 
-    const application = applications.find(app => app.id === applicationId);
+    // const application = applications.find(app => app.id === applicationId);
 
     let contextSpecificItems = [] as IContextItem[];
 
@@ -15,7 +15,7 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
             {
                 type: ContextMenuType.MENUITEM,
                 name: 'Remove',
-                onClick: () => props.removeDesktopShortcut(applicationId)
+                onClick: () => props.removeDesktopShortcut(application.id)
             },
             {
                 type: ContextMenuType.SUBMENU,
@@ -24,12 +24,12 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Start menu (pin)',
-                        onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        onClick: () => props.pinApplicationToStartMenu(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Task bar (make shortcut)',
-                        onClick: () => props.addQuickAccessShortcut(applicationId)
+                        onClick: () => props.addQuickAccessShortcut(application.id)
                     }
                 ] as IContextItem[]
             }
@@ -41,7 +41,7 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
             {
                 type: ContextMenuType.MENUITEM,
                 name: 'Remove',
-                onClick: () => props.removeQuickAccessShortcut(applicationId)
+                onClick: () => props.removeQuickAccessShortcut(application.id)
             },
             {
                 type: ContextMenuType.SUBMENU,
@@ -50,12 +50,12 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Desktop (make shortcut)',
-                        onClick: () => props.addDesktopShortcut(applicationId)
+                        onClick: () => props.addDesktopShortcut(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Start menu (pin)',
-                        onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        onClick: () => props.pinApplicationToStartMenu(application.id)
                     }
                 ] as IContextItem[]
             }
@@ -67,7 +67,7 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
             {
                 type: ContextMenuType.MENUITEM,
                 name: 'Unpin',
-                onClick: () => props.unpinApplicationToStartMenu(applicationId)
+                onClick: () => props.unpinApplicationToStartMenu(application.id)
             },
             {
                 type: ContextMenuType.SUBMENU,
@@ -76,12 +76,12 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Desktop (make shortcut)',
-                        onClick: () => props.addDesktopShortcut(applicationId)
+                        onClick: () => props.addDesktopShortcut(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Task bar (make shortcut)',
-                        onClick: () => props.addQuickAccessShortcut(applicationId)
+                        onClick: () => props.addQuickAccessShortcut(application.id)
                     }
                 ] as IContextItem[]
             }
@@ -93,7 +93,7 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
             {
                 type: ContextMenuType.MENUITEM,
                 name: 'Pin',
-                onClick: () => props.pinApplicationToStartMenu(applicationId)
+                onClick: () => props.pinApplicationToStartMenu(application.id)
             },
             {
                 type: ContextMenuType.SUBMENU,
@@ -102,12 +102,12 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Desktop (make shortcut)',
-                        onClick: () => props.addDesktopShortcut(applicationId)
+                        onClick: () => props.addDesktopShortcut(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Task bar (make shortcut)',
-                        onClick: () => props.addQuickAccessShortcut(applicationId)
+                        onClick: () => props.addQuickAccessShortcut(application.id)
                     }
                 ] as IContextItem[]
             }
@@ -123,17 +123,17 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Start menu (pin)',
-                        onClick: () => props.pinApplicationToStartMenu(applicationId)
+                        onClick: () => props.pinApplicationToStartMenu(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Desktop (make shortcut)',
-                        onClick: () => props.addDesktopShortcut(applicationId)
+                        onClick: () => props.addDesktopShortcut(application.id)
                     },
                     {
                         type: ContextMenuType.MENUITEM,
                         name: 'Task bar (make shortcut)',
-                        onClick: () => props.addQuickAccessShortcut(applicationId)
+                        onClick: () => props.addQuickAccessShortcut(application.id)
                     }
                 ] as IContextItem[]
             }
@@ -144,7 +144,7 @@ const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationCont
             type: ContextMenuType.MENUITEM,
             name: 'Open',
             iconSrc: application.icon.src,
-            onClick: () => props.openWindow(applicationId)
+            onClick: () => props.openWindow(application)
         },
         ...contextSpecificItems
     ];

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import DefaultApplicationWindow, {IDefaultApplicationWindowProps} from '../../components/Window/DefaultApplicationWindow';
+import Window, { IDefaultWindowProps } from '../../components/Window/Window';
 
-export class Outlook extends React.Component<IDefaultApplicationWindowProps, {}> {
+export class Outlook extends React.Component<IDefaultWindowProps, {}> {
     public render() {
-        const { windowInstance, application, selected } = this.props;
+        const { windowInstance, selected } = this.props;
         return (
-            <DefaultApplicationWindow windowInstance={windowInstance} application={application} selected={selected}>
+            <Window.Default windowInstance={windowInstance} selected={selected}>
                 <div style={{ padding: 12 }}>
                     Outlook
                 </div>
-            </DefaultApplicationWindow>
+            </Window.Default>
         );
     }
 }

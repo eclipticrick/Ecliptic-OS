@@ -1,16 +1,16 @@
 import * as React from 'react';
 import * as classes from './InternetExplorer.module.scss';
-import DefaultApplicationWindow, {IDefaultApplicationWindowProps} from '../../components/Window/DefaultApplicationWindow';
+import Window, { IDefaultWindowProps } from '../../components/Window/Window';
 
-export class InternetExplorer extends React.Component<IDefaultApplicationWindowProps, {}> {
+export class InternetExplorer extends React.Component<IDefaultWindowProps, {}> {
     public render() {
-        const { windowInstance, application, selected } = this.props;
+        const { windowInstance, selected } = this.props;
         return (
-            <DefaultApplicationWindow windowInstance={windowInstance} application={application} selected={selected}>
+            <Window.Default windowInstance={windowInstance} selected={selected}>
                 <div className={classes.root}>
                     InternetExplorer
                 </div>
-            </DefaultApplicationWindow>
+            </Window.Default>
         );
     }
 }

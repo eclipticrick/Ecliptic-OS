@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {IDefaultApplicationWindowProps} from '../../components/Window/DefaultApplicationWindow';
-import Window, {IWindowProps} from '../../components/Window/Base/Window';
+import Window, {IDefaultWindowProps} from '../../components/Window/Window';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
 import {Button, Grid, Tooltip} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
-import {IPopupInstance, PopupType} from '../../appdata/window';
+import applications, {ApplicationId, IApplication} from "../../appdata/applications";
 
 interface ICalculatorState {
     entry: string
@@ -16,7 +15,7 @@ interface ICalculatorState {
     memory: string
 }
 interface ICalculatorPassedProps {
-    openPopup: (popup: IPopupInstance) => void
+    openWindow: (application: IApplication) => void
 }
 enum Clicked {
     COPY = 'COPY',
@@ -31,7 +30,7 @@ const menuTree = {
     }
 };
 
-export class Calculator extends React.Component<IDefaultApplicationWindowProps & ICalculatorPassedProps, ICalculatorState> {
+export class Calculator extends React.Component<IDefaultWindowProps & ICalculatorPassedProps, ICalculatorState> {
     public state = {
         entry: '0',
         store: null as string,
@@ -42,21 +41,22 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps &
     private inputRef: any = React.createRef();
 
     public render() {
-        const { windowInstance, application, selected } = this.props;
+        const { windowInstance, selected } = this.props;
 
         const menuItemClickedHandler = (menuItem: Clicked) => {
             if (menuItem === Clicked.COPY) {
                 this.inputRef.current.select();
                 document.execCommand('copy');
             } else if (menuItem === Clicked.ABOUT) {
-                this.props.openPopup({
-                    type: PopupType.INFO,
-                    title: 'About Calculator',
-                    children: (<>
-                        Version 0.0.1<br/>
-                        © Wesley Veenendaal
-                    </>)
-                })
+                this.props.openWindow(applications.find(app => app.id === ApplicationId.POPUP_INFO))
+                // this.props.openPopup({
+                //     type: PopupType.INFO,
+                //     title: 'About Calculator',
+                //     children: (<>
+                //         Version 0.0.1<br/>
+                //         © Wesley Veenendaal
+                //     </>)
+                // })
             }
         };
 
@@ -204,11 +204,11 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps &
         };
 
         return (
-            <Window windowInstance={windowInstance}
-                    title={application.window.title}
+            <Window.Default
+                    windowInstance={windowInstance}
+                    // application={application}
                     minWidth={350}
                     minHeight={417}
-                    iconSrc={application.icon.src}
                     maximizable={false}
                     selected={selected}>
 
@@ -403,14 +403,14 @@ export class Calculator extends React.Component<IDefaultApplicationWindowProps &
                     </Grid>
 
                 </div>
-            </Window>
+            </Window.Default>
         );
     }
 }
 
 const mapDispatchToProps = (dispatch: any): Partial<ICalculatorPassedProps> => ({
-    openPopup: (popup: IPopupInstance) => dispatch(actions.openPopup(popup))
+    openWindow: (application: IApplication) => dispatch(actions.openWindow(application))
 });
-export default connect<Partial<ICalculatorPassedProps>, Partial<ICalculatorPassedProps>, IWindowProps>(
+export default connect<Partial<ICalculatorPassedProps>, Partial<ICalculatorPassedProps>, IDefaultWindowProps>(
     null, mapDispatchToProps
 )(Calculator);

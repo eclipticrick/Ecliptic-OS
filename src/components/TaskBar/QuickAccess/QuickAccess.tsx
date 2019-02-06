@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as classes from './QuickAccess.module.scss';
-import {ApplicationId} from '../../../appdata/applications';
+import {ApplicationId, IApplication} from '../../../appdata/applications';
 import applications from '../../../appdata/applications';
 import {Button} from '@material-ui/core';
 import Resizable from 're-resizable';
@@ -10,7 +10,7 @@ export interface IQuickAccessProps {
     shortcuts: ApplicationId[]
     width: number
     setQuickAccessWidth: (width: number) => void
-    openWindow: (applicationId: ApplicationId) => void
+    openWindow: (application: IApplication) => void
 }
 
 const quickAccess = (props: IQuickAccessProps) => {
@@ -36,10 +36,10 @@ const quickAccess = (props: IQuickAccessProps) => {
                     {shortcuts.map(shortcut => {
                         const application = applications.find(app => app.id === shortcut);
                         return (
-                            <Button key={`quick-access-${application.id}`} onClick={() => props.openWindow(application.id)}
+                            <Button key={`quick-access-${application.id}`} onClick={() => props.openWindow(application)}
                                     variant={'contained'}
                                     style={{ width: imageButtonSize, height: imageButtonSize }}>
-                                <ApplicationContextMenu applicationId={application.id} context={OuterContextType.TASKBAR_QUICKACCESS}>
+                                <ApplicationContextMenu application={application} context={OuterContextType.TASKBAR_QUICKACCESS}>
                                     <img src={application.icon.src}
                                          aria-label={application.icon.name}
                                          style={{ width: imageSize, height: imageSize }}/>
