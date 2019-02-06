@@ -5,17 +5,15 @@ import IconGrid from './IconGrid/IconGrid';
 import {connect} from 'react-redux';
 import {IStore} from '../../store/initialize';
 
-import applications, {ApplicationId, IApplication} from '../../appdata/applications';
+import {ApplicationId, IApplication} from '../../appdata/applications';
 import {IWindowInstance, WindowInstanceType} from '../../apptypings/window';
 import * as actions from '../../store/actions';
 import {IBackground} from '../../store/reducers/desktop';
-import Window from '../Window/Window';
 
 export interface IDesktopProps {
     taskbarHeight: number
     windows: IWindowInstance[]
     shortcuts: ApplicationId[]
-    // popup: IApplication
 }
 export interface IDesktopPassedProps {
     background: IBackground
@@ -25,50 +23,42 @@ export interface IDesktopPassedProps {
 
 export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps, {}> {
     public render() {
-        const { props, props: { taskbarHeight, windows, shortcuts, background } } = this; // popup
+        const { props, props: { taskbarHeight, windows, shortcuts, background } } = this;
 
         const openWindow = (application: IApplication) => {
             props.openWindow(application);
             props.addRecentApplicationToStartMenu(application.id);
         };
+        const popupWindows = windows.filter(window => window.type === WindowInstanceType.POPUP);
+        const nonPopupWindows = windows.filter(window => window.type !== WindowInstanceType.POPUP);
 
         return (
             <div id='desktop' className={classes.root} style={{ height: `calc(100% - ${taskbarHeight}px)` }}>
                 <Background taskbarHeight={taskbarHeight} background={background}/>
                 <IconGrid shortcuts={shortcuts} openWindow={openWindow}/>
 
-                {windows.map((window, i: number) => {
-                    const application = window.application; // applications.find(app => app.id === window.applicationId);
+                {nonPopupWindows.map((window, i: number) => {
+                    const application = window.application;
                     const { Component } = application.window;
-                    if (window.type === WindowInstanceType.APPLICATION) {
-                        return (
-                            <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                                <Component windowInstance={window} selected={windows.length - 1 === i}/> {/* application={application} */}{/*  && !popup */}
-                                {/* todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx */}
-                            </div>
-                        )
-                    } else if (window.type === WindowInstanceType.POPUP) {
-                        return (
-                            <div className={classes.popupWrapper}>
-                                <Component windowInstance={window} selected={true}>{ application.window.children }</Component> {/* popup={popup} */}
-                            </div>
-                        )
-                    }
-                    // else {
-                    //     return (
-                    //         <div className={classes.popupWrapper}>
-                    //             <Window.Popup windowInstance={window} popup={popup} selected={true}>{ popup.children }</Window.Popup>
-                    //         </div>
-                    //     )
-                    // }
+                    return (
+                        <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
+                            <Component windowInstance={window} selected={windows.length - 1 === i}>
+                                {application.window.children}
+                            </Component>
+                            {/* todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx */}
+                        </div>
+                    )
                 })}
-
-                {/* popup ? (
-                    <div className={classes.popupWrapper}>
-                        <Window.Popup popup={popup} selected={true}>{ popup.children }</Window.Popup>
-                    </div>
-                ) : null */ }
-
+                {!popupWindows.length ? null : <div className={classes.popupWrapper} />}
+                {popupWindows.map((window, i: number) => {
+                    const application = window.application;
+                    const { Component } = application.window;
+                    return (
+                        <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
+                            <Component windowInstance={window} selected={true}>{ application.window.children }</Component>
+                        </div>
+                    )
+                })}
             </div>
         );
     }

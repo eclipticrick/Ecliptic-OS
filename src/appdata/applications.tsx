@@ -28,7 +28,10 @@ import Window from '../components/Window/Window';
 import {ReactNode} from "react";
 
 export enum ApplicationId {
+    POPUP_ERROR = 'POPUP_ERROR',
+    POPUP_WARNING = 'POPUP_WARNING',
     POPUP_INFO = 'POPUP_INFO',
+    POPUP_HELP = 'POPUP_HELP',
 
     INTERNET_EXPLORER = 'INTERNET_EXPLORER',
     LIME_WIRE         = 'LIME_WIRE',
@@ -52,18 +55,45 @@ export interface IApplication {
         Component: any
         title?: string
         children?: ReactNode
-        // minHeight?: number
-        // minWidth?: number
-        // maximizable?: boolean
     }
 }
 
 const applications: IApplication[] = [
     {
+        id: ApplicationId.POPUP_ERROR,
+        icon: {
+            name: 'Error',
+            src: errorIcon
+        },
+        window: {
+            Component: Window.Popup
+        }
+    },
+    {
+        id: ApplicationId.POPUP_WARNING,
+        icon: {
+            name: 'Warning',
+            src: warningIcon
+        },
+        window: {
+            Component: Window.Popup
+        }
+    },
+    {
         id: ApplicationId.POPUP_INFO,
         icon: {
             name: 'Info',
             src: infoIcon
+        },
+        window: {
+            Component: Window.Popup
+        }
+    },
+    {
+        id: ApplicationId.POPUP_HELP,
+        icon: {
+            name: 'Help',
+            src: helpIcon
         },
         window: {
             Component: Window.Popup
@@ -77,10 +107,7 @@ const applications: IApplication[] = [
             scale: 1.2
         },
         window: {
-            Component: InternetExplorer,
-            title: 'Internet Explorer',
-            // minHeight: 300,
-            // minWidth: 400,
+            Component: InternetExplorer
         }
     },
     {
@@ -112,8 +139,7 @@ const applications: IApplication[] = [
             src: notepadIcon
         },
         window: {
-            Component: Notepad,
-            title: 'untitled.txt'
+            Component: Notepad
         }
     },
     {

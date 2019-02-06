@@ -1,12 +1,10 @@
 import * as React from 'react';
 import WindowBase from '../../WindowBase/WindowBase';
 import {IWindowInstance} from "../../../../apptypings/window";
-import {IApplication} from "../../../../appdata/applications";
 import {ReactNode} from "react";
 
 export interface IDefaultWindowProps {
     windowInstance: IWindowInstance
-    // application: IApplication
     selected: boolean
     minWidth?: number
     minHeight?: number
@@ -14,7 +12,7 @@ export interface IDefaultWindowProps {
     children?: ReactNode
 }
 
-const defaultWindow = ({ windowInstance, selected, minWidth, minHeight, maximizable, children }: IDefaultWindowProps) => {{/* application */}
+const defaultWindow = ({ windowInstance, selected, minWidth, minHeight, maximizable, children }: IDefaultWindowProps) => {
     const { icon, window } = windowInstance.application;
 
     return (

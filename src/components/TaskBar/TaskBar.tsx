@@ -9,7 +9,7 @@ import QuickAccess from './QuickAccess/QuickAccess';
 import ActiveWindows from './ActiveWindows/ActiveWindows';
 import SystemTray from './SystemTray/SystemTray';
 import {ApplicationId, IApplication} from '../../appdata/applications';
-import {IWindowInstance} from '../../apptypings/window';
+import {IWindowInstance, WindowInstanceType} from '../../apptypings/window';
 import classNames from 'classnames';
 
 export interface ITaskbarProps {
@@ -20,7 +20,6 @@ export interface ITaskbarProps {
 }
 
 export interface ITaskbarPassedProps {
-    // popup: IPopupInstance
     startMenuIsOpen: boolean
     setTaskbarHeight: (height: number) => void
     setQuickAccessWidth: (width: number) => void
@@ -41,8 +40,10 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
             props.addRecentApplicationToStartMenu(application.id);
         };
 
+        const hasPopups = !!windowInstances.filter(windowInstance => windowInstance.type === WindowInstanceType.POPUP).length;
+
         return (
-            <div className={classes.root}> {/* className={classNames(classes.root, popup ? classes. ((todo:)) unClickable : null)} */}
+            <div className={classNames(classes.root, hasPopups ? classes.unClickable : null)}>
                 <Resizable
                     size={{ height }}
                     enable={{top: true}}
@@ -78,9 +79,9 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
 }
 const mapStateToProps = (state: IStore) => {
     const { height, quickAccessShortcuts, quickAccessWidth } = state.taskbar;
-    const { windows } = state.windows; // popup
+    const { windows } = state.windows;
     const { opened } = state.startmenu;
-    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, startMenuIsOpen: opened } // popup
+    return { height, quickAccessShortcuts, quickAccessWidth, windowInstances: windows, startMenuIsOpen: opened }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({

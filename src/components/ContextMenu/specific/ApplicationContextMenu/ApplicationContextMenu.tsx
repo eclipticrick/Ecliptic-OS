@@ -4,6 +4,7 @@ import {ApplicationId, IApplication} from '../../../../appdata/applications';
 import * as actions from '../../../../store/actions/index';
 import ContextMenu, {IContextItem, IContextMenu} from '../../ContextMenu';
 import contextMenuItems from './contextMenuItems';
+import {ReactNode} from 'react';
 
 export enum OuterContextType {
     DESKTOP = 'DESKTOP',
@@ -15,7 +16,7 @@ export enum OuterContextType {
 export interface IApplicationContextMenuProps {
     application: IApplication
     context: OuterContextType
-    children: any // todo: inherit from react props?
+    children: ReactNode
 }
 export interface IApplicationContextMenuPassedProps {
     openWindow: (application: IApplication) => void

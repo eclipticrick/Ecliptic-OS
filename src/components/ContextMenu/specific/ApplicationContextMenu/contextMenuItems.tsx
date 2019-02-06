@@ -1,11 +1,8 @@
 import {ContextMenuType, IContextItem} from '../../ContextMenu';
 import {IApplicationContextMenuPassedProps, IApplicationContextMenuProps, OuterContextType} from './ApplicationContextMenu';
-import applications from '../../../../appdata/applications';
 
 const contextMenuItems = (props: IApplicationContextMenuProps & IApplicationContextMenuPassedProps): IContextItem[] => {
     const { application, context } = props;
-
-    // const application = applications.find(app => app.id === applicationId);
 
     let contextSpecificItems = [] as IContextItem[];
 

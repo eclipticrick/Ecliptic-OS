@@ -1,18 +1,16 @@
 import * as React from 'react';
-import WindowBase from '../WindowBase/WindowBase';
-import {IWindowInstance} from "../../../apptypings/window";
-
-import {IApplication} from "../../../appdata/applications";
+import WindowBase from '../../WindowBase/WindowBase';
+import {IWindowInstance} from "../../../../apptypings/window";
 import {ReactNode} from "react";
+import * as classes from './Popup.module.scss';
 
 export interface IPopupWindowProps {
     windowInstance: IWindowInstance
-    // application: IApplication
     selected: boolean
     children?: ReactNode
 }
 
-const popupWindow = ({ windowInstance, selected, children }: IPopupWindowProps) => { {/* application */}
+const popupWindow = ({ windowInstance, selected, children }: IPopupWindowProps) => {
     const { icon, window } = windowInstance.application;
     return (
         <WindowBase windowInstance={windowInstance}
@@ -24,7 +22,9 @@ const popupWindow = ({ windowInstance, selected, children }: IPopupWindowProps) 
                     selected={selected} // todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx
                     showMaximizeButton={false}
                     showMinimizeButton={false}>
-            { children }
+            <div className={classes.root}>
+                { children }
+            </div>
         </WindowBase>
     );
 };

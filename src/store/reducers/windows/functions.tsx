@@ -5,14 +5,14 @@ import {IWindowInstance, WindowInstanceType} from '../../../apptypings/window';
 export default {
 
     open: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-        const { application } = action.payload;
+        const { application, type } = action.payload;
         const uniqueInstanceCounter = oldState.uniqueInstanceCounter + 1;
 
         const windows: IWindowInstance[] = [...oldState.windows];
 
         const window: IWindowInstance = {
             instanceId: uniqueInstanceCounter,
-            type: WindowInstanceType.APPLICATION,
+            type: type ? type : WindowInstanceType.APPLICATION,
             application,
             maximized: false,
             minimized: false
@@ -25,19 +25,6 @@ export default {
             windows
         };
     },
-    // openPopup: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
-    //     const { popup } = action.payload;
-    //     return {
-    //         ...oldState,
-    //         popup
-    //     };
-    // },
-    // closePopUp: (oldState: IReducerWindows): IReducerWindows => {
-    //     return {
-    //         ...oldState,
-    //         popup: null
-    //     };
-    // },
     close: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
         const { instanceId } = action.payload;
 

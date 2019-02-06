@@ -16,12 +16,8 @@ export interface IWindowBaseProps {
     maximizable: boolean
     minHeight: number
     minWidth: number
-
-
     showMaximizeButton: boolean,
     showMinimizeButton: boolean,
-
-
     defaultPosition?: {
         x: number
         y: number
@@ -173,7 +169,7 @@ class WindowBase extends React.Component<IWindowBaseProps & IWindowBasePassedPro
                          }>
 
                         <div className={classes.left}>
-                            <img src={iconSrc} />
+                            <img alt='icon' src={iconSrc} />
                             <span className={classes.title}>{title}</span>
                         </div>
                         <div className={classes.right}>

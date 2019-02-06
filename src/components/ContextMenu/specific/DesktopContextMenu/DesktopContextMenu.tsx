@@ -2,9 +2,10 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 import ContextMenu, {IContextItem, IContextMenu, ContextMenuType} from '../../ContextMenu';
+import {ReactNode} from 'react';
 
 export interface IDesktopContextMenuProps {
-    children?: any // todo: inherit from react props?
+    children?: ReactNode
 }
 export interface IDesktopContextMenuPassedProps {
     toggleDesktopBackground: () => void
