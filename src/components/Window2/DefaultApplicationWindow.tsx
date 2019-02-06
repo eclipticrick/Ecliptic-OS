@@ -7,7 +7,7 @@
 //     windowInstance: IWindowInstance
 //     application: IApplication
 //     selected: boolean
-//     children?: any // TODO inherit from React.Props ?
+//     children?: ReactNode
 // }
 //
 // const defaultApplicationWindow = ({ windowInstance, application, selected, children }: IDefaultApplicationWindowProps) => {
@@ -27,4 +27,4 @@
 // };
 //
 // export default defaultApplicationWindow;
-//
+//import {ReactNode} from "react";

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Menu, Item, Separator, Submenu, MenuProvider, animation } from 'react-contexify';
 import './ContextMenu.scss';
 import * as classes from './ContextMenu.module.scss';
+import {ReactNode} from "react";
 
 export interface IContextMenu {
     items: IContextItem[]
@@ -22,7 +23,7 @@ export enum ContextMenuType {
 
 export interface IContextMenuProps {
     uid: string | number
-    children?: any // todo: inherit from react props?
+    children?: ReactNode
     menu: IContextMenu
 }
 

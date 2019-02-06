@@ -54,7 +54,6 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
                             </div>
                         )
                     }
-                    // todo: support multiple poppups
                     // else {
                     //     return (
                     //         <div className={classes.popupWrapper}>

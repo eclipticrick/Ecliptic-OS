@@ -4,6 +4,7 @@ import Draggable, {DraggableData} from 'react-draggable';
 import {Icon} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import {ReactNode} from "react";
 // import {IPopupInstance, PopupType} from '../../../apptypings/window';
 // import classNames from 'classnames';
 //
@@ -22,7 +23,7 @@ import * as actions from '../../../store/actions/index';
 //
 // export interface IPopUpProps {
 //     popup: IPopupInstance
-//     children: any // TODO inherit from React.Props?
+//     children: ReactNode
 // }
 // interface IPopupPassedProps {
 //     closePopup: () => void

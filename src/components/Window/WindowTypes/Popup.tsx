@@ -3,12 +3,13 @@ import WindowBase from '../WindowBase/WindowBase';
 import {IWindowInstance} from "../../../apptypings/window";
 
 import {IApplication} from "../../../appdata/applications";
+import {ReactNode} from "react";
 
 export interface IPopupWindowProps {
     windowInstance: IWindowInstance
     // application: IApplication
     selected: boolean
-    children?: any // TODO inherit from React.Props ?
+    children?: ReactNode
 }
 
 const popupWindow = ({ windowInstance, selected, children }: IPopupWindowProps) => { {/* application */}

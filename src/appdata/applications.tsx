@@ -25,6 +25,7 @@ import * as warningIcon from '../assets/images/icons/069-warning.svg';
 import * as helpIcon from '../assets/images/icons/071-question.svg';
 
 import Window from '../components/Window/Window';
+import {ReactNode} from "react";
 
 export enum ApplicationId {
     POPUP_INFO = 'POPUP_INFO',
@@ -50,7 +51,7 @@ export interface IApplication {
     window: {
         Component: any
         title?: string
-        children?: any // todo: JSX or string
+        children?: ReactNode
         // minHeight?: number
         // minWidth?: number
         // maximizable?: boolean

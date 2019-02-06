@@ -1,4 +1,5 @@
 import {ApplicationId, IApplication} from '../appdata/applications';
+import {ReactNode} from "react";
 
 export enum WindowInstanceType {
     APPLICATION = 'APPLICATION',
@@ -23,5 +24,5 @@ export interface IWindowInstance {
 // export interface IPopupInstance {
 //     title: string
 //     type: PopupType
-//     children: any // TODO: JSX or string
+//     children: ReactNode
 // }
