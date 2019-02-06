@@ -22,7 +22,7 @@ export enum ContextMenuType {
 
 export interface IContextMenuProps {
     uid: string | number
-    children: any // todo: inherit from react props?
+    children?: any // todo: inherit from react props?
     menu: IContextMenu
 }
 
@@ -57,7 +57,7 @@ const innerContextMenu = (uniqueId: string | number, items: IContextItem[], dept
 const contextMenu = ({uid, children, menu}: IContextMenuProps) => (
     <>
         <MenuProvider id={`menu-${uid}`} className={classes.menuProviderDiv}>
-            {children}
+            {children || <></>}
         </MenuProvider>
         <Menu id={`menu-${uid}`} animation={animation.fade}>
             {innerContextMenu(uid, menu.items)}
