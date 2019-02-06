@@ -63,8 +63,6 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
                     </div>
                 );
                 this.props.openWindow(app, WindowInstanceType.POPUP);
-                this.props.openWindow(app, WindowInstanceType.POPUP);
-                this.props.openWindow(app, WindowInstanceType.POPUP);
             }
         };
 
