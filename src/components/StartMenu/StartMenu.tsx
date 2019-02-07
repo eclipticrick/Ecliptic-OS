@@ -54,7 +54,7 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
                             {allProgramsOpened ? (
                                 <>
                                     <div className={classes.allProgramsList}>
-                                        {applications.slice(0, maxAppsShownOnTheLeft).map(app => (
+                                        {applications.map(app => (
                                             <React.Fragment key={`start-menu-tile-allprograms-${app.id}`}>
                                                 <div className={classes.tileWrapper}>
                                                     <StartMenuTile context={OuterContextType.STARTMENU_ALL}
