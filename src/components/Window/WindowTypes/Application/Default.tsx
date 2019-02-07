@@ -5,24 +5,22 @@ import {ReactNode} from "react";
 
 export interface IDefaultWindowProps {
     windowInstance: IWindowInstance
-    selected: boolean
     minWidth?: number
     minHeight?: number
     maximizable?: boolean
     children?: ReactNode
 }
 
-const defaultWindow = ({ windowInstance, selected, minWidth, minHeight, maximizable, children }: IDefaultWindowProps) => {
+const defaultWindow = ({ windowInstance, minWidth, minHeight, maximizable, children }: IDefaultWindowProps) => {
     const { icon, window } = windowInstance.application;
 
     return (
         <WindowBase windowInstance={windowInstance}
-                    title={window.title ? window.title : 'no title provided'}
+                    title={window.title}
                     minWidth={minWidth ? minWidth : 250}
                     minHeight={minHeight ? minHeight : 250}
                     iconSrc={icon.src}
                     maximizable={typeof maximizable === 'undefined' ? true : maximizable}
-                    selected={selected} // todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx
                     showMaximizeButton={true}
                     showMinimizeButton={true}>
             { children }

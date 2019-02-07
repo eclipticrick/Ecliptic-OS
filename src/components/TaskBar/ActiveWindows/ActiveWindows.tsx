@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as classes from './ActiveWindows.module.scss';
 import {IWindowInstance} from '../../../apptypings/window';
-import applications from '../../../appdata/applications';
 import classNames from 'classnames';
 
 export interface IQuickAccessProps {
@@ -26,16 +25,16 @@ const activeWindows = (props: IQuickAccessProps) => {
     return (
         <div className={classes.root}>
             <div className={classes.itemsOuterWrapper}>
-                {sortedWindowInstances.map(window => {
-                    const application = applications.find(app => app.id === window.application.id);
-                    const isSelected = selectedInstanceId === window.instanceId;
+                {sortedWindowInstances.map(windowInstance => {
+                    const application = windowInstance.application;
+                    const isSelected = selectedInstanceId === windowInstance.instanceId;
                     return (
-                        <div key={`taskbar-${window.instanceId}`}
+                        <div key={`taskbar-${windowInstance.instanceId}`}
                              className={classes.itemInnerWrapper}
                              style={{ width: `${100 / windowInstances.length}%` }}>
                             <div className={classNames(classes.item, isSelected ? classes.selected : null)}
                                  onClick={
-                                     () => isSelected ? props.minimizeWindow(window.instanceId) : props.selectWindow(window.instanceId)
+                                     () => isSelected ? props.minimizeWindow(windowInstance.instanceId) : props.selectWindow(windowInstance.instanceId)
                                  }>
                                 <img src={application.icon.src} /><span>{application.window.title}</span>
                             </div>

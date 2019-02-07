@@ -44,7 +44,7 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
     private inputRef: any = React.createRef();
 
     public render() {
-        const { windowInstance, selected } = this.props;
+        const { windowInstance } = this.props;
 
         const menuItemClickedHandler = (menuItem: Clicked) => {
             if (menuItem === Clicked.COPY) {
@@ -214,8 +214,7 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
                     windowInstance={windowInstance}
                     minWidth={350}
                     minHeight={417}
-                    maximizable={false}
-                    selected={selected}>
+                    maximizable={false}>
 
                 <WindowMenu menuTree={menuTree} onItemClicked={menuItemClickedHandler}/>
 

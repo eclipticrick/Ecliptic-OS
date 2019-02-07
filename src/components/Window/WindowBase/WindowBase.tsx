@@ -7,12 +7,12 @@ import {Icon} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import {IWindowInstance} from '../../../apptypings/window';
+import {IStore} from "../../../store/initialize";
 
 export interface IWindowBaseProps {
     windowInstance: IWindowInstance
     title: string
     iconSrc: string
-    selected: boolean
     maximizable: boolean
     minHeight: number
     minWidth: number
@@ -24,6 +24,7 @@ export interface IWindowBaseProps {
     }
 }
 interface IWindowBasePassedProps {
+    windows: IWindowInstance[]
     closeWindow: (instanceId: number) => void
     selectWindow: (instanceId: number) => void
     minimizeWindow: (instanceId: number) => void
@@ -98,15 +99,21 @@ class WindowBase extends React.Component<IWindowBaseProps & IWindowBasePassedPro
                 title,
                 iconSrc,
                 maximizable,
-                selected,
                 minHeight,
                 minWidth,
                 defaultPosition,
                 showMaximizeButton,
                 showMinimizeButton,
+                windows,
                 children
             }
         } = this;
+
+        let selected = false;
+        const visibleWindows = windows.filter(w => w.minimized === false);
+        if (visibleWindows.length) {
+            selected = visibleWindows[visibleWindows.length - 1].instanceId === windowInstance.instanceId
+        }
 
         const { position, resizeLimit } = this.state;
 
@@ -235,7 +242,11 @@ class WindowBase extends React.Component<IWindowBaseProps & IWindowBasePassedPro
     }
 }
 
-const mapDispatchToProps = (dispatch: any): IWindowBasePassedProps => ({
+const mapStateToProps = (state: IStore) => {
+    const { windows } = state.windows;
+    return { windows }
+};
+const mapDispatchToProps = (dispatch: any): Partial<IWindowBasePassedProps> => ({
     closeWindow: (id: number) => dispatch(actions.closeWindow(id)),
     selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
     minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
@@ -243,5 +254,5 @@ const mapDispatchToProps = (dispatch: any): IWindowBasePassedProps => ({
     normalizeWindow: (id: number) => dispatch(actions.normalizeWindow(id))
 });
 export default connect<Partial<IWindowBasePassedProps>, Partial<IWindowBasePassedProps>, IWindowBaseProps>(
-    null, mapDispatchToProps
+    mapStateToProps, mapDispatchToProps
 )(WindowBase);

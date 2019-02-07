@@ -37,12 +37,12 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
                 <Background taskbarHeight={taskbarHeight} background={background}/>
                 <IconGrid shortcuts={shortcuts} openWindow={openWindow}/>
 
-                {nonPopupWindows.map((window, i: number) => {
+                {nonPopupWindows.map(window => {
                     const application = window.application;
                     const { Component } = application.window;
                     return (
                         <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                            <Component windowInstance={window} selected={windows.length - 1 === i}>
+                            <Component windowInstance={window}>
                                 {application.window.children}
                             </Component>
                             {/* todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx */}
@@ -50,12 +50,14 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
                     )
                 })}
                 {!popupWindows.length ? null : <div className={classes.popupWrapper} />}
-                {popupWindows.map((window, i: number) => {
+                {popupWindows.map(window => {
                     const application = window.application;
                     const { Component } = application.window;
                     return (
                         <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                            <Component windowInstance={window} selected={true}>{ application.window.children }</Component>
+                            <Component windowInstance={window}>
+                                { application.window.children }
+                            </Component>
                         </div>
                     )
                 })}
@@ -65,9 +67,9 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
 }
 const mapStateToProps = (state: IStore) => {
     const { height } = state.taskbar;
-    const { windows } = state.windows; // popup
+    const { windows } = state.windows;
     const { shortcuts, background } = state.desktop;
-    return { taskbarHeight: height, windows, shortcuts, background } // popup
+    return { taskbarHeight: height, windows, shortcuts, background }
 };
 
 const mapDispatchToProps = (dispatch: any): Partial<IDesktopPassedProps> => ({
