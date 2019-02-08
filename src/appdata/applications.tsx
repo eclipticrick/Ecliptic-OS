@@ -24,10 +24,15 @@ import * as infoIcon from '../assets/images/icons/068-info.svg';
 import * as warningIcon from '../assets/images/icons/069-warning.svg';
 import * as helpIcon from '../assets/images/icons/071-question.svg';
 
-import Window from '../components/Window/Window';
+import Window, {IPopupWindowProps} from '../components/Window/Window';
 import {ReactNode} from "react";
 
 export enum ApplicationId {
+    POPUP_ERROR_ONLY_CLOSABLE = 'POPUP_ERROR_ONLY_CLOSABLE',
+    POPUP_WARNING_ONLY_CLOSABLE = 'POPUP_WARNING_ONLY_CLOSABLE',
+    POPUP_INFO_ONLY_CLOSABLE = 'POPUP_INFO_ONLY_CLOSABLE',
+    POPUP_HELP_ONLY_CLOSABLE = 'POPUP_HELP_ONLY_CLOSABLE',
+
     POPUP_ERROR = 'POPUP_ERROR',
     POPUP_WARNING = 'POPUP_WARNING',
     POPUP_INFO = 'POPUP_INFO',
@@ -43,9 +48,14 @@ export enum ApplicationId {
     COMPUTER          = 'COMPUTER',
     PAINT             = 'PAINT',
 }
-
+export enum DisplayLevel {
+    NOT_VISIBLE_ANYWHERE = 'NOT_VISIBLE_ANYWHERE',
+    ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW = 'ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW',
+    VISIBLE_EVERYWHERE = 'VISIBLE_EVERYWHERE',
+}
 export interface IApplication {
     id: ApplicationId,
+    display: DisplayLevel,
     icon: {
         name: string,
         src: string,
@@ -53,6 +63,7 @@ export interface IApplication {
     },
     window: {
         Component: any
+        props?: any
         title?: string
         children?: ReactNode
     }
@@ -60,7 +71,8 @@ export interface IApplication {
 
 const applications: IApplication[] = [
     {
-        id: ApplicationId.POPUP_ERROR,
+        id: ApplicationId.POPUP_ERROR_ONLY_CLOSABLE,
+        display: DisplayLevel.NOT_VISIBLE_ANYWHERE,
         icon: {
             name: 'Error',
             src: errorIcon
@@ -70,7 +82,8 @@ const applications: IApplication[] = [
         }
     },
     {
-        id: ApplicationId.POPUP_WARNING,
+        id: ApplicationId.POPUP_WARNING_ONLY_CLOSABLE,
+        display: DisplayLevel.NOT_VISIBLE_ANYWHERE,
         icon: {
             name: 'Warning',
             src: warningIcon
@@ -80,7 +93,8 @@ const applications: IApplication[] = [
         }
     },
     {
-        id: ApplicationId.POPUP_INFO,
+        id: ApplicationId.POPUP_INFO_ONLY_CLOSABLE,
+        display: DisplayLevel.NOT_VISIBLE_ANYWHERE,
         icon: {
             name: 'Info',
             src: infoIcon
@@ -90,7 +104,8 @@ const applications: IApplication[] = [
         }
     },
     {
-        id: ApplicationId.POPUP_HELP,
+        id: ApplicationId.POPUP_HELP_ONLY_CLOSABLE,
+        display: DisplayLevel.NOT_VISIBLE_ANYWHERE,
         icon: {
             name: 'Help',
             src: helpIcon
@@ -100,7 +115,56 @@ const applications: IApplication[] = [
         }
     },
     {
+        id: ApplicationId.POPUP_ERROR,
+        display: DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW,
+        icon: {
+            name: 'Error',
+            src: errorIcon
+        },
+        window: {
+            Component: Window.Popup,
+            props: { minimizable: true } as Partial<IPopupWindowProps>
+        }
+    },
+    {
+        id: ApplicationId.POPUP_WARNING,
+        display: DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW,
+        icon: {
+            name: 'Warning',
+            src: warningIcon
+        },
+        window: {
+            Component: Window.Popup,
+            props: { minimizable: true } as Partial<IPopupWindowProps>
+        }
+    },
+    {
+        id: ApplicationId.POPUP_INFO,
+        display: DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW,
+        icon: {
+            name: 'Info',
+            src: infoIcon
+        },
+        window: {
+            Component: Window.Popup,
+            props: { minimizable: true } as Partial<IPopupWindowProps>
+        }
+    },
+    {
+        id: ApplicationId.POPUP_HELP,
+        display: DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW,
+        icon: {
+            name: 'Help',
+            src: helpIcon
+        },
+        window: {
+            Component: Window.Popup,
+            props: { minimizable: true } as Partial<IPopupWindowProps>
+        }
+    },
+    {
         id: ApplicationId.INTERNET_EXPLORER,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Internet Explorer',
             src: ieIcon,
@@ -112,6 +176,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.LIME_WIRE,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Lime Wire',
             src: limeWireIcon
@@ -123,6 +188,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.OUTLOOK,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Outlook',
             src: outlookIcon
@@ -134,6 +200,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.NOTEPAD,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Notepad',
             src: notepadIcon
@@ -144,6 +211,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.TODO_LIST,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Todo list',
             src: todoListIcon
@@ -155,6 +223,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.WHATSAPP,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'WhatsApp',
             src: whatsappIcon
@@ -166,6 +235,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.CALCULATOR,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Calculator',
             src: calculatorIcon
@@ -177,6 +247,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.COMPUTER,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'My Computer',
             src: computerIcon
@@ -188,6 +259,7 @@ const applications: IApplication[] = [
     },
     {
         id: ApplicationId.PAINT,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
         icon: {
             name: 'Paint',
             src: paintIcon

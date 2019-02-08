@@ -42,10 +42,9 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
                     const { Component } = application.window;
                     return (
                         <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                            <Component windowInstance={window}>
+                            <Component windowInstance={window} { ...application.window.props }>
                                 {application.window.children}
                             </Component>
-                            {/* todo: replace selected here with selectedWindowInstance in Redux & access in WindowBase.tsx */}
                         </div>
                     )
                 })}
@@ -55,7 +54,7 @@ export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps
                     const { Component } = application.window;
                     return (
                         <div key={`window-${window.instanceId}`} className={classes.windowWrapper}>
-                            <Component windowInstance={window}>
+                            <Component windowInstance={window} { ...application.window.props }>
                                 { application.window.children }
                             </Component>
                         </div>

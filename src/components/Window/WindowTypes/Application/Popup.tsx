@@ -6,10 +6,11 @@ import * as classes from './Popup.module.scss';
 
 export interface IPopupWindowProps {
     windowInstance: IWindowInstance
+    minimizable?: boolean
     children?: ReactNode
 }
 
-const popupWindow = ({ windowInstance, children }: IPopupWindowProps) => {
+const popupWindow = ({ windowInstance, minimizable, children }: IPopupWindowProps) => {
     const { icon, window } = windowInstance.application;
     return (
         <WindowBase windowInstance={windowInstance}
@@ -19,7 +20,7 @@ const popupWindow = ({ windowInstance, children }: IPopupWindowProps) => {
                     iconSrc={icon.src}
                     maximizable={false}
                     showMaximizeButton={false}
-                    showMinimizeButton={false}>
+                    showMinimizeButton={!!minimizable}>
             <div className={classes.root}>
                 { children }
             </div>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import '../../transitions/zoom.scss';
 import * as classes from './StartMenu.module.scss';
 import * as actions from '../../store/actions';
-import applications, {ApplicationId, IApplication} from '../../appdata/applications';
+import applications, {ApplicationId, DisplayLevel, IApplication} from '../../appdata/applications';
 import {Button, Icon} from '@material-ui/core';
 import StartMenuTile from './StartMenuTile/StartMenuTile';
 import {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
@@ -39,6 +39,8 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
         };
         const maxAppsShownOnTheLeft = 7;
 
+        const applicationsForStartMenu = applications.filter(app => app.display === DisplayLevel.VISIBLE_EVERYWHERE);
+
         return (
             <div className={classes.root}
                  onClick={() => canCloseOnClick ? props.closeStartMenu() : null}>
@@ -47,14 +49,14 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
                      onMouseOver={() => { canCloseOnClick = false }}
                      onMouseLeave={() => { canCloseOnClick = true }}>
                     <div className={classes.top}>
-                        <img src={imageSrc}/> <span>{userName}</span>
+                        <img alt='user' src={imageSrc}/> <span>{userName}</span>
                     </div>
                     <div className={classes.content}>
                         <div className={classes.left}>
                             {allProgramsOpened ? (
                                 <>
                                     <div className={classes.allProgramsList}>
-                                        {applications.map(app => (
+                                        {applicationsForStartMenu.map(app => (
                                             <React.Fragment key={`start-menu-tile-allprograms-${app.id}`}>
                                                 <div className={classes.tileWrapper}>
                                                     <StartMenuTile context={OuterContextType.STARTMENU_ALL}
@@ -116,9 +118,9 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
                                 <hr/>
                                 <Button onClick={() => this.setState((state) => ({ allProgramsOpened: !state.allProgramsOpened }))}>
                                     <div className={classes.allProgramsButtonContent}>
-                                        {allProgramsOpened ? <img src={allProgramsSrc} className={classes.flipped}/> : null}
+                                        {allProgramsOpened ? <img alt='all programs' src={allProgramsSrc} className={classes.flipped}/> : null}
                                         <span>{allProgramsOpened ? 'Back' : 'All programs'}</span>
-                                        {!allProgramsOpened ? <img src={allProgramsSrc}/> : null}
+                                        {!allProgramsOpened ? <img alt='all programs' src={allProgramsSrc}/> : null}
                                     </div>
                                 </Button>
                             </div>
