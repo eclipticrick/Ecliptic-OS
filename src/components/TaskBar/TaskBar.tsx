@@ -8,7 +8,7 @@ import StartButton from './StartButton/StartButton';
 import QuickAccess from './QuickAccess/QuickAccess';
 import ActiveWindows from './ActiveWindows/ActiveWindows';
 import SystemTray from './SystemTray/SystemTray';
-import {ApplicationId, IApplication} from '../../appdata/applications';
+import {ApplicationId, DisplayLevel, IApplication} from '../../appdata/applications';
 import {IWindowInstance, WindowInstanceType} from '../../apptypings/window';
 import classNames from 'classnames';
 
@@ -41,7 +41,10 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
         };
 
         const hasPopups = !!windowInstances.filter(windowInstance => windowInstance.type === WindowInstanceType.POPUP).length;
-
+        const windowInstancesToShow = windowInstances.filter(windowInstance =>
+            windowInstance.application.display === DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW ||
+            windowInstance.application.display === DisplayLevel.VISIBLE_EVERYWHERE
+        );
         return (
             <div className={classNames(classes.root, hasPopups ? classes.unClickable : null)}>
                 <Resizable
@@ -64,7 +67,7 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
                                      openWindow={openWindow}
                                      setQuickAccessWidth={props.setQuickAccessWidth}/>
 
-                        <ActiveWindows windowInstances={windowInstances}
+                        <ActiveWindows windowInstances={windowInstancesToShow}
                                        selectWindow={props.selectWindow}
                                        minimizeWindow={props.minimizeWindow}/>
 
