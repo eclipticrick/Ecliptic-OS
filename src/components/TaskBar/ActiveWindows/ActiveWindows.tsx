@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as classes from './ActiveWindows.module.scss';
 import {IWindowInstance} from '../../../apptypings/window';
 import classNames from 'classnames';
+import {DisplayLevel} from "../../../appdata/applications";
 
 export interface IQuickAccessProps {
     windowInstances: IWindowInstance[]
@@ -11,21 +12,26 @@ export interface IQuickAccessProps {
 
 const activeWindows = (props: IQuickAccessProps) => {
     const { windowInstances } = props;
+
     const unMinimizedInstances = [...windowInstances].filter(window => window.minimized === false);
     let selectedInstanceId: number;
     if (unMinimizedInstances.length) {
         selectedInstanceId = unMinimizedInstances[unMinimizedInstances.length - 1].instanceId
     }
-    const sortedWindowInstances = [...windowInstances].sort((a, b) => {
+
+    const sortedWindowInstancesToShow = windowInstances.filter(windowInstance =>
+        windowInstance.application.display === DisplayLevel.ONLY_VISIBLE_IN_TASKBAR_AS_ACTIVE_WINDOW ||
+        windowInstance.application.display === DisplayLevel.VISIBLE_EVERYWHERE
+    ).sort((a, b) => {
         if (a.instanceId < b.instanceId) return -1;
         if (a.instanceId > b.instanceId) return 1;
         return 0;
-    }
-);
+    });
+
     return (
         <div className={classes.root}>
             <div className={classes.itemsOuterWrapper}>
-                {sortedWindowInstances.map(windowInstance => {
+                {sortedWindowInstancesToShow.map(windowInstance => {
                     const application = windowInstance.application;
                     const isSelected = selectedInstanceId === windowInstance.instanceId;
                     return (
@@ -36,7 +42,7 @@ const activeWindows = (props: IQuickAccessProps) => {
                                  onClick={
                                      () => isSelected ? props.minimizeWindow(windowInstance.instanceId) : props.selectWindow(windowInstance.instanceId)
                                  }>
-                                <img src={application.icon.src} /><span>{application.window.title}</span>
+                                <img alt='icon' src={application.icon.src} /><span>{application.window.title}</span>
                             </div>
                         </div>
                     )

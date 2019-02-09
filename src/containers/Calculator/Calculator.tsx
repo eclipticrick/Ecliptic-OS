@@ -7,8 +7,12 @@ import {Button, Grid, Tooltip} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
 import applications, {ApplicationId, IApplication} from "../../appdata/applications";
-import * as infoIcon from '../../assets/images/icons/068-info.svg';
 import {WindowInstanceType} from "../../apptypings/window";
+import * as infoIcon from '../../assets/images/icons/068-info.svg';
+
+import * as errorIcon from '../../assets/images/icons/070-cancel.svg';
+import * as warningIcon from '../../assets/images/icons/069-warning.svg';
+import * as helpIcon from '../../assets/images/icons/071-question.svg';
 
 interface ICalculatorState {
     entry: string
@@ -22,7 +26,15 @@ interface ICalculatorPassedProps {
 }
 enum Clicked {
     COPY = 'COPY',
-    ABOUT = 'ABOUT'
+    ABOUT = 'ABOUT',
+
+    // todo: temp
+    TEST_1 = 'TEST_1',
+    TEST_2 = 'TEST_2',
+    TEST_3 = 'TEST_3',
+    TEST_4 = 'TEST_4',
+    TEST_5 = 'TEST_5'
+
 }
 const menuTree = {
     Edit: {
@@ -30,7 +42,17 @@ const menuTree = {
     },
     Help: {
         about: Clicked.ABOUT
+    },
+
+    // todo: temp
+    Temp: {
+        'test overlay popup': Clicked.TEST_1,
+        'test only closable popup': Clicked.TEST_2,
+        'test minimizable popup': Clicked.TEST_3,
+        'test 4': Clicked.TEST_4,
+        'test 5': Clicked.TEST_5,
     }
+
 };
 
 export class Calculator extends React.Component<IDefaultWindowProps & ICalculatorPassedProps, ICalculatorState> {
@@ -64,6 +86,50 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
                 );
                 this.props.openWindow(app);
             }
+
+            // todo: temp
+            else if (menuItem === Clicked.TEST_1) {
+                const app = applications.find(app => app.id === ApplicationId.POPUP_WARNING_ONLY_CLOSABLE);
+                app.window.title = 'Warning';
+                app.window.children = (
+                    <div className={popupClasses.padding}>
+                        <img alt='about' className={popupClasses.left} src={warningIcon}/>
+                        <div className={popupClasses.info}>
+                            overlay popup test
+                        </div>
+                    </div>
+                );
+                this.props.openWindow(app, WindowInstanceType.POPUP);
+            } else if (menuItem === Clicked.TEST_2) {
+                const app = applications.find(app => app.id === ApplicationId.POPUP_ERROR_ONLY_CLOSABLE);
+                app.window.title = 'Error';
+                app.window.children = (
+                    <div className={popupClasses.padding}>
+                        <img alt='about' className={popupClasses.left} src={errorIcon}/>
+                        <div className={popupClasses.info}>
+                            only closable popup test
+                        </div>
+                    </div>
+                );
+                this.props.openWindow(app);
+            } else if (menuItem === Clicked.TEST_3) {
+                const app = applications.find(app => app.id === ApplicationId.POPUP_HELP);
+                app.window.title = 'Help';
+                app.window.children = (
+                    <div className={popupClasses.padding}>
+                        <img alt='about' className={popupClasses.left} src={helpIcon}/>
+                        <div className={popupClasses.info}>
+                            minimizable popup test
+                        </div>
+                    </div>
+                );
+                this.props.openWindow(app);
+            } else if (menuItem === Clicked.TEST_4) {
+                alert('nothing to test over here...')
+            } else if (menuItem === Clicked.TEST_5) {
+                alert('nothing to test over here...')
+            }
+            // todo: /temp
         };
 
         const handleButtonClick = (char: string | number) => {
