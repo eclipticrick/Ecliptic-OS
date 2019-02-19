@@ -6,7 +6,7 @@ import * as classes from './StartMenu.module.scss';
 import * as actions from '../../store/actions';
 import applications, {ApplicationId, DisplayLevel, IApplication} from '../../appdata/applications';
 import {Button, Icon} from '@material-ui/core';
-import StartMenuTile from './StartMenuTile/StartMenuTile';
+import StartMenuTileList from './StartMenuTileList/StartMenuTileList';
 import {OuterContextType} from '../ContextMenu/specific/ApplicationContextMenu/ApplicationContextMenu';
 import * as allProgramsSrc from '../../assets/images/icons/073-play.svg';
 
@@ -39,7 +39,90 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
         };
         const maxAppsShownOnTheLeft = 7;
 
-        const applicationsForStartMenu = applications.filter(app => app.display === DisplayLevel.VISIBLE_EVERYWHERE);
+        const applicationsForStartMenu: ApplicationId[] = applications
+            .filter(app => app.display === DisplayLevel.VISIBLE_EVERYWHERE)
+            .map(app => app.id);
+
+        const pane = {
+            top: (
+                <>
+                    <img alt='user' src={imageSrc}/>
+                    <span>{userName}</span>
+                </>
+            ),
+            bottom: (
+                <>
+                    <Button className={classes.button}>
+                        <Icon className={classes.icon}>lock</Icon>
+                        Log Off
+                    </Button>
+                    <Button className={classes.button}>
+                        <Icon className={classes.icon}>power_settings_new</Icon>
+                        Shutdown
+                    </Button>
+                </>
+            ),
+            left: (
+                <>
+                    {allProgramsOpened ? (
+                        <div className={classes.allProgramsList}>
+                            <StartMenuTileList applicationIds={applicationsForStartMenu}
+                                               context={OuterContextType.STARTMENU_ALL}
+                                               closeStartMenu={props.closeStartMenu}
+                                               openWindow={openWindow}/>
+                        </div>
+                    ) : (
+                        <>
+                            {pinnedApplications.length ? (
+                                <>
+                                    <div className={classes.title}>Pinned</div>
+                                    <div>
+                                        <StartMenuTileList applicationIds={pinnedApplications.slice(0, maxAppsShownOnTheLeft)}
+                                                           context={OuterContextType.STARTMENU_PINNED}
+                                                           closeStartMenu={props.closeStartMenu}
+                                                           openWindow={openWindow}/>
+                                    </div>
+                                    {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : <hr/>}
+                                </>
+                            ) : null}
+
+                            {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : (
+                                <>
+                                    <div className={classes.title}>Recent</div>
+                                    <div>
+                                        {pinnedApplications.length >= maxAppsShownOnTheLeft ? null :
+                                            recentApplications.length ? (
+                                                    <StartMenuTileList applicationIds={recentApplications.slice(0, maxAppsShownOnTheLeft - pinnedApplications.length)}
+                                                                       context={OuterContextType.STARTMENU_RECENT}
+                                                                       closeStartMenu={props.closeStartMenu}
+                                                                       openWindow={openWindow}/>
+                                                )
+                                                :
+                                                (<div className={classes.noItemsMessage}>No applications were opened recently</div>)
+                                        }
+                                    </div>
+                                </>
+                            )}
+                        </>
+                    )}
+                    <div className={classes.allProgramsButton}>
+                        <hr/>
+                        <Button onClick={() => this.setState((state) => ({ allProgramsOpened: !state.allProgramsOpened }))}>
+                            <div className={classes.allProgramsButtonContent}>
+                                {allProgramsOpened ? <img alt='all programs' src={allProgramsSrc} className={classes.flipped}/> : null}
+                                <span>{allProgramsOpened ? 'Back' : 'All programs'}</span>
+                                {!allProgramsOpened ? <img alt='all programs' src={allProgramsSrc}/> : null}
+                            </div>
+                        </Button>
+                    </div>
+                </>
+            ),
+            right: (
+                <>
+
+                </>
+            )
+        };
 
         return (
             <div className={classes.root}
@@ -48,97 +131,14 @@ export class StartMenu extends React.Component<IStartMenuPassedProps, IStartMenu
                      style={{ bottom: taskbarHeight }}
                      onMouseOver={() => { canCloseOnClick = false }}
                      onMouseLeave={() => { canCloseOnClick = true }}>
-                    <div className={classes.top}>
-                        <img alt='user' src={imageSrc}/> <span>{userName}</span>
-                    </div>
+
+                    <div className={classes.top}>{pane.top}</div>
                     <div className={classes.content}>
-                        <div className={classes.left}>
-                            {allProgramsOpened ? (
-                                <>
-                                    <div className={classes.allProgramsList}>
-                                        {applicationsForStartMenu.map(app => (
-                                            <React.Fragment key={`start-menu-tile-allprograms-${app.id}`}>
-                                                <div className={classes.tileWrapper}>
-                                                    <StartMenuTile context={OuterContextType.STARTMENU_ALL}
-                                                                   applicationId={app.id}
-                                                                   closeStartMenu={props.closeStartMenu}
-                                                                   openWindow={openWindow}/>
-                                                </div>
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    {pinnedApplications.length ? (
-                                        <>
-                                            <div className={classes.title}>Pinned</div>
-                                            <div>
-                                                {pinnedApplications.slice(0, maxAppsShownOnTheLeft).map(appId => (
-                                                    <React.Fragment key={`start-menu-tile-pinned-${appId}`}>
-                                                        <div className={classes.tileWrapper}>
-                                                            <StartMenuTile context={OuterContextType.STARTMENU_PINNED}
-                                                                           applicationId={appId}
-                                                                           closeStartMenu={props.closeStartMenu}
-                                                                           openWindow={openWindow}/>
-                                                        </div>
-                                                    </React.Fragment>
-                                                ))}
-                                            </div>
-                                            {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : <hr/>}
-                                        </>
-                                    ) : null}
-
-                                    {pinnedApplications.length >= maxAppsShownOnTheLeft ? null : (
-                                        <>
-                                            <div className={classes.title}>Recent</div>
-                                            <div>
-                                                {pinnedApplications.length >= maxAppsShownOnTheLeft ? null :
-                                                    recentApplications.length ?
-                                                        recentApplications
-                                                            .slice(0, maxAppsShownOnTheLeft - pinnedApplications.length)
-                                                            .map(appId => (
-                                                                <div key={`start-menu-tile-recent-${appId}`}
-                                                                     className={classes.tileWrapper}>
-                                                                    <StartMenuTile context={OuterContextType.STARTMENU_RECENT}
-                                                                                   applicationId={appId}
-                                                                                   closeStartMenu={props.closeStartMenu}
-                                                                                   openWindow={openWindow}/>
-                                                                </div>
-                                                            ))
-                                                        :
-                                                        (<div className={classes.noItemsMessage}>No applications were opened recently</div>)
-                                                }
-                                            </div>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                            <div className={classes.allProgramsButton}>
-                                <hr/>
-                                <Button onClick={() => this.setState((state) => ({ allProgramsOpened: !state.allProgramsOpened }))}>
-                                    <div className={classes.allProgramsButtonContent}>
-                                        {allProgramsOpened ? <img alt='all programs' src={allProgramsSrc} className={classes.flipped}/> : null}
-                                        <span>{allProgramsOpened ? 'Back' : 'All programs'}</span>
-                                        {!allProgramsOpened ? <img alt='all programs' src={allProgramsSrc}/> : null}
-                                    </div>
-                                </Button>
-                            </div>
-                        </div>
-                        <div className={classes.right}>
-
-                        </div>
+                        <div className={classes.left}>{pane.left}</div>
+                        <div className={classes.right}>{pane.right}</div>
                     </div>
-                    <div className={classes.bottom}>
-                        <Button className={classes.button}>
-                            <Icon className={classes.icon}>lock</Icon>
-                            Log Off
-                        </Button>
-                        <Button className={classes.button}>
-                            <Icon className={classes.icon}>power_settings_new</Icon>
-                            Shutdown
-                        </Button>
-                    </div>
+                    <div className={classes.bottom}>{pane.bottom}</div>
+
                 </div>
             </div>
         );
