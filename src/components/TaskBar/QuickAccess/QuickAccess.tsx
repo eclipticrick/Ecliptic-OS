@@ -36,15 +36,16 @@ const quickAccess = (props: IQuickAccessProps) => {
                     {shortcuts.map(shortcut => {
                         const application = applications.find(app => app.id === shortcut);
                         return (
-                            <Button key={`quick-access-${application.id}`} onClick={() => props.openWindow(application)}
-                                    variant={'contained'}
-                                    style={{ width: imageButtonSize, height: imageButtonSize }}>
-                                <ApplicationContextMenu application={application} context={OuterContextType.TASKBAR_QUICKACCESS}>
-                                    <img src={application.icon.src}
-                                         aria-label={application.icon.name}
-                                         style={{ width: imageSize, height: imageSize }}/>
-                                </ApplicationContextMenu>
-                            </Button>
+                            <ApplicationContextMenu key={`quick-access-${application.id}`} application={application} context={OuterContextType.TASKBAR_QUICKACCESS}>
+                                <Button onClick={() => props.openWindow(application)}
+                                        variant={'contained'}
+                                        style={{ width: imageButtonSize, height: imageButtonSize }}>
+                                        <img alt={application.icon.name}
+                                             src={application.icon.src}
+                                             aria-label={application.icon.name}
+                                             style={{ width: imageSize, height: imageSize }}/>
+                                </Button>
+                            </ApplicationContextMenu>
                         )
                     })}
                 </Resizable>

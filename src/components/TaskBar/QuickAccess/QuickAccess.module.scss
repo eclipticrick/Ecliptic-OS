@@ -10,21 +10,27 @@ div.root {
     overflow: hidden;
     div.resizableDiv {
       border-right: 1px solid rgba(255, 255, 255, 0.15);
-      button {
-        min-width: 0;
-        min-height: 0;
-        padding: 0;
-        margin: 0 3px;
-        border-radius: 6px;
-        background: transparent;
-        box-shadow: none;
-        &:hover {
-          background: #012F9C;
-        }
-        img {
-          object-fit: contain;
+
+      // the context-menu container around the button
+      > * {
+        display: inline-block;
+        button {
+          min-width: 0;
+          min-height: 0;
+          padding: 0;
+          margin: 0 3px;
+          border-radius: 6px;
+          background: transparent;
+          box-shadow: none;
+          &:hover {
+            background: #012F9C;
+          }
+          img {
+            object-fit: contain;
+          }
         }
       }
+
     }
   }
 }
