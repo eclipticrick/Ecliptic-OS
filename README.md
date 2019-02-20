@@ -4,6 +4,7 @@ A web-OS :)
 [![Build Status](https://travis-ci.com/eclipticrick/Ecliptic-OS.svg?branch=master)](https://travis-ci.com/eclipticrick/Ecliptic-OS)
 [![Coverage Status](https://coveralls.io/repos/github/eclipticrick/Ecliptic-OS/badge.svg?branch=master)](https://coveralls.io/github/eclipticrick/Ecliptic-OS?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/eclipticrick/Ecliptic-OS.svg?columns=all)](https://waffle.io/eclipticrick/Ecliptic-OS)
 
 _This project uses __TypeScript__ and __SASS__ for logic and styling._
 
