@@ -10,6 +10,7 @@ import Calculator from '../containers/Calculator/Calculator';
 import Computer from '../containers/Computer/Computer';
 import Paint from '../containers/Paint/Paint';
 
+import * as explorerIcon from '../assets/images/icons/026-folder-1.svg';
 import * as ieIcon from '../assets/images/icons/internet-explorer.png';
 import * as limeWireIcon from '../assets/images/icons/008-lime.svg';
 import * as outlookIcon from '../assets/images/icons/011-outlook.svg';
@@ -26,6 +27,7 @@ import * as helpIcon from '../assets/images/icons/071-question.svg';
 
 import Window, {IPopupWindowProps} from '../components/Window/Window';
 import {ReactNode} from "react";
+import Explorer from "../containers/Explorer/Explorer";
 
 export enum ApplicationId {
     POPUP_ERROR_ONLY_CLOSABLE = 'POPUP_ERROR_ONLY_CLOSABLE',
@@ -33,11 +35,12 @@ export enum ApplicationId {
     POPUP_INFO_ONLY_CLOSABLE = 'POPUP_INFO_ONLY_CLOSABLE',
     POPUP_HELP_ONLY_CLOSABLE = 'POPUP_HELP_ONLY_CLOSABLE',
 
-    POPUP_ERROR = 'POPUP_ERROR',
+    POPUP_ERROR   = 'POPUP_ERROR',
     POPUP_WARNING = 'POPUP_WARNING',
-    POPUP_INFO = 'POPUP_INFO',
-    POPUP_HELP = 'POPUP_HELP',
+    POPUP_INFO    = 'POPUP_INFO',
+    POPUP_HELP    = 'POPUP_HELP',
 
+    EXPLORER          = 'EXPLORER',
     INTERNET_EXPLORER = 'INTERNET_EXPLORER',
     LIME_WIRE         = 'LIME_WIRE',
     OUTLOOK           = 'OUTLOOK',
@@ -160,6 +163,17 @@ const applications: IApplication[] = [
         window: {
             Component: Window.Popup,
             props: { minimizable: true } as Partial<IPopupWindowProps>
+        }
+    },
+    {
+        id: ApplicationId.EXPLORER,
+        display: DisplayLevel.VISIBLE_EVERYWHERE,
+        icon: {
+            name: 'Explorer',
+            src: explorerIcon
+        },
+        window: {
+            Component: Explorer
         }
     },
     {

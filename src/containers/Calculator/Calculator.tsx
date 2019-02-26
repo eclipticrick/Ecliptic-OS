@@ -258,7 +258,7 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
                     if (char === 'MC') {
                         newState.memory = null;
                     } else if (char === 'MR') {
-                        newState.entry = state.memory;
+                        newState.entry = state.memory ? state.memory : '0';
                     } else if (char === 'MS') {
                         newState.memory = trimNr(state.entry);
                     } else if (char === 'M+') {
