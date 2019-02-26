@@ -1,17 +1,17 @@
 import Actions, {IAction} from '../../actionTypes';
 import functions from './functions';
 import * as userImageSrc from '../../../assets/images/admin.jpg';
+import {EclipticFilePermissionGroup} from "../../../apptypings/filesystem";
+import {User} from "../../../apptypings/user";
 
-export interface IReducerUser {
-    isLoggedIn: boolean
-    name: string
-    imageSrc: string
-}
+export interface IReducerUser extends User{}
 
 const initialState: IReducerUser = {
+    username: 'rick',
     isLoggedIn: false,
-    name: 'Admin',
-    imageSrc: userImageSrc
+    name: 'Ecliptic Rick',
+    imageSrc: userImageSrc,
+    groups: [EclipticFilePermissionGroup.user]
 };
 
 const REDUCER = ( state: IReducerUser = initialState, action: IAction & any ) => {
