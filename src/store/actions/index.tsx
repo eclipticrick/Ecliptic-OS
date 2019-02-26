@@ -27,3 +27,11 @@ export {
     removeDesktopShortcut,
     toggleDesktopBackground
 } from './desktop';
+export {
+    attachDrive,
+    detachDrive,
+    createFolder,
+    removeFolder,
+    createFile,
+    removeFile,
+} from './storage';

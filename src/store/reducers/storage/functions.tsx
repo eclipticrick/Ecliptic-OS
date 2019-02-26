@@ -198,7 +198,7 @@ export default {
         }
     },
     createFile: (oldState: IReducerStorage, action: IAction): IReducerStorage => {
-        let { drive, location, name, user } = action.payload; // TODO: make User object
+        let { drive, location, name, user } = action.payload;
         let error: string = null;
         let driveContent = null;
 
