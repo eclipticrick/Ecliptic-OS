@@ -31,3 +31,8 @@ export const normalizeWindow = (instanceId: number) => ({
     type: Actions.WINDOWS_____NORMALIZE,
     payload: { instanceId }
 });
+
+export const updateWindowTitle = (instanceId: number, title: string) => ({
+    type: Actions.WINDOWS_____UPDATE_TITLE,
+    payload: { instanceId, title }
+});

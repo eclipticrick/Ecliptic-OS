@@ -28,7 +28,8 @@ const initialState: IReducerDesktop = {
     shortcuts: [
         ApplicationId.INTERNET_EXPLORER,
         ApplicationId.CALCULATOR,
-        ApplicationId.COMPUTER
+        ApplicationId.COMPUTER,
+        ApplicationId.EXPLORER,
     ]
 };
 

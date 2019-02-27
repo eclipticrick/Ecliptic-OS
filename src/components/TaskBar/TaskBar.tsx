@@ -54,19 +54,22 @@ export class TaskBar extends React.Component<ITaskbarProps & ITaskbarPassedProps
                     }}>
                     <div className={classes.taskBarContent}>
 
-                        <StartButton taskBarHeight={height}
-                                     startMenuIsOpen={startMenuIsOpen}
-                                     openStartMenu={props.openStartMenu}
-                                     closeStartMenu={props.closeStartMenu}/>
+                        <StartButton
+                            taskBarHeight={height}
+                            startMenuIsOpen={startMenuIsOpen}
+                            openStartMenu={props.openStartMenu}
+                            closeStartMenu={props.closeStartMenu}/>
 
-                        <QuickAccess shortcuts={quickAccessShortcuts}
-                                     width={quickAccessWidth}
-                                     openWindow={openWindow}
-                                     setQuickAccessWidth={props.setQuickAccessWidth}/>
+                        <QuickAccess
+                            shortcuts={quickAccessShortcuts}
+                            width={quickAccessWidth}
+                            openWindow={openWindow}
+                            setQuickAccessWidth={props.setQuickAccessWidth}/>
 
-                        <ActiveWindows windowInstances={windowInstances}
-                                       selectWindow={props.selectWindow}
-                                       minimizeWindow={props.minimizeWindow}/>
+                        <ActiveWindows
+                            windowInstances={windowInstances}
+                            selectWindow={props.selectWindow}
+                            minimizeWindow={props.minimizeWindow}/>
 
                         <SystemTray/>
 
@@ -88,8 +91,8 @@ const mapDispatchToProps = (dispatch: any): Partial<ITaskbarPassedProps> => ({
     setTaskbarHeight: (height: number) => dispatch(actions.setTaskbarHeight(height)),
     setQuickAccessWidth: (width: number) => dispatch(actions.setQuickAccessWidth(width)),
     openWindow: (application: IApplication) => dispatch(actions.openWindow(application)),
-    selectWindow: (id: number) => dispatch(actions.selectWindow(id)),
-    minimizeWindow: (id: number) => dispatch(actions.minimizeWindow(id)),
+    selectWindow: (instanceId: number) => dispatch(actions.selectWindow(instanceId)),
+    minimizeWindow: (instanceId: number) => dispatch(actions.minimizeWindow(instanceId)),
     openStartMenu: () => dispatch(actions.openStartMenu()),
     closeStartMenu: () => dispatch(actions.closeStartMenu()),
     addRecentApplicationToStartMenu: (id: ApplicationId) => dispatch(actions.addRecentApplicationToStartMenu(id)),

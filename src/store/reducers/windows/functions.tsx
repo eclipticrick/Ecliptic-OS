@@ -1,6 +1,7 @@
 import {IReducerWindows} from './index';
 import {IAction} from '../../actionTypes';
 import {IWindowInstance, WindowInstanceType} from '../../../apptypings/window';
+import {cloneDeep} from 'lodash';
 
 export default {
 
@@ -13,7 +14,7 @@ export default {
         const window: IWindowInstance = {
             instanceId: uniqueInstanceCounter,
             type: type ? type : WindowInstanceType.APPLICATION,
-            application,
+            application: cloneDeep(application),
             maximized: false,
             minimized: false
         };
@@ -84,6 +85,21 @@ export default {
         let windows = [...oldState.windows];
         const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)};
         window.maximized = false;
+        windows = windows.filter(w => w.instanceId !== instanceId);
+        windows.push(window);
+
+        return {
+            ...oldState,
+            windows
+        };
+    },
+    updateTitle: (oldState: IReducerWindows, action: IAction): IReducerWindows => {
+        const { instanceId, title } = action.payload;
+
+        let windows = [...oldState.windows];
+        const window: IWindowInstance = {...windows.find(w => w.instanceId === instanceId)};
+        window.application.window = cloneDeep(window.application.window);
+        window.application.window.title = title;
         windows = windows.filter(w => w.instanceId !== instanceId);
         windows.push(window);
 

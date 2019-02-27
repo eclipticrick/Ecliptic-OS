@@ -20,7 +20,6 @@ export interface IDesktopPassedProps {
     openWindow: (application: IApplication) => void
     addRecentApplicationToStartMenu: (id: ApplicationId) => void
 }
-
 export class Desktop extends React.Component<IDesktopProps & IDesktopPassedProps, {}> {
     public render() {
         const { props, props: { taskbarHeight, windows, shortcuts, background } } = this;

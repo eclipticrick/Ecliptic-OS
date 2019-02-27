@@ -20,6 +20,7 @@ const REDUCER = ( state: IReducerWindows = initialState, action: IAction & any )
         case Actions.WINDOWS_____MINIMIZE : return functions.minimize(state, action);
         case Actions.WINDOWS_____MAXIMIZE : return functions.maximize(state, action);
         case Actions.WINDOWS_____NORMALIZE : return functions.normalize(state, action);
+        case Actions.WINDOWS_____UPDATE_TITLE : return functions.updateTitle(state, action);
     }
     return state;
 };

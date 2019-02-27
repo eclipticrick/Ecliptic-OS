@@ -23,9 +23,10 @@
   "homepage": "https://github.com/eclipticrick/Ecliptic-OS#readme",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
-    "react": "^16.8.2",
+    "lodash": "^4.17.11",
+    "react": "^16.8.3",
     "react-contexify": "^4.0.1",
-    "react-dom": "^16.8.1",
+    "react-dom": "^16.8.3",
     "react-draggable": "^3.1.1"
   },
   "devDependencies": {
@@ -33,8 +34,9 @@
     "@types/enzyme": "^3.1.17",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.3.14",
-    "@types/react": "^16.8.2",
-    "@types/react-dom": "^16.8.0",
+    "@types/lodash": "^4.14.121",
+    "@types/react": "^16.8.5",
+    "@types/react-dom": "^16.8.2",
     "@types/react-redux": "^6.0.13",
     "@types/react-router-dom": "^4.3.1",
     "autoprefixer": "^9.4.7",

@@ -20,7 +20,8 @@ export {
     selectWindow,
     minimizeWindow,
     maximizeWindow,
-    normalizeWindow
+    normalizeWindow,
+    updateWindowTitle
 } from './windows';
 export {
     addDesktopShortcut,
