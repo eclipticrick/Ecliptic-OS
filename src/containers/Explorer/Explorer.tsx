@@ -52,7 +52,7 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
         history: [] as any[]
     };
     componentDidMount(): void {
-        this.updateWindowTitle(null, [])
+        this.updateWindowTitle(null, []);
     }
 
     public render() {
@@ -74,7 +74,7 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
                                      selectedDrive={selectedDrive}
                                      currentLocation={currentLocation}
                                      selectedItems={selectedItems}
-                                     onDriveSelection={this.selectDrive.bind(this)}
+                                     onDriveOpen={this.openDrive.bind(this)}
                                      onSelectItem={this.selectItem.bind(this)}
                                      onOpenFolder={this.openFolder.bind(this)}
                                      onOpenFile={this.openFile.bind(this)}
@@ -98,8 +98,8 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
             this.setState({ ctrlKeyPressed: false })
         }
     }
-    private selectDrive(drive: string) {
-        console.log('selecting drive...', drive);
+    private openDrive(drive: string) {
+        console.log('opening drive...', drive);
         this.setState((prevState) =>  {
             this.updateWindowTitle(drive, prevState.currentLocation);
             return { selectedDrive: drive }
@@ -127,6 +127,11 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
     }
     private openFolder(name: string) {
         console.log('openFolder...', name);
+        this.setState(prevState => {
+            const newLocation = [...prevState.currentLocation, name];
+            this.updateWindowTitle(prevState.selectedDrive, newLocation);
+            return { currentLocation: newLocation }
+        })
     }
     private openFile(name: string) {
         console.log('openFile...', name);
@@ -137,7 +142,7 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
         const { props: { windowInstance }} = this;
         this.props.updateWindowTitle(
             windowInstance.instanceId,
-            !selectedDrive ? 'My Computer' : `${selectedDrive}:/${currentLocation.map(loc => `${loc}/`)}`
+            !selectedDrive ? 'My Computer' : `${selectedDrive}:/${currentLocation.map((loc, i) => `${loc}${i !== currentLocation.length - 1 ? '/' : ''}`)}`
         );
     }
 }

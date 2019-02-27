@@ -4,7 +4,6 @@ import {IApplication} from '../../../../appdata/applications';
 import classNames from 'classnames';
 
 export interface ITileIconProps {
-    application: IApplication
     iconSrc: string
     name: string
     selected: boolean

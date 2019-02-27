@@ -1,38 +1,50 @@
 import * as React from 'react';
 import * as classes from './ExplorerContent.module.scss';
 import {ExplorerView, IExplorerWindowPassedProps} from '../Explorer';
-import {FileSystemDiscriminator} from '../../../apptypings/filesystem';
+import {EclipticFile, FileSystemDiscriminator, Folder} from '../../../apptypings/filesystem';
+import * as hddIcon from '../../../assets/images/icons/029-harddisk.svg';
 import * as folderIcon from '../../../assets/images/icons/026-folder-1.svg';
 import * as fileIcon from '../../../assets/images/icons/062-file.svg';
-import Resizable from 're-resizable';
 import TileIcon from './TileIcon/TileIcon';
+import HarddriveIcon from "./HarddriveIcon/HarddriveIcon";
 
 export interface IExplorerContentProps {
     view: ExplorerView
     selectedDrive: string
     currentLocation: string[]
     selectedItems: string[]
-    onDriveSelection: (drive: string) => void
+    onDriveOpen: (drive: string) => void
     onOpenFolder: (name: string) => void
     onOpenFile: (name: string) => void
     onSelectItem: (name: string) => void
 }
 const explorerContent = (props: IExplorerContentProps & Partial<IExplorerWindowPassedProps>) => {
     const { drives, selectedDrive, currentLocation, selectedItems } = props;
+
+    let folderContent = drives[selectedDrive];
+    if (currentLocation.length) {
+        folderContent = currentLocation.reduce((contentArr: (EclipticFile | Folder)[], loc: string, i: number) => {
+            const folder = contentArr.find(
+                fileOrFolder => fileOrFolder.discriminator === FileSystemDiscriminator.FOLDER && fileOrFolder.name === loc
+            );
+            return folder.content
+        }, drives[selectedDrive])
+    }
     const templates = {
         driveSelection: () => (
             <>
                 {Object.keys(drives).map(driveLetter => (
-                    <div key={`drive-list-${driveLetter}`} onClick={() => props.onDriveSelection(driveLetter)}>
-                        { driveLetter }
-                    </div>
+                    <HarddriveIcon iconSrc={hddIcon}
+                              name={`${driveLetter}:/`}
+                              onDoubleClick={() => props.onDriveOpen(driveLetter)}
+                              key={`drive-list-${driveLetter}`}/>
                 ))}
             </>
         ),
         fileExplorer: () => (
             <>
                 <div className={classes.fileExplorerWrapper}>
-                    {drives[selectedDrive].map(fileOrFolder => {
+                    {folderContent.map(fileOrFolder => {
                         const template = (iconSrc: string, name: string, itemProps: any) => (
                             <TileIcon iconSrc={iconSrc}
                                       name={name}
@@ -46,7 +58,7 @@ const explorerContent = (props: IExplorerContentProps & Partial<IExplorerWindowP
                                 fileOrFolder.customIcon ? fileOrFolder.customIcon : folderIcon,
                                 fileOrFolder.name,
                                 {
-                                    onDoubleClick: () => props.onOpenFolder(name),
+                                    onDoubleClick: () => props.onOpenFolder(fileOrFolder.name),
                                 }
                             );
                         } else if (fileOrFolder.discriminator === FileSystemDiscriminator.FILE) {
@@ -54,7 +66,7 @@ const explorerContent = (props: IExplorerContentProps & Partial<IExplorerWindowP
                                 fileIcon,
                                 fileOrFolder.name,
                                 {
-                                    onDoubleClick: () => props.onOpenFile(name),
+                                    onDoubleClick: () => props.onOpenFile(fileOrFolder.name),
                                 }
                             );
                         } else {
