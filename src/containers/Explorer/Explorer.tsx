@@ -60,6 +60,7 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
             props, props: { windowInstance, drives, detachedDrives },
             state, state: { selectedDrive, currentLocation, selectedItems, view }
         } = this;
+
         // windowInstance.application.window.title = !selectedDrive ? 'My Computer' : `${selectedDrive}:/${currentLocation.map(loc => `${loc}/`)}`;
         return (
             <Window.Default windowInstance={windowInstance}>
@@ -142,7 +143,7 @@ export class Explorer extends React.Component<IDefaultWindowProps & IExplorerWin
         const { props: { windowInstance }} = this;
         this.props.updateWindowTitle(
             windowInstance.instanceId,
-            !selectedDrive ? 'My Computer' : `${selectedDrive}:/${currentLocation.map((loc, i) => `${loc}${i !== currentLocation.length - 1 ? '/' : ''}`)}`
+            !selectedDrive ? 'My Computer' : `${selectedDrive}:/${currentLocation.map((loc, i) => `${loc}${i !== currentLocation.length - 1 ? '/' : ''}`).join('')}`
         );
     }
 }

@@ -21,15 +21,38 @@ export interface IExplorerContentProps {
 const explorerContent = (props: IExplorerContentProps & Partial<IExplorerWindowPassedProps>) => {
     const { drives, selectedDrive, currentLocation, selectedItems } = props;
 
-    let folderContent = drives[selectedDrive];
-    if (currentLocation.length) {
-        folderContent = currentLocation.reduce((contentArr: (EclipticFile | Folder)[], loc: string, i: number) => {
+    let folderContent: (EclipticFile | Folder)[] = currentLocation
+        .reduce((contentArr: (EclipticFile | Folder)[], loc: string, i: number) => {
             const folder = contentArr.find(
                 fileOrFolder => fileOrFolder.discriminator === FileSystemDiscriminator.FOLDER && fileOrFolder.name === loc
             );
             return folder.content
-        }, drives[selectedDrive])
+        }, drives[selectedDrive]);
+    if (folderContent) {
+        folderContent = folderContent.sort((a: (EclipticFile | Folder), b: (EclipticFile | Folder)) =>
+                a.discriminator === b.discriminator ? a.name > b.name ? 1 : -1 : a.discriminator < b.discriminator ? 1 : -1
+        );
     }
+
+
+    // if (currentLocation.length) {
+    //     folderContent = currentLocation.reduce((contentArr: (EclipticFile | Folder)[], loc: string, i: number) => {
+    //         const folder = contentArr.find(
+    //             fileOrFolder => fileOrFolder.discriminator === FileSystemDiscriminator.FOLDER && fileOrFolder.name === loc
+    //         );
+    //         return folder.content
+    //     }, drives[selectedDrive])
+    // }
+
+    // if (selectedDrive) {
+    //     drives[selectedDrive].sort((a, b) => {
+    //         if (a.city === b.city) {
+    //             // Price is only important when cities are the same
+    //             return b.price - a.price;
+    //         }
+    //         return a.city > b.city ? 1 : -1;
+    //     });
+    // }
     const templates = {
         driveSelection: () => (
             <>

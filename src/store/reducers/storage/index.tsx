@@ -1,6 +1,6 @@
 import Actions, {IAction} from '../../actionTypes';
 import functions from './functions';
-import {defaultFolder, EclipticFile, Folder} from '../../../apptypings/filesystem';
+import {defaultFile, defaultFolder, EclipticFile, Folder} from '../../../apptypings/filesystem';
 import * as documentsIconSrc from '../../../assets/images/icons/025-folder.svg';
 
 export interface IReducerStorage {
@@ -17,12 +17,38 @@ const initialState: IReducerStorage = {
     drives: {
         C: [
             { ...defaultFolder, protected: true, name: 'desktop', customIcon: documentsIconSrc },
-            { ...defaultFolder, protected: true, name: 'documents', customIcon: documentsIconSrc },
+            { ...defaultFolder, protected: true, name: 'documents', customIcon: documentsIconSrc,
+                content: [
+                    { ...defaultFolder, name: 'aaa',
+                        content: [
+                            { ...defaultFolder, name: 'bbb',
+                                content: [
+                                    { ...defaultFolder, name: 'ccc',
+                                        content: [
+                                            { ...defaultFolder, name: 'ddd',
+                                                content: [
+                                                    { ...defaultFolder, name: 'eee' },
+                                                ]
+                                            },
+                                        ]
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    { ...defaultFolder, name: 'zzz' },
+                    { ...defaultFile, name: 'aaa.txt' },
+                    { ...defaultFile, name: 'zzz.txt' },
+                ]
+            },
             { ...defaultFolder, protected: true, name: 'downloads', customIcon: documentsIconSrc },
             { ...defaultFolder, protected: true, name: 'pictures', customIcon: documentsIconSrc },
             { ...defaultFolder, protected: true, name: 'videos', customIcon: documentsIconSrc },
             { ...defaultFolder, protected: true, name: 'shared', customIcon: documentsIconSrc },
-            { ...defaultFolder, name: 'other' }
+            { ...defaultFolder, name: 'other' },
+            { ...defaultFile, name: 'myFile.txt' },
+            { ...defaultFile, name: 'myDrawing.doodle' },
+            { ...defaultFile, name: 'myDocument.writer' },
         ],
         D: []
     },
