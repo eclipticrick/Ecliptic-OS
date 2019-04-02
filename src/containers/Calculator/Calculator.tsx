@@ -2,40 +2,15 @@ import * as React from 'react';
 import Window, {IDefaultWindowProps} from '../../components/Window/Window';
 import WindowMenu from './WindowMenu/WindowMenu';
 import * as classes from './Calculator.module.scss';
-import * as popupClasses from '../../components/Window/WindowTypes/Application/Popup.module.scss';
 import {Button, Grid, Tooltip} from '@material-ui/core';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
-import applications, {ApplicationId, IApplication} from "../../appdata/applications";
-import {WindowInstanceType} from "../../apptypings/window";
-import * as infoIcon from '../../assets/images/icons/068-info.svg';
+import {IApplication} from '../../appdata/applications';
+import {WindowInstanceType} from '../../apptypings/window';
+import {Clicked} from './Enum/Clicked';
+import {ICalculatorPassedProps} from './Interface/ICalculatorPassedProps';
+import {ICalculatorState} from './Interface/ICalculatorState';
 
-import * as errorIcon from '../../assets/images/icons/070-cancel.svg';
-import * as warningIcon from '../../assets/images/icons/069-warning.svg';
-import * as helpIcon from '../../assets/images/icons/071-question.svg';
-
-interface ICalculatorState {
-    entry: string
-    store: string
-    operator: string
-    lastChar: number | string
-    memory: string
-}
-interface ICalculatorPassedProps {
-    openWindow: (application: IApplication, type?: WindowInstanceType) => void
-}
-enum Clicked {
-    COPY = 'COPY',
-    ABOUT = 'ABOUT',
-
-    // todo: temp
-    TEST_1 = 'TEST_1',
-    TEST_2 = 'TEST_2',
-    TEST_3 = 'TEST_3',
-    TEST_4 = 'TEST_4',
-    TEST_5 = 'TEST_5'
-
-}
 const menuTree = {
     Edit: {
         copy: [Clicked.COPY, 'CTRL + C']
@@ -63,74 +38,10 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
         lastChar: null as number | string,
         memory: null as string
     };
-    private inputRef: any = React.createRef();
+    public inputRef: any = React.createRef();
 
     public render() {
-        const { windowInstance } = this.props;
-
-        const menuItemClickedHandler = (menuItem: Clicked) => {
-            if (menuItem === Clicked.COPY) {
-                this.inputRef.current.select();
-                document.execCommand('copy');
-            } else if (menuItem === Clicked.ABOUT) {
-                const app = applications.find(app => app.id === ApplicationId.POPUP_INFO);
-                app.window.title = 'About Calculator';
-                app.window.children = (
-                    <div className={popupClasses.padding}>
-                        <img alt='about' className={popupClasses.left} src={infoIcon}/>
-                        <div className={popupClasses.info}>
-                            Version 0.0.1<br/>
-                            © Wesley Veenendaal
-                        </div>
-                    </div>
-                );
-                this.props.openWindow(app);
-            }
-
-            // todo: temp
-            else if (menuItem === Clicked.TEST_1) {
-                const app = applications.find(app => app.id === ApplicationId.POPUP_WARNING_ONLY_CLOSABLE);
-                app.window.title = 'Warning';
-                app.window.children = (
-                    <div className={popupClasses.padding}>
-                        <img alt='about' className={popupClasses.left} src={warningIcon}/>
-                        <div className={popupClasses.info}>
-                            overlay popup test
-                        </div>
-                    </div>
-                );
-                this.props.openWindow(app, WindowInstanceType.POPUP);
-            } else if (menuItem === Clicked.TEST_2) {
-                const app = applications.find(app => app.id === ApplicationId.POPUP_ERROR_ONLY_CLOSABLE);
-                app.window.title = 'Error';
-                app.window.children = (
-                    <div className={popupClasses.padding}>
-                        <img alt='about' className={popupClasses.left} src={errorIcon}/>
-                        <div className={popupClasses.info}>
-                            only closable popup test
-                        </div>
-                    </div>
-                );
-                this.props.openWindow(app);
-            } else if (menuItem === Clicked.TEST_3) {
-                const app = applications.find(app => app.id === ApplicationId.POPUP_HELP);
-                app.window.title = 'Help';
-                app.window.children = (
-                    <div className={popupClasses.padding}>
-                        <img alt='about' className={popupClasses.left} src={helpIcon}/>
-                        <div className={popupClasses.info}>
-                            minimizable popup test
-                        </div>
-                    </div>
-                );
-                this.props.openWindow(app);
-            } else if (menuItem === Clicked.TEST_4) {
-                alert('nothing to test over here...')
-            } else if (menuItem === Clicked.TEST_5) {
-                alert('nothing to test over here...')
-            }
-            // todo: /temp
-        };
+        const {windowInstance} = this.props;
 
         const handleButtonClick = (char: string | number) => {
 
@@ -277,12 +188,12 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
 
         return (
             <Window.Default
-                    windowInstance={windowInstance}
-                    minWidth={350}
-                    minHeight={417}
-                    maximizable={false}>
+                windowInstance={windowInstance}
+                minWidth={350}
+                minHeight={417}
+                maximizable={false}>
 
-                <WindowMenu menuTree={menuTree} onItemClicked={menuItemClickedHandler}/>
+                <WindowMenu menuTree={menuTree} parent={this}/>
 
                 <div className={classes.root}>
 
@@ -293,7 +204,7 @@ export class Calculator extends React.Component<IDefaultWindowProps & ICalculato
                                 <input readOnly
                                        ref={this.inputRef}
                                        value={this.state.entry.toString()}
-                                       style={this.state.entry.length > 21 ? { fontSize: '14px' } : {}}/>
+                                       style={this.state.entry.length > 21 ? {fontSize: '14px'} : {}}/>
                             </div>
                         </Grid>
                     </Grid>
